@@ -73,9 +73,19 @@
           + Phân thủ công
         </button>
 
+        <button onclick="openHolidayModal()"
+          class="px-3.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 text-sm font-semibold transition border border-amber-200">
+          Ngày nghỉ lễ
+        </button>
+
         <button onclick="openBcsModal()"
           class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-medium transition border border-slate-200">
           BCS.txt
+        </button>
+
+        <button onclick="openSyncModal()"
+          class="px-3.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-sm font-semibold transition border border-emerald-200">
+          Đồng bộ GitHub
         </button>
       </div>
 
@@ -94,8 +104,18 @@
     </div>
   </div>
 
+  <!-- Trạng thái đồng bộ -->
+  <div id="syncStatusBar" class="max-w-6xl w-full mx-auto px-4 pt-3">
+    <div id="syncStatusText" class="text-xs text-slate-500 flex items-center justify-between gap-2">
+      <span>Đủ lịch T2–T6 từng tuần • Đồng bộ qua <code>data.json</code> trên GitHub.</span>
+      <button onclick="pullCloudData(true)" class="text-blue-600 hover:underline font-medium shrink-0">
+        Tải dữ liệu mới nhất
+      </button>
+    </div>
+  </div>
+
   <!-- Kết quả tìm ngày -->
-  <div id="dateSearchResult" class="hidden max-w-6xl w-full mx-auto px-4 pt-4">
+  <div id="dateSearchResult" class="hidden max-w-6xl w-full mx-auto px-4 pt-3">
     <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 flex items-center justify-between gap-4">
       <div id="dateSearchContent" class="text-sm text-slate-800"></div>
       <button onclick="document.getElementById('dateSearchResult').classList.add('hidden')"
@@ -106,13 +126,13 @@
   </div>
 
   <!-- Main Content -->
-  <main class="max-w-6xl w-full mx-auto px-4 py-5 flex-1">
+  <main class="max-w-6xl w-full mx-auto px-4 py-4 flex-1">
     <!-- PHẦN 1: PHÂN CÔNG TRỰC NHẬT -->
     <section id="sectionDuty" class="space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
           <h2 class="text-base font-bold text-slate-800">Danh sách trực nhật theo thời gian thực</h2>
-          <p class="text-xs text-slate-500">Giữ tối đa 1 tuần đã qua, tuần đang trực (màu xanh nổi bật) và 3 tuần tiếp theo.</p>
+          <p class="text-xs text-slate-500">Đủ T2–T6 mỗi tuần • Giữ tối đa 1 tuần đã qua, tuần đang trực nổi bật và 3 tuần tiếp theo.</p>
         </div>
         <div class="text-xs text-slate-500">
           Hôm nay: <span id="todayLabel" class="font-semibold text-blue-600"></span>
@@ -142,8 +162,9 @@
               <tr class="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-600 uppercase">
                 <th class="py-3 px-4 w-16">STT</th>
                 <th class="py-3 px-4">Họ và tên</th>
-                <th class="py-3 px-4">Chi tiết lỗi & số lần</th>
-                <th class="py-3 px-4 w-20 text-right">Xóa</th>
+                <th class="py-3 px-4">Lỗi vi phạm</th>
+                <th class="py-3 px-4 w-28 text-center">Số lần</th>
+                <th class="py-3 px-4 w-32 text-right">Thao tác</th>
               </tr>
             </thead>
             <tbody id="violationTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
@@ -152,6 +173,88 @@
       </div>
     </section>
   </main>
+
+  <!-- MODAL NGÀY NGHỈ LỄ -->
+  <div id="holidayModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-900">Quản lý ngày nghỉ lễ</h3>
+        <button onclick="closeModal('holidayModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-600 mb-1">Ngày nghỉ lễ</label>
+          <input id="holidayDateInput" type="date"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-600 mb-1">Tên ngày lễ / ghi chú</label>
+          <input id="holidayNoteInput" type="text" placeholder="VD: Tết Dương lịch, Nghỉ Tết Âm lịch..."
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+        </div>
+        <button type="button" onclick="addHolidayDate()"
+          class="w-full py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold transition">
+          + Thêm ngày nghỉ lễ
+        </button>
+      </div>
+
+      <div class="space-y-1.5">
+        <div class="text-xs font-semibold text-slate-600">Danh sách ngày nghỉ lễ đã lưu:</div>
+        <div id="holidayListBox" class="max-h-44 overflow-y-auto space-y-1.5 custom-scroll"></div>
+      </div>
+
+      <div class="flex justify-end pt-1">
+        <button onclick="closeModal('holidayModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 0: ĐỒNG BỘ GITHUB (data.json) -->
+  <div id="syncModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-bold text-slate-900">Đồng bộ dữ liệu qua GitHub</h3>
+        <button onclick="closeModal('syncModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-600 mb-1">Repo (owner/repo)</label>
+          <input id="ghRepoInput" type="text" placeholder="minhduy0605/trucnhat"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-600 mb-1">Đường dẫn file dữ liệu</label>
+          <input id="ghDataPathInput" type="text" placeholder="data.json"
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-600 mb-1">GitHub Token (chỉ lưu trên thiết bị này để ghi lên GitHub)</label>
+          <input id="ghTokenInput" type="password" placeholder="github_pat_..."
+            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+        <button type="button" onclick="pullCloudData(true)"
+          class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200">
+          Tải từ GitHub
+        </button>
+        <div class="flex items-center gap-2">
+          <button onclick="closeModal('syncModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+            Đóng
+          </button>
+          <button type="button" onclick="saveSyncConfigAndPush()"
+            class="px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition">
+            Lưu & đẩy lên GitHub
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL 1: DÁN / TẢI ẢNH VI PHẠM (Ctrl+V) -->
   <div id="scanModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
@@ -201,35 +304,47 @@
     </div>
   </div>
 
-  <!-- MODAL 2: PHÂN THỦ CÔNG (1 HỌC SINH & TỰ ĐẨY LỊCH) -->
+  <!-- MODAL 2: PHÂN / CHỈNH SỬA / XÓA NGƯỜI TRỰC THỦ CÔNG -->
   <div id="manualModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-slate-900">Phân trực thủ công (tự đẩy lịch)</h3>
+        <h3 id="manualModalTitle" class="text-base font-bold text-slate-900">Phân / Sửa người trực</h3>
         <button onclick="closeModal('manualModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
       </div>
 
       <div class="space-y-3">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày bắt đầu trực</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày trực</label>
           <input id="manualDate" type="date"
             class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Chọn 1 học sinh</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">HS 1</label>
           <select id="manualStudent1" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">HS 2</label>
+          <select id="manualStudent2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
         </div>
       </div>
 
-      <div class="flex items-center justify-end gap-2 pt-2">
-        <button onclick="closeModal('manualModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-          Hủy
+      <div class="flex items-center justify-between gap-2 pt-2">
+        <button id="btnDeleteManualDuty" type="button" onclick="deleteManualDuty()"
+          class="hidden px-3 py-2 rounded-lg text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 transition">
+          Xóa phân công thủ công
         </button>
-        <button onclick="submitManualDuty()"
-          class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition">
-          Chèn & đẩy lịch
-        </button>
+
+        <div class="flex items-center gap-2 ml-auto">
+          <button onclick="closeModal('manualModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
+            Hủy
+          </button>
+          <button onclick="submitManualDuty()"
+            class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition">
+            Lưu & cập nhật
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -365,6 +480,8 @@ Lớp phó văn nghệ - Ngọc Linh
 Bí thư - Gia An`;
 
     const DEFAULT_GITHUB_BCS_URL = "https://raw.githubusercontent.com/minhduy0605/trucnhat/main/BCS.txt";
+    const DEFAULT_GH_REPO = "minhduy0605/trucnhat";
+    const DEFAULT_GH_DATA_PATH = "data.json";
 
     const INITIAL_VIOLATIONS = [
       { id: 1, studentName: "Nguyễn Minh Khang", date: "2026-11-18", type: "Trễ Chính khóa" },
@@ -372,12 +489,16 @@ Bí thư - Gia An`;
       { id: 3, studentName: "Tập thể lớp", date: "2026-11-18", type: "Vệ sinh lớp dơ" }
     ];
 
-    const STORAGE_KEY = "duty_12a1_v10";
+    const STORAGE_KEY = "duty_12a1_v15";
 
     let state = {
       bcsText: DEFAULT_BCS,
       githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
+      ghRepo: DEFAULT_GH_REPO,
+      ghDataPath: DEFAULT_GH_DATA_PATH,
+      ghToken: "",
       geminiApiKey: "",
+      holidays: [],
       violations: [...INITIAL_VIOLATIONS],
       manualInsertions: [],
       priorityQueue: []
@@ -386,10 +507,16 @@ Bí thư - Gia An`;
     let parsedDraft = [];
     let currentImageBase64 = "";
     let currentImageMime = "image/png";
+    let editingManualDate = "";
 
     function getRealToday() {
       const now = new Date();
       return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+
+    function setSyncMessage(msg) {
+      const bar = document.querySelector("#syncStatusText span");
+      if (bar) bar.innerHTML = msg;
     }
 
     function loadState() {
@@ -400,7 +527,11 @@ Bí thư - Gia An`;
           state = {
             bcsText: parsed.bcsText ?? DEFAULT_BCS,
             githubBcsUrl: parsed.githubBcsUrl || DEFAULT_GITHUB_BCS_URL,
+            ghRepo: parsed.ghRepo || DEFAULT_GH_REPO,
+            ghDataPath: parsed.ghDataPath || DEFAULT_GH_DATA_PATH,
+            ghToken: parsed.ghToken || "",
             geminiApiKey: parsed.geminiApiKey || "",
+            holidays: Array.isArray(parsed.holidays) ? parsed.holidays : [],
             violations: Array.isArray(parsed.violations) ? parsed.violations : [...INITIAL_VIOLATIONS],
             manualInsertions: Array.isArray(parsed.manualInsertions) ? parsed.manualInsertions : [],
             priorityQueue: Array.isArray(parsed.priorityQueue) ? parsed.priorityQueue : []
@@ -415,26 +546,196 @@ Bí thư - Gia An`;
       }
     }
 
-    function saveState() {
+    function saveState(pushCloud = true) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      if (pushCloud && state.ghToken) {
+        pushCloudData(false);
+      }
+    }
+
+    async function pullCloudData(showNotice = false) {
+      const repo = (state.ghRepo || DEFAULT_GH_REPO).trim();
+      const path = (state.ghDataPath || DEFAULT_GH_DATA_PATH).trim();
+      if (!repo || !path) return;
+
+      const rawUrl = `https://raw.githubusercontent.com/${repo}/main/${path}?t=${Date.now()}`;
+      try {
+        const res = await fetch(rawUrl);
+        if (!res.ok) throw new Error("Chưa có file data.json");
+        const cloud = await res.json();
+        const hasCloudContent =
+          (Array.isArray(cloud.violations) && cloud.violations.length > 0) ||
+          (Array.isArray(cloud.manualInsertions) && cloud.manualInsertions.length > 0) ||
+          (Array.isArray(cloud.priorityQueue) && cloud.priorityQueue.length > 0) ||
+          (Array.isArray(cloud.holidays) && cloud.holidays.length > 0) ||
+          Boolean((cloud.bcsText || "").trim());
+
+        if (hasCloudContent) {
+          if (cloud.bcsText) state.bcsText = cloud.bcsText;
+          if (Array.isArray(cloud.holidays)) state.holidays = cloud.holidays;
+          if (Array.isArray(cloud.violations)) state.violations = cloud.violations;
+          if (Array.isArray(cloud.manualInsertions)) state.manualInsertions = cloud.manualInsertions;
+          if (Array.isArray(cloud.priorityQueue)) state.priorityQueue = cloud.priorityQueue;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+          renderAll();
+          setSyncMessage(`Đã đồng bộ từ GitHub (<code>${repo}/${path}</code>).`);
+        } else if (showNotice) {
+          alert("File data.json trên GitHub hiện đang trống. Hãy bấm 'Lưu & đẩy lên GitHub' để tải dữ liệu hiện tại lên.");
+        }
+      } catch (e) {
+        if (showNotice) alert("Chưa tải được data.json từ GitHub.");
+      }
+    }
+
+    async function pushCloudData(showNotice = false) {
+      const repo = (state.ghRepo || DEFAULT_GH_REPO).trim();
+      const path = (state.ghDataPath || DEFAULT_GH_DATA_PATH).trim();
+      const token = (state.ghToken || "").trim();
+      if (!repo || !path || !token) {
+        if (showNotice) alert("Hãy nhập GitHub Token trước khi đẩy dữ liệu lên GitHub.");
+        return;
+      }
+
+      const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
+      const payloadObj = {
+        bcsText: state.bcsText,
+        holidays: state.holidays,
+        violations: state.violations,
+        manualInsertions: state.manualInsertions,
+        priorityQueue: state.priorityQueue
+      };
+      const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(payloadObj, null, 2))));
+
+      try {
+        setSyncMessage("Đang lưu dữ liệu lên GitHub...");
+        let sha = "";
+        const getRes = await fetch(apiUrl, {
+          headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" }
+        });
+        if (getRes.ok) {
+          const getJson = await getRes.json();
+          sha = getJson.sha || "";
+        }
+
+        const putRes = await fetch(apiUrl, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github+json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: `Sync 12A1 data ${new Date().toISOString()}`,
+            content: base64Content,
+            ...(sha ? { sha } : {})
+          })
+        });
+
+        if (!putRes.ok) {
+          const errJson = await putRes.json().catch(() => ({}));
+          throw new Error(errJson.message || "Lỗi ghi GitHub");
+        }
+
+        setSyncMessage(`Đã lưu đồng bộ lên GitHub lúc ${new Date().toLocaleTimeString("vi-VN")}.`);
+        if (showNotice) {
+          alert("Đã lưu & đẩy dữ liệu lên GitHub thành công!");
+        }
+      } catch (e) {
+        setSyncMessage(`Lỗi đồng bộ GitHub: ${e.message}`);
+        if (showNotice) alert(`Không đẩy được lên GitHub: ${e.message}`);
+      }
+    }
+
+    function openSyncModal() {
+      document.getElementById("ghRepoInput").value = state.ghRepo || DEFAULT_GH_REPO;
+      document.getElementById("ghDataPathInput").value = state.ghDataPath || DEFAULT_GH_DATA_PATH;
+      document.getElementById("ghTokenInput").value = state.ghToken || "";
+      document.getElementById("syncModal").classList.remove("hidden");
+    }
+
+    async function saveSyncConfigAndPush() {
+      state.ghRepo = (document.getElementById("ghRepoInput").value || DEFAULT_GH_REPO).trim();
+      state.ghDataPath = (document.getElementById("ghDataPathInput").value || DEFAULT_GH_DATA_PATH).trim();
+      state.ghToken = (document.getElementById("ghTokenInput").value || "").trim();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      closeModal("syncModal");
+      await pushCloudData(true);
+    }
+
+    function openHolidayModal() {
+      document.getElementById("holidayDateInput").value = formatIsoDate(getRealToday());
+      document.getElementById("holidayNoteInput").value = "";
+      renderHolidayList();
+      document.getElementById("holidayModal").classList.remove("hidden");
+    }
+
+    function addHolidayDate() {
+      const dateVal = document.getElementById("holidayDateInput").value;
+      const noteVal = (document.getElementById("holidayNoteInput").value || "Nghỉ lễ").trim();
+      if (!dateVal) return;
+
+      state.holidays = state.holidays.filter(h => h.date !== dateVal);
+      state.holidays.push({ date: dateVal, note: noteVal });
+      state.holidays.sort((a, b) => a.date.localeCompare(b.date));
+      saveState();
+      renderHolidayList();
+      renderWeeks();
+    }
+
+    function removeHolidayDate(dateIso) {
+      state.holidays = state.holidays.filter(h => h.date !== dateIso);
+      saveState();
+      renderHolidayList();
+      renderWeeks();
+    }
+
+    function renderHolidayList() {
+      const box = document.getElementById("holidayListBox");
+      if (!box) return;
+      if (!state.holidays.length) {
+        box.innerHTML = `<div class="text-xs text-slate-400 py-2">Chưa có ngày nghỉ lễ nào.</div>`;
+        return;
+      }
+      box.innerHTML = state.holidays.map(h => {
+        const d = toDateObj(h.date);
+        return `
+          <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200/80 rounded-lg px-3 py-1.5 text-xs">
+            <div>
+              <span class="font-bold text-amber-900">${formatShortDate(d)}/${d.getFullYear()}</span>
+              <span class="text-slate-700 ml-1.5">— ${h.note}</span>
+            </div>
+            <button type="button" onclick="removeHolidayDate('${h.date}')" class="text-red-600 font-bold hover:underline">
+              Xóa
+            </button>
+          </div>
+        `;
+      }).join("");
     }
 
     function saveApiKey() {
       state.geminiApiKey = (document.getElementById("geminiApiKey")?.value || "").trim();
-      saveState();
+      saveState(false);
     }
 
     function resetData() {
       if (!confirm("Khôi phục toàn bộ dữ liệu mặc định?")) return;
+      const keepToken = state.ghToken;
+      const keepRepo = state.ghRepo;
+      const keepPath = state.ghDataPath;
       localStorage.removeItem(STORAGE_KEY);
       state = {
         bcsText: DEFAULT_BCS,
         githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
+        ghRepo: keepRepo,
+        ghDataPath: keepPath,
+        ghToken: keepToken,
         geminiApiKey: "",
+        holidays: [],
         violations: [...INITIAL_VIOLATIONS],
         manualInsertions: [],
         priorityQueue: []
       };
+      saveState(Boolean(state.ghToken));
       renderAll();
     }
 
@@ -462,6 +763,22 @@ Bí thư - Gia An`;
       return exempt;
     }
 
+    function getHolidaySet() {
+      return new Set((state.holidays || []).map(h => h.date));
+    }
+
+    function getNextStudentByStt(student1Name, exemptSet) {
+      const idx1 = STUDENTS.findIndex(s => s.name === student1Name);
+      if (idx1 === -1) return "";
+      for (let offset = 1; offset <= STUDENTS.length; offset++) {
+        const cand = STUDENTS[(idx1 + offset) % STUDENTS.length];
+        if (!exemptSet.has(cand.name) && cand.name !== student1Name) {
+          return cand.name;
+        }
+      }
+      return "";
+    }
+
     function isExcusedAbsence(typeStr = "") {
       const n = normalizeStr(typeStr);
       return n.includes("nghi hoc co phep") || n.includes("co phep") || /\b(cp|sp)\b/.test(n);
@@ -483,13 +800,14 @@ Bí thư - Gia An`;
       return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
     }
 
-    function getSchoolDays(startIso, endIso) {
+    function getSchoolDays(startIso, endIso, holidaySet) {
       const days = [];
       const cur = toDateObj(startIso);
       const end = toDateObj(endIso);
       while (cur <= end) {
         const dow = cur.getDay();
-        if (dow >= 1 && dow <= 5) {
+        const iso = formatIsoDate(cur);
+        if (dow >= 1 && dow <= 5 && !holidaySet.has(iso)) {
           days.push(new Date(cur));
         }
         cur.setDate(cur.getDate() + 1);
@@ -524,117 +842,97 @@ Bí thư - Gia An`;
       return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
     }
 
-    // Chuỗi cụm ngày cố định lặp lại liên tục:
-    // 23 (T2,T3) -> 45 (T4,T5) -> 62 (T6 nối T2 tuần sau) -> 34 (T3,T4) -> 56 (T5,T6) -> lặp lại
+    // Mỗi tuần đủ từ Thứ 2 đến Thứ 6 (T2–T6), bỏ qua ngày nghỉ lễ, đi tuần tự không lặp trùng
     function buildAllWeeksSchedule() {
-      const schoolDays = getSchoolDays("2026-11-23", "2027-05-31");
       const exempt = getExemptNames();
+      const holidays = getHolidaySet();
+      const schoolDays = getSchoolDays("2026-11-23", "2027-05-31", holidays);
 
       const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"];
       const minhIndex = STUDENTS.findIndex(s => s.name === "Nguyễn Khắc Hoàng Minh");
 
-      const orderedFromAfterMinh = [
+      const baseOrder = [
         ...STUDENTS.slice(minhIndex + 1),
         ...STUDENTS.slice(0, minhIndex + 1)
       ]
         .map(s => s.name)
         .filter(name => !exempt.has(name) && !firstPair.includes(name));
 
-      const candidateQueue = [...state.priorityQueue];
-      for (let i = 0; i < 8; i++) {
-        candidateQueue.push(...orderedFromAfterMinh);
+      const queue = [];
+      const seen = new Set();
+      for (const p of [...state.priorityQueue, ...baseOrder]) {
+        if (p && !exempt.has(p) && !seen.has(p)) {
+          seen.add(p);
+          queue.push(p);
+        }
+      }
+      for (const p of baseOrder) {
+        queue.push(p);
       }
 
-      let queueIdx = 0;
+      let qIdx = 0;
       const takePair = () => {
-        const p1 = candidateQueue[queueIdx++] || "";
-        const p2 = candidateQueue[queueIdx++] || "";
+        const p1 = queue[qIdx++] || "";
+        const p2 = queue[qIdx++] || "";
         return [p1, p2];
       };
 
       const manualMap = new Map();
       for (const m of state.manualInsertions) {
-        manualMap.set(m.startDate, m.student);
+        const s1 = m.student1 || "";
+        const s2 = m.student2 === "__NEXT_STT__"
+          ? getNextStudentByStt(s1, exempt)
+          : (m.student2 || "");
+        manualMap.set(m.startDate, [s1, s2]);
       }
 
-      // Danh sách mẫu cụm thứ trong chu kỳ 5 cụm:
-      // 0: [2, 3] (T2, T3)
-      // 1: [4, 5] (T4, T5)
-      // 2: [5, 1] (T6 nối T2 tuần sau)
-      // 3: [2, 3] (T3, T4)
-      // 4: [4, 5] (T5, T6)
-      const cyclePatterns = [
-        [2, 3],
-        [4, 5],
-        [5, 1],
-        [2, 3],
-        [4, 5]
-      ];
+      const byWeek = new Map();
+      for (const d of schoolDays) {
+        const wkKey = getWeekMonday(d);
+        if (!byWeek.has(wkKey)) byWeek.set(wkKey, []);
+        byWeek.get(wkKey).push(d);
+      }
 
-      const shifts = [];
-      let dayCursor = 0;
-      let patIdx = 0;
+      const weekEntries = Array.from(byWeek.entries());
+      const weeksResult = [];
       let isFirstShift = true;
 
-      while (dayCursor < schoolDays.length) {
-        const expectedDows = cyclePatterns[patIdx % cyclePatterns.length];
-        const groupDays = [];
+      weekEntries.forEach(([wkKey, daysInWeek], wIdx) => {
+        const groups = [];
+        for (let i = 0; i < daysInWeek.length; i += 2) {
+          groups.push(daysInWeek.slice(i, i + 2));
+        }
 
-        for (const targetDow of expectedDows) {
-          if (dayCursor < schoolDays.length && schoolDays[dayCursor].getDay() === targetDow) {
-            groupDays.push(schoolDays[dayCursor]);
-            dayCursor++;
+        const shifts = groups.map(grp => {
+          const startIso = formatIsoDate(grp[0]);
+          if (manualMap.has(startIso)) {
+            return {
+              startDate: startIso,
+              days: grp,
+              label: formatShiftLabel(grp),
+              students: manualMap.get(startIso),
+              isManual: true
+            };
           }
-        }
-
-        if (groupDays.length === 0) {
-          dayCursor++;
-          continue;
-        }
-
-        const startIso = formatIsoDate(groupDays[0]);
-        let pair;
-        let isManual = false;
-
-        if (manualMap.has(startIso)) {
-          pair = [manualMap.get(startIso), ""];
-          isManual = true;
-        } else if (isFirstShift) {
-          pair = firstPair;
+          const pair = isFirstShift ? firstPair : takePair();
           isFirstShift = false;
-        } else {
-          pair = takePair();
-        }
-
-        // Nếu cụm là 62 (T6 nối T2 tuần sau) có đủ 2 ngày, hiển thị rõ "T6,T2 • dd–dd/MM" và gắn vào tuần có T6
-        const anchorDate = groupDays[0];
-        const wkKey = getWeekMonday(anchorDate);
-
-        shifts.push({
-          weekKey: wkKey,
-          startDate: startIso,
-          days: groupDays,
-          label: formatShiftLabel(groupDays),
-          students: pair,
-          isManual
+          return {
+            startDate: startIso,
+            days: grp,
+            label: formatShiftLabel(grp),
+            students: pair,
+            isManual: false
+          };
         });
 
-        patIdx++;
-      }
+        weeksResult.push({
+          weekNumber: wIdx + 1,
+          weekMonday: wkKey,
+          shifts
+        });
+      });
 
-      const weeksMap = new Map();
-      for (const sh of shifts) {
-        if (!weeksMap.has(sh.weekKey)) {
-          weeksMap.set(sh.weekKey, { weekMonday: sh.weekKey, shifts: [] });
-        }
-        weeksMap.get(sh.weekKey).shifts.push(sh);
-      }
-
-      return Array.from(weeksMap.values()).map((w, idx) => ({
-        weekNumber: idx + 1,
-        weekMonday: w.weekMonday,
-        shifts: w.shifts
-      }));
+      return weeksResult;
     }
 
     function getVisibleWeeks() {
@@ -689,10 +987,26 @@ Bí thư - Gia An`;
           const s2 = sh.students[1] || "";
           return `
             <div class="bg-white border border-slate-200/90 rounded-xl p-3 flex flex-col justify-between min-w-[165px]">
-              <div class="text-xs font-bold text-blue-600 mb-2">${sh.label}</div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <div class="text-xs font-bold text-blue-600">${sh.label}</div>
+                <button type="button" onclick="openEditShiftModal('${sh.startDate}')"
+                  class="text-[11px] font-semibold text-slate-500 hover:text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-50 transition">
+                  Sửa
+                </button>
+              </div>
               <div class="space-y-1 text-sm text-slate-800 font-medium">
-                <div class="truncate" title="${s1}">${s1}</div>
-                ${s2 ? `<div class="truncate" title="${s2}">${s2}</div>` : ""}
+                ${s1 ? `
+                  <div class="flex items-center justify-between gap-1.5">
+                    <span class="truncate" title="${s1}">${s1}</span>
+                    <button type="button" onclick="removePersonFromShift('${sh.startDate}', 0)" title="Xóa người trực"
+                      class="text-slate-400 hover:text-red-600 text-xs font-bold px-1 shrink-0">&times;</button>
+                  </div>` : ""}
+                ${s2 ? `
+                  <div class="flex items-center justify-between gap-1.5">
+                    <span class="truncate" title="${s2}">${s2}</span>
+                    <button type="button" onclick="removePersonFromShift('${sh.startDate}', 1)" title="Xóa người trực"
+                      class="text-slate-400 hover:text-red-600 text-xs font-bold px-1 shrink-0">&times;</button>
+                  </div>` : ""}
               </div>
             </div>
           `;
@@ -720,6 +1034,70 @@ Bí thư - Gia An`;
           </div>
         `;
       }).join("");
+    }
+
+    function openEditShiftModal(startDate) {
+      const weeks = buildAllWeeksSchedule();
+      let targetShift = null;
+      for (const wk of weeks) {
+        for (const sh of wk.shifts) {
+          if (sh.startDate === startDate) {
+            targetShift = sh;
+            break;
+          }
+        }
+        if (targetShift) break;
+      }
+
+      editingManualDate = startDate;
+      document.getElementById("manualModalTitle").textContent = "Chỉnh sửa phân công trực";
+      document.getElementById("manualDate").value = startDate;
+
+      const s1Val = targetShift?.students?.[0] || STUDENTS[0].name;
+      const s2Val = targetShift?.students?.[1] || "";
+      document.getElementById("manualStudent1").value = findStudent(s1Val)?.name || STUDENTS[0].name;
+      document.getElementById("manualStudent2").value = s2Val ? (findStudent(s2Val)?.name || "__NEXT_STT__") : "";
+
+      const hasManual = state.manualInsertions.some(m => m.startDate === startDate);
+      document.getElementById("btnDeleteManualDuty").classList.toggle("hidden", !hasManual);
+      document.getElementById("manualModal").classList.remove("hidden");
+    }
+
+    function removePersonFromShift(startDate, slotIndex) {
+      const weeks = buildAllWeeksSchedule();
+      let targetShift = null;
+      for (const wk of weeks) {
+        for (const sh of wk.shifts) {
+          if (sh.startDate === startDate) {
+            targetShift = sh;
+            break;
+          }
+        }
+        if (targetShift) break;
+      }
+      if (!targetShift) return;
+
+      const currentPair = [...targetShift.students];
+      currentPair[slotIndex] = "";
+      const nextS1 = currentPair[0] || currentPair[1] || "";
+      const nextS2 = currentPair[0] ? (currentPair[1] || "") : "";
+
+      state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== startDate);
+      state.manualInsertions.push({
+        startDate,
+        student1: nextS1,
+        student2: nextS2
+      });
+      saveState();
+      renderWeeks();
+    }
+
+    function deleteManualDuty() {
+      const targetDate = editingManualDate || document.getElementById("manualDate").value;
+      state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== targetDate);
+      saveState();
+      closeModal("manualModal");
+      renderWeeks();
     }
 
     function downloadWeekPng(weekMonday, weekNumber) {
@@ -793,7 +1171,8 @@ Bí thư - Gia An`;
       const keyword = normalizeStr(document.getElementById("violationSearch")?.value || "");
       const tbody = document.getElementById("violationTableBody");
 
-      const mapByStudent = new Map();
+      const grouped = [];
+      const groupMap = new Map();
 
       for (const v of state.violations) {
         if (isExcusedAbsence(v.type)) continue;
@@ -802,53 +1181,83 @@ Bí thư - Gia An`;
         const st = findStudent(v.studentName);
         const displayName = st ? st.name : v.studentName;
         const stt = st ? st.stt : "-";
-
-        if (!mapByStudent.has(displayName)) {
-          mapByStudent.set(displayName, { stt, name: displayName, counts: {} });
-        }
-        const entry = mapByStudent.get(displayName);
         const errName = (v.type || "Vi phạm").trim();
-        entry.counts[errName] = (entry.counts[errName] || 0) + 1;
+        const key = `${displayName}|||${errName}`;
+
+        if (!groupMap.has(key)) {
+          const item = { stt, name: displayName, errName, count: 0 };
+          groupMap.set(key, item);
+          grouped.push(item);
+        }
+        groupMap.get(key).count += 1;
       }
 
-      const rows = Array.from(mapByStudent.values()).filter(item => {
+      const rows = grouped.filter(item => {
         if (!keyword) return true;
-        const detailStr = Object.entries(item.counts).map(([k, c]) => `${k} ${c} lần`).join(" ");
-        return normalizeStr(item.name).includes(keyword) || normalizeStr(detailStr).includes(keyword);
+        return (
+          normalizeStr(item.name).includes(keyword) ||
+          normalizeStr(item.errName).includes(keyword) ||
+          normalizeStr(`${item.count} lần`).includes(keyword)
+        );
       });
 
       if (rows.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-slate-400">Chưa có dữ liệu vi phạm phù hợp.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">Chưa có dữ liệu vi phạm phù hợp.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = rows.map(r => {
-        const details = Object.entries(r.counts)
-          .map(([errName, count]) => `<span class="inline-block bg-slate-100 text-slate-800 px-2.5 py-1 rounded-lg text-xs font-medium mr-1.5 mb-1">${errName}: ${count} lần</span>`)
-          .join("");
-
+        const safeName = r.name.replace(/'/g, "\\'");
+        const safeErr = r.errName.replace(/'/g, "\\'");
         return `
           <tr class="hover:bg-slate-50/80 transition">
             <td class="py-3 px-4 text-slate-500 font-medium">#${r.stt}</td>
             <td class="py-3 px-4 font-semibold text-slate-900">${r.name}</td>
-            <td class="py-3 px-4">${details}</td>
+            <td class="py-3 px-4 text-slate-700">${r.errName}</td>
+            <td class="py-3 px-4 text-center font-bold text-blue-700">${r.count} lần</td>
             <td class="py-3 px-4 text-right">
-              <button onclick="deleteStudentViolations('${r.name.replace(/'/g, "\\'")}')"
-                class="text-xs text-red-600 hover:underline font-medium">
-                Xóa
-              </button>
+              <div class="inline-flex items-center gap-1.5">
+                <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', -1)"
+                  title="Trừ 1 lần lỗi này"
+                  class="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 text-xs font-bold transition">
+                  -1
+                </button>
+                <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', 1)"
+                  title="Cộng thêm 1 lần lỗi này"
+                  class="px-2.5 py-1 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold transition">
+                  +1
+                </button>
+              </div>
             </td>
           </tr>
         `;
       }).join("");
     }
 
-    function deleteStudentViolations(name) {
-      state.violations = state.violations.filter(v => {
-        const st = findStudent(v.studentName);
-        const displayName = st ? st.name : v.studentName;
-        return displayName !== name;
-      });
+    function adjustViolationCount(studentName, errName, delta) {
+      if (delta > 0) {
+        state.violations.push({
+          id: Date.now() + Math.random(),
+          studentName,
+          date: formatIsoDate(getRealToday()),
+          type: errName
+        });
+      } else if (delta < 0) {
+        let removeIdx = -1;
+        for (let i = state.violations.length - 1; i >= 0; i--) {
+          const v = state.violations[i];
+          const st = findStudent(v.studentName);
+          const displayName = st ? st.name : v.studentName;
+          const vErr = (v.type || "Vi phạm").trim();
+          if (displayName === studentName && vErr === errName) {
+            removeIdx = i;
+            break;
+          }
+        }
+        if (removeIdx !== -1) {
+          state.violations.splice(removeIdx, 1);
+        }
+      }
       saveState();
       renderViolations();
     }
@@ -925,6 +1334,12 @@ Bí thư - Gia An`;
       const content = document.getElementById("dateSearchContent");
       box.classList.remove("hidden");
 
+      const holiday = (state.holidays || []).find(h => h.date === iso);
+      if (holiday) {
+        content.innerHTML = `Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> là ngày nghỉ lễ (<b>${holiday.note}</b>).`;
+        return;
+      }
+
       if (dow === 0 || dow === 6) {
         content.innerHTML = `Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> là cuối tuần (không có ca trực).`;
         return;
@@ -957,11 +1372,14 @@ Bí thư - Gia An`;
     function submitManualDuty() {
       const startDate = document.getElementById("manualDate").value;
       const s1 = document.getElementById("manualStudent1").value;
+      const s2 = document.getElementById("manualStudent2").value;
       if (!startDate || !s1) return;
 
+      state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== startDate);
       state.manualInsertions.push({
         startDate,
-        student: s1
+        student1: s1,
+        student2: s2
       });
       saveState();
       closeModal("manualModal");
@@ -1130,7 +1548,7 @@ Bí thư - Gia An`;
         if (txt) {
           state.bcsText = txt;
           state.githubBcsUrl = url;
-          saveState();
+          saveState(false);
           const ta = document.getElementById("bcsTextarea");
           if (ta) ta.value = txt;
           renderWeeks();
@@ -1172,6 +1590,11 @@ Bí thư - Gia An`;
     }
 
     function openManualModal() {
+      editingManualDate = "";
+      document.getElementById("manualModalTitle").textContent = "Phân trực thủ công";
+      document.getElementById("manualDate").value = formatIsoDate(getRealToday());
+      document.getElementById("manualStudent2").value = "__NEXT_STT__";
+      document.getElementById("btnDeleteManualDuty").classList.add("hidden");
       document.getElementById("manualModal").classList.remove("hidden");
     }
 
@@ -1186,6 +1609,10 @@ Bí thư - Gia An`;
     function populateSelects() {
       const optionsHtml = STUDENTS.map(s => `<option value="${s.name}">${s.stt}. ${s.name}</option>`).join("");
       document.getElementById("manualStudent1").innerHTML = optionsHtml;
+      document.getElementById("manualStudent2").innerHTML =
+        `<option value="">-- Không có / Bỏ trống --</option>` +
+        `<option value="__NEXT_STT__">STT tiếp theo (tự động)</option>` +
+        optionsHtml;
       document.getElementById("violTargetSelect").innerHTML =
         `<option value="Tập thể lớp">Tập thể lớp</option>` + optionsHtml;
 
@@ -1203,6 +1630,7 @@ Bí thư - Gia An`;
     loadState();
     populateSelects();
     renderAll();
+    pullCloudData(false);
     fetchGithubBcs(false);
   </script>
 </body>
