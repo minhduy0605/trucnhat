@@ -42,6 +42,12 @@
       "studentName": "Trần Ngọc Minh Châu",
       "date": "2026-11-23",
       "type": "Trễ Chính khóa"
+    },
+    {
+      "id": 1795450597783.6016,
+      "studentName": "Nguyễn Khắc Hoàng Minh",
+      "date": "2026-11-23",
+      "type": "Không chuận bị bài; Không chép bài"
     }
   ],
   "manualInsertions": [
@@ -52,6 +58,7 @@
     }
   ],
   "priorityQueue": [
+    "Nguyễn Khắc Hoàng Minh",
     "Trần Ngọc Minh Châu",
     "Nguyễn Ngọc Bảo Nhi",
     "Lê Ngân Hạnh"
