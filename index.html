@@ -4,105 +4,122 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Quản Lý Trực Nhật & Vi Phạm - 12A1</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#13315c">
+  <script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}})()</script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{slate:{50:'rgb(var(--s50) / <alpha-value>)',100:'rgb(var(--s100) / <alpha-value>)',200:'rgb(var(--s200) / <alpha-value>)',300:'rgb(var(--s300) / <alpha-value>)',400:'rgb(var(--s400) / <alpha-value>)',500:'rgb(var(--s500) / <alpha-value>)',600:'rgb(var(--s600) / <alpha-value>)',700:'rgb(var(--s700) / <alpha-value>)',800:'rgb(var(--s800) / <alpha-value>)',900:'rgb(var(--s900) / <alpha-value>)'},blue:{50:'rgb(var(--b50) / <alpha-value>)',100:'rgb(var(--b100) / <alpha-value>)',200:'rgb(var(--b200) / <alpha-value>)',300:'rgb(var(--b300) / <alpha-value>)',400:'rgb(var(--b400) / <alpha-value>)',500:'rgb(var(--b500) / <alpha-value>)',600:'rgb(var(--b600) / <alpha-value>)',700:'rgb(var(--b700) / <alpha-value>)'},red:{50:'rgb(var(--r50) / <alpha-value>)',100:'rgb(var(--r100) / <alpha-value>)',200:'rgb(var(--r200) / <alpha-value>)',600:'rgb(var(--r600) / <alpha-value>)',700:'rgb(var(--r700) / <alpha-value>)'},emerald:{50:'rgb(var(--e50) / <alpha-value>)',100:'rgb(var(--e100) / <alpha-value>)',200:'rgb(var(--e200) / <alpha-value>)',600:'rgb(var(--e600) / <alpha-value>)',700:'rgb(var(--e700) / <alpha-value>)'},amber:{50:'rgb(var(--a50) / <alpha-value>)',100:'rgb(var(--a100) / <alpha-value>)',200:'rgb(var(--a200) / <alpha-value>)',500:'rgb(var(--a500) / <alpha-value>)',600:'rgb(var(--a600) / <alpha-value>)',800:'rgb(var(--a800) / <alpha-value>)',900:'rgb(var(--a900) / <alpha-value>)'}},fontFamily:{sans:['"Be Vietnam Pro"','system-ui','sans-serif']}}}}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #f8fafc;
-      color: #0f172a;
-    }
-    .custom-scroll::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
-    .custom-scroll::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
+    :root{--s50:244 247 251;--s100:235 240 246;--s200:220 227 237;--s300:194 205 220;--s400:144 159 180;--s500:96 112 135;--s600:71 86 108;--s700:51 64 84;--s800:32 42 58;--s900:19 26 38;--b50:237 244 255;--b100:214 229 255;--b200:176 206 255;--b300:124 173 255;--b400:66 133 244;--b500:37 99 235;--b600:29 78 216;--b700:29 63 168;--r50:253 240 240;--r100:251 224 224;--r200:244 188 188;--r600:197 48 48;--r700:160 38 38;--e50:232 246 240;--e100:208 238 224;--e200:160 222 195;--e600:22 140 100;--e700:15 112 80;--a50:253 246 232;--a100:251 236 204;--a200:244 220 160;--a500:214 140 20;--a600:180 105 10;--a800:133 77 14;--a900:110 62 12;--bg:239 243 248;--surface:252 253 255;color-scheme:light}
+    .dark{--s50:29 35 45;--s100:37 44 56;--s200:50 59 74;--s300:70 80 98;--s400:118 130 150;--s500:145 157 176;--s600:170 180 196;--s700:192 201 214;--s800:216 222 232;--s900:238 242 247;--b50:23 39 68;--b100:28 52 92;--b200:37 74 132;--b300:56 108 188;--b400:118 168 255;--b500:59 130 246;--b600:37 99 235;--b700:29 78 216;--r50:58 28 30;--r100:74 34 36;--r200:110 48 50;--r600:240 120 120;--r700:248 150 150;--e50:20 48 40;--e100:24 62 50;--e200:36 92 72;--e600:22 140 100;--e700:110 220 170;--a50:52 40 20;--a100:66 50 24;--a200:100 76 30;--a500:230 170 60;--a600:240 190 90;--a800:240 196 120;--a900:250 215 150;--bg:13 18 27;--surface:21 28 41;color-scheme:dark}
+    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+    body{font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;background:rgb(var(--bg));color:rgb(var(--s900));line-height:1.55;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;transition:background-color .2s,color .2s}
+    html .bg-white{background-color:rgb(var(--surface))}
+    header.bg-white{background-color:rgb(var(--surface)/.88);backdrop-filter:blur(10px)}
+    input,select,textarea{background-color:rgb(var(--surface));color:rgb(var(--s900))}
+    input::placeholder,textarea::placeholder{color:rgb(var(--s400))}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:rgb(var(--b500));box-shadow:0 0 0 3px rgb(var(--b500)/.2)}
+    button:focus-visible,a:focus-visible{outline:2px solid rgb(var(--b500));outline-offset:2px}
+    button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
+    .dark .text-blue-600,.dark .text-blue-700{color:rgb(var(--b400))}
+    #weeksContainer>div{content-visibility:auto;contain-intrinsic-size:auto 230px;box-shadow:0 1px 2px rgb(0 0 0/.04)}
+    #weeksContainer>div:hover{box-shadow:0 4px 14px rgb(0 0 0/.07)}
+    ::-webkit-scrollbar{width:8px;height:8px}
+    ::-webkit-scrollbar-thumb{background:rgb(var(--s300));border-radius:9999px}
+    ::-webkit-scrollbar-thumb:hover{background:rgb(var(--s400))}
+    .dark .bg-amber-500{background-color:#b7791f}.dark .hover\:bg-amber-600:hover{background-color:#9c640f}.dark .hover\:bg-emerald-700:hover{background-color:#0f7050}
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+    header.bg-white{backdrop-filter:none}
+    .hero{background:linear-gradient(135deg,#13315c 0%,#1d4ed8 100%);color:#eff6ff;position:relative;overflow:hidden;padding:30px 16px 68px}
+    .dark .hero{background:linear-gradient(135deg,#0c1e3a 0%,#173a7a 100%)}
+    .hero::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 31px,rgb(255 255 255/.05) 31px 32px);pointer-events:none}
+    .hero-in{position:relative;max-width:72rem;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:16px}
+    .crest{flex:none;width:62px;height:62px;border-radius:18px;border:2px dashed #93c5fd;color:#bfdbfe;font-weight:800;font-size:19px;display:grid;place-items:center;letter-spacing:-.02em;transform:rotate(-4deg);background:rgb(255 255 255/.08)}
+    .hero h1{font-size:clamp(1.5rem,4vw,2.3rem);font-weight:800;letter-spacing:-.035em;line-height:1.1}
+    .hero p{color:#bfdbfe;font-size:.85rem;margin-top:6px}
+    .today{display:flex;align-items:center;gap:14px;text-align:right}
+    .today small{display:block;color:#93c5fd;font-weight:600;font-size:.85rem}
+    .today b{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;letter-spacing:-.035em;line-height:1.05}
+    .hero #themeBtn{border-color:rgb(255 255 255/.28);color:#eff6ff;background:transparent}
+    .hero #themeBtn:hover{background:rgb(255 255 255/.14)}
+    .dock{position:relative;z-index:30;max-width:72rem;margin:-36px auto 0;padding:0 16px}
+    .dock-in{background:rgb(var(--surface)/.92);backdrop-filter:blur(12px);border:1px solid rgb(var(--s200));border-radius:22px;padding:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;box-shadow:0 14px 34px -14px rgb(29 78 216/.28)}
+    @media(min-width:768px){.dock{position:sticky;top:10px}}
+    .tabs{display:flex;background:rgb(var(--s100));border-radius:15px;padding:4px}
+    .tab{padding:8px 16px;border-radius:11px;font-weight:600;font-size:.875rem;color:rgb(var(--s600));transition:.15s}
+    .tab-on{background:rgb(var(--b600));color:#fff;box-shadow:0 3px 10px -3px rgb(var(--b600)/.7)}
+    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:12px;font-size:.84rem;font-weight:600;border:1px solid rgb(var(--s200));background:rgb(var(--surface));color:rgb(var(--s800));transition:.15s}
+    .btn:hover{background:rgb(var(--b50));border-color:rgb(var(--b200));color:rgb(var(--b700))}
+    .btn-p{background:rgb(var(--b600));border-color:transparent;color:#fff}.btn-p:hover{background:rgb(var(--b700));color:#fff}
+    .btn-w{background:rgb(var(--a50));border-color:rgb(var(--a200));color:rgb(var(--a800))}.btn-w:hover{background:rgb(var(--a100))}
+    .btn-e{background:rgb(var(--e50));border-color:rgb(var(--e200));color:rgb(var(--e700))}.btn-e:hover{background:rgb(var(--e100))}
+    .btn-s{padding:5px 11px;font-size:.78rem}
+    kbd{font:inherit;font-size:11px;background:rgb(255 255 255/.22);padding:1px 6px;border-radius:6px}
+    .week{background:rgb(var(--surface));border:1px solid rgb(var(--s200));border-radius:24px;padding:20px;position:relative}
+    .week-now{border-color:rgb(var(--b400));background:rgb(var(--b50))}
+    .week-now::before{content:"";position:absolute;left:-1px;top:26px;bottom:26px;width:5px;border-radius:0 6px 6px 0;background:rgb(var(--b600))}
+    .week-past{opacity:.7}
+    .week h3{font-weight:700;font-size:1.08rem;letter-spacing:-.015em;color:rgb(var(--b700))}
+    .dark .week h3{color:rgb(var(--b400))}
+    .live{display:inline-flex;align-items:center;gap:6px;background:rgb(var(--b600));color:#fff;font-size:.75rem;font-weight:700;padding:3px 11px;border-radius:999px}
+    .live i{width:7px;height:7px;border-radius:50%;background:#bfdbfe;animation:pulse 1.6s infinite}
+    @keyframes pulse{50%{opacity:.25}}
+    .shifts{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+    .shift{background:rgb(var(--surface));border:1px solid rgb(var(--s200));border-radius:16px;padding:12px 14px}
+    .shift-day{font-weight:700;font-size:.8rem;color:rgb(var(--b600))}
+    .person{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.9rem;font-weight:500;min-width:0}
+    .person .x{margin-left:auto;color:rgb(var(--s400));padding:0 4px;font-weight:700}.person .x:hover{color:rgb(var(--r600))}
+    .lnk{font-size:.75rem;font-weight:600;color:rgb(var(--s500));padding:2px 9px;border-radius:8px}.lnk:hover{background:rgb(var(--b50));color:rgb(var(--b600))}
+    .dark .shift-day,.dark .lnk:hover{color:rgb(var(--b400))}
+    .pill{display:inline-block;padding:2px 12px;border-radius:999px;font-weight:700;font-size:.8rem}
+    .pill-s{background:rgb(var(--b50));color:rgb(var(--b700))}.pill-a{background:rgb(var(--a100));color:rgb(var(--a800))}.pill-r{background:rgb(var(--r100));color:rgb(var(--r700))}
+    .dark .pill-s{background:rgb(var(--b100));color:rgb(var(--b400))}
+    #sectionViolation .rounded-2xl{border-radius:24px}
+    #violationSearch{border-radius:14px}
+    @media(prefers-reduced-motion:reduce){.live i{animation:none}}
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white font-bold flex items-center justify-center shadow-sm">
-          12A1
-        </div>
+  <header class="hero">
+    <div class="hero-in">
+      <div class="brand">
+        <div class="crest">12A1</div>
         <div>
-          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">
-            Trực Nhật & Vi Phạm Lớp 12A1
-          </h1>
-          <p class="text-xs text-slate-500">THPT Nguyễn Khuyến • 2026 - 2027</p>
+          <h1>Trực nhật &amp; vi phạm</h1>
+          <p>Lớp 12A1, THPT Nguyễn Khuyến, năm học 2026 – 2027</p>
         </div>
       </div>
-
-      <!-- 2 Tab chính -->
-      <nav class="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200">
-        <button id="tabDuty" onclick="switchTab('duty')"
-          class="px-4 py-1.5 rounded-lg text-sm font-semibold transition bg-blue-600 text-white shadow-sm">
-          Phân công trực nhật
-        </button>
-        <button id="tabViolation" onclick="switchTab('violation')"
-          class="px-4 py-1.5 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900">
-          Thống kê vi phạm
-        </button>
-      </nav>
+      <div class="today">
+        <div><small id="todayWeekday"></small><b id="todayLabel"></b></div>
+        <button id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Đổi giao diện sáng/tối" title="Sáng / Tối" class="w-10 h-10 rounded-xl border flex items-center justify-center transition">◐</button>
+      </div>
     </div>
   </header>
 
-  <!-- Toolbar chức năng -->
-  <div class="bg-white border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-2.5">
-      <div class="flex flex-wrap items-center gap-2">
-        <button onclick="openScanModal()"
-          class="px-3.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium transition flex items-center gap-1.5 shadow-sm">
-          <span>Dán / Tải ảnh vi phạm</span>
-          <span class="text-[11px] bg-blue-500/70 px-1.5 py-0.5 rounded">Ctrl+V</span>
-        </button>
-
-        <button onclick="openManualModal()"
-          class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-medium transition border border-slate-200">
-          + Phân thủ công
-        </button>
-
-        <button onclick="openHolidayModal()"
-          class="px-3.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 text-sm font-semibold transition border border-amber-200">
-          Ngày nghỉ lễ
-        </button>
-
-        <button onclick="openBcsModal()"
-          class="px-3.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-medium transition border border-slate-200">
-          BCS.txt
-        </button>
-
-        <button onclick="openSyncModal()"
-          class="px-3.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-sm font-semibold transition border border-emerald-200">
-          Đồng bộ GitHub
-        </button>
-      </div>
-
-      <div class="flex flex-wrap items-center gap-2">
-        <input id="searchDateInput" type="date"
-          class="px-3 py-1.5 rounded-lg border border-slate-300 text-sm text-slate-700 focus:outline-none focus:border-blue-500" />
-        <button onclick="findByDate()"
-          class="px-3.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-semibold border border-blue-200 transition">
-          Tìm ngày
-        </button>
-        <button onclick="resetData()" title="Khôi phục mặc định"
-          class="px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 text-sm transition">
-          Reset
-        </button>
-      </div>
+  <div class="dock"><div class="dock-in">
+    <nav class="tabs">
+      <button id="tabDuty" onclick="switchTab('duty')" class="tab tab-on">Phân công trực nhật</button>
+      <button id="tabViolation" onclick="switchTab('violation')" class="tab">Thống kê vi phạm</button>
+    </nav>
+    <div class="flex flex-wrap items-center gap-2">
+      <button onclick="openScanModal()" class="btn btn-p">Dán / Tải ảnh vi phạm <kbd>Ctrl+V</kbd></button>
+      <button onclick="openManualModal()" class="btn">+ Phân thủ công</button>
+      <button onclick="openHolidayModal()" class="btn btn-w">Ngày nghỉ lễ</button>
+      <button onclick="openBcsModal()" class="btn">BCS.txt</button>
+      <button onclick="openSyncModal()" class="btn btn-e">Đồng bộ GitHub</button>
     </div>
-  </div>
+    <div class="flex items-center gap-2">
+      <input id="searchDateInput" type="date" class="px-3 py-2 rounded-xl border border-slate-200 text-sm" />
+      <button onclick="findByDate()" class="btn">Tìm ngày</button>
+      <button onclick="resetData()" title="Khôi phục mặc định" class="btn btn-s text-slate-500 hover:text-red-600" style="border-color:transparent">Reset</button>
+    </div>
+  </div></div>
 
   <!-- Trạng thái đồng bộ -->
   <div id="syncStatusBar" class="max-w-6xl w-full mx-auto px-4 pt-3">
@@ -134,12 +151,10 @@
           <h2 class="text-base font-bold text-slate-800">Danh sách trực nhật theo thời gian thực</h2>
           <p class="text-xs text-slate-500">Đủ T2–T6 mỗi tuần • Giữ tối đa 1 tuần đã qua, tuần đang trực nổi bật và 3 tuần tiếp theo.</p>
         </div>
-        <div class="text-xs text-slate-500">
-          Hôm nay: <span id="todayLabel" class="font-semibold text-blue-600"></span>
-        </div>
+        
       </div>
 
-      <div id="weeksContainer" class="space-y-4 max-h-[75vh] overflow-y-auto pr-1 custom-scroll"></div>
+      <div id="weeksContainer" class="space-y-4 "></div>
     </section>
 
     <!-- PHẦN 2: THỐNG KÊ VI PHẠM -->
@@ -175,7 +190,7 @@
   </main>
 
   <!-- MODAL NGÀY NGHỈ LỄ -->
-  <div id="holidayModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="holidayModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-slate-900">Quản lý ngày nghỉ lễ</h3>
@@ -213,7 +228,7 @@
   </div>
 
   <!-- MODAL 0: ĐỒNG BỘ GITHUB (data.json) -->
-  <div id="syncModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="syncModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-slate-900">Đồng bộ dữ liệu qua GitHub</h3>
@@ -257,7 +272,7 @@
   </div>
 
   <!-- MODAL 1: DÁN / TẢI ẢNH VI PHẠM (Ctrl+V) -->
-  <div id="scanModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="scanModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-slate-900">Nhận diện ảnh vi phạm</h3>
@@ -305,7 +320,7 @@
   </div>
 
   <!-- MODAL 2: PHÂN / CHỈNH SỬA / XÓA NGƯỜI TRỰC THỦ CÔNG -->
-  <div id="manualModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="manualModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 id="manualModalTitle" class="text-base font-bold text-slate-900">Phân / Sửa người trực</h3>
@@ -350,7 +365,7 @@
   </div>
 
   <!-- MODAL 3: CẤU HÌNH BCS.TXT -->
-  <div id="bcsModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="bcsModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-slate-900">Danh sách miễn trừ / BCS.txt</h3>
@@ -383,7 +398,7 @@
   </div>
 
   <!-- MODAL 4: THÊM LỖI VI PHẠM NHANH -->
-  <div id="addViolationModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+  <div id="addViolationModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-bold text-slate-900">Thêm vi phạm</h3>
@@ -489,7 +504,7 @@ Bí thư - Gia An`;
       { id: 3, studentName: "Tập thể lớp", date: "2026-11-18", type: "Vệ sinh lớp dơ" }
     ];
 
-    const STORAGE_KEY = "duty_12a1_v15";
+    const STORAGE_KEY = "duty_12a1_v16";
 
     let state = {
       bcsText: DEFAULT_BCS,
@@ -842,7 +857,6 @@ Bí thư - Gia An`;
       return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
     }
 
-    // Mỗi tuần đủ từ Thứ 2 đến Thứ 6 (T2–T6), bỏ qua ngày nghỉ lễ, đi tuần tự không lặp trùng
     function buildAllWeeksSchedule() {
       const exempt = getExemptNames();
       const holidays = getHolidaySet();
@@ -961,78 +975,44 @@ Bí thư - Gia An`;
 
     function renderWeeks() {
       const today = getRealToday();
-      const todayEl = document.getElementById("todayLabel");
-      if (todayEl) {
-        todayEl.textContent = `${formatShortDate(today)}/${today.getFullYear()}`;
-      }
+      const dayNames = ["Chủ nhật","Thứ hai","Thứ ba","Thứ tư","Thứ năm","Thứ sáu","Thứ bảy"];
+      const tl = document.getElementById("todayLabel");
+      if (tl) tl.textContent = `${formatShortDate(today)}/${today.getFullYear()}`;
+      const tw = document.getElementById("todayWeekday");
+      if (tw) tw.textContent = dayNames[today.getDay()];
 
-      const visibleWeeks = getVisibleWeeks();
+      const nowMon = getWeekMonday(today);
       const container = document.getElementById("weeksContainer");
 
-      container.innerHTML = visibleWeeks.map(wk => {
-        const mondayObj = toDateObj(wk.weekMonday);
-        const fridayObj = new Date(mondayObj);
-        fridayObj.setDate(mondayObj.getDate() + 4);
+      container.innerHTML = getVisibleWeeks().map(wk => {
+        const mon = toDateObj(wk.weekMonday);
+        const fri = new Date(mon); fri.setDate(mon.getDate() + 4);
+        const cls = wk.isCurrent ? "week-now" : (wk.weekMonday < nowMon ? "week-past" : "");
 
-        const cardStyle = wk.isCurrent
-          ? "bg-blue-50/75 border-blue-400 ring-2 ring-blue-100"
-          : "bg-white border-slate-200";
-
-        const badgeHtml = wk.isCurrent
-          ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-600 text-white">Đang trực</span>`
-          : `<span class="text-xs text-slate-400 font-medium">Tuần ${wk.weekNumber}</span>`;
-
-        const shiftsHtml = wk.shifts.map(sh => {
-          const s1 = sh.students[0] || "";
-          const s2 = sh.students[1] || "";
-          return `
-            <div class="bg-white border border-slate-200/90 rounded-xl p-3 flex flex-col justify-between min-w-[165px]">
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <div class="text-xs font-bold text-blue-600">${sh.label}</div>
-                <button type="button" onclick="openEditShiftModal('${sh.startDate}')"
-                  class="text-[11px] font-semibold text-slate-500 hover:text-blue-600 px-1.5 py-0.5 rounded hover:bg-blue-50 transition">
-                  Sửa
-                </button>
-              </div>
-              <div class="space-y-1 text-sm text-slate-800 font-medium">
-                ${s1 ? `
-                  <div class="flex items-center justify-between gap-1.5">
-                    <span class="truncate" title="${s1}">${s1}</span>
-                    <button type="button" onclick="removePersonFromShift('${sh.startDate}', 0)" title="Xóa người trực"
-                      class="text-slate-400 hover:text-red-600 text-xs font-bold px-1 shrink-0">&times;</button>
-                  </div>` : ""}
-                ${s2 ? `
-                  <div class="flex items-center justify-between gap-1.5">
-                    <span class="truncate" title="${s2}">${s2}</span>
-                    <button type="button" onclick="removePersonFromShift('${sh.startDate}', 1)" title="Xóa người trực"
-                      class="text-slate-400 hover:text-red-600 text-xs font-bold px-1 shrink-0">&times;</button>
-                  </div>` : ""}
-              </div>
+        const shifts = wk.shifts.map(sh => `
+          <div class="shift">
+            <div class="flex items-center justify-between gap-2">
+              <span class="shift-day">${sh.label}</span>
+              <button type="button" class="lnk" onclick="openEditShiftModal('${sh.startDate}')">Sửa</button>
             </div>
-          `;
-        }).join("");
+            ${[0, 1].map(i => sh.students[i] ? `
+              <div class="person">
+                <span class="truncate" title="${esc(sh.students[i])}">${esc(sh.students[i])}</span>
+                <button type="button" class="x" title="Xóa người trực" onclick="removePersonFromShift('${sh.startDate}', ${i})">&times;</button>
+              </div>` : "").join("")}
+          </div>`).join("");
 
         return `
-          <div class="rounded-2xl border p-4 transition ${cardStyle}">
-            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-              <div class="flex items-center gap-2.5">
-                <span class="text-sm font-bold text-blue-700">
-                  Tuần ${formatShortDate(mondayObj)} – ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()}
-                </span>
-                ${badgeHtml}
+          <article class="week ${cls}">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <h3>Tuần ${formatShortDate(mon)} – ${formatShortDate(fri)}/${fri.getFullYear()}</h3>
+                ${wk.isCurrent ? '<span class="live"><i></i>Đang trực</span>' : ""}
               </div>
-
-              <button onclick="downloadWeekPng('${wk.weekMonday}', ${wk.weekNumber})"
-                class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition">
-                Tải hình PNG
-              </button>
+              <button class="btn btn-s" onclick="downloadWeekPng('${wk.weekMonday}', ${wk.weekNumber})">Tải hình PNG</button>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
-              ${shiftsHtml}
-            </div>
-          </div>
-        `;
+            <div class="shifts">${shifts}</div>
+          </article>`;
       }).join("");
     }
 
@@ -1125,20 +1105,16 @@ Bí thư - Gia An`;
 
       ctx.fillStyle = "#1d4ed8";
       ctx.font = "bold 22px Inter, sans-serif";
-      ctx.fillText(`LỊCH TRỰC NHẬT 12A1 - TUẦN ${weekNumber}`, 32, 44);
-
-      ctx.fillStyle = "#2563eb";
-      ctx.font = "600 14px Inter, sans-serif";
-      ctx.fillText(`(${formatShortDate(mondayObj)} – ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()})`, 32, 70);
+      ctx.fillText(`LỊCH TRỰC NHẬT 12A1 (${formatShortDate(mondayObj)} – ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()})`, 32, 48);
 
       ctx.strokeStyle = "#bfdbfe";
       ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(32, 88);
-      ctx.lineTo(width - 32, 88);
+      ctx.moveTo(32, 72);
+      ctx.lineTo(width - 32, 72);
       ctx.stroke();
 
-      let y = 118;
+      let y = 104;
       for (const sh of wk.shifts) {
         ctx.fillStyle = "#2563eb";
         ctx.font = "bold 16px Inter, sans-serif";
@@ -1162,7 +1138,7 @@ Bí thư - Gia An`;
       }
 
       const link = document.createElement("a");
-      link.download = `Truc_Nhat_12A1_Tuan_${weekNumber}.png`;
+      link.download = `Truc_Nhat_12A1_${formatShortDate(mondayObj).replace("/", "-")}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
@@ -1212,9 +1188,9 @@ Bí thư - Gia An`;
         return `
           <tr class="hover:bg-slate-50/80 transition">
             <td class="py-3 px-4 text-slate-500 font-medium">#${r.stt}</td>
-            <td class="py-3 px-4 font-semibold text-slate-900">${r.name}</td>
-            <td class="py-3 px-4 text-slate-700">${r.errName}</td>
-            <td class="py-3 px-4 text-center font-bold text-blue-700">${r.count} lần</td>
+            <td class="py-3 px-4 font-semibold text-slate-900">${esc(r.name)}</td>
+            <td class="py-3 px-4 text-slate-700">${esc(r.errName)}</td>
+            <td class="py-3 px-4 text-center"><span class="pill ${r.count >= 3 ? "pill-r" : r.count === 2 ? "pill-a" : "pill-s"}">${r.count} lần</span></td>
             <td class="py-3 px-4 text-right">
               <div class="inline-flex items-center gap-1.5">
                 <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', -1)"
@@ -1508,11 +1484,11 @@ Bí thư - Gia An`;
 
       list.innerHTML = parsedDraft.map((item, idx) => `
         <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-white p-2 rounded-lg border border-slate-200 text-xs items-center">
-          <input type="text" value="${item.student}" oninput="parsedDraft[${idx}].student = this.value"
+          <input type="text" value="${esc(item.student)}" oninput="parsedDraft[${idx}].student = this.value"
             class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Họ tên / Tập thể lớp" />
           <input type="date" value="${item.date}" oninput="parsedDraft[${idx}].date = this.value"
             class="sm:col-span-3 px-2 py-1 border border-slate-200 rounded" />
-          <input type="text" value="${item.type}" oninput="parsedDraft[${idx}].type = this.value"
+          <input type="text" value="${esc(item.type)}" oninput="parsedDraft[${idx}].type = this.value"
             class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Lỗi vi phạm" />
           <button type="button" onclick="removeParsedRow(${idx})" class="sm:col-span-1 text-red-600 font-bold text-center hover:underline">
             &times;
@@ -1575,13 +1551,13 @@ Bí thư - Gia An`;
       if (tab === "duty") {
         dutySec.classList.remove("hidden");
         violSec.classList.add("hidden");
-        btnDuty.className = "px-4 py-1.5 rounded-lg text-sm font-semibold transition bg-blue-600 text-white shadow-sm";
-        btnViol.className = "px-4 py-1.5 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900";
+        btnDuty.className = "tab tab-on";
+        btnViol.className = "tab";
       } else {
         dutySec.classList.add("hidden");
         violSec.classList.remove("hidden");
-        btnViol.className = "px-4 py-1.5 rounded-lg text-sm font-semibold transition bg-blue-600 text-white shadow-sm";
-        btnDuty.className = "px-4 py-1.5 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900";
+        btnViol.className = "tab tab-on";
+        btnDuty.className = "tab";
       }
     }
 
@@ -1626,6 +1602,20 @@ Bí thư - Gia An`;
       renderWeeks();
       renderViolations();
     }
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    function toggleTheme() {
+      const dark = document.documentElement.classList.toggle('dark');
+      try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+      const m = document.querySelector('meta[name="theme-color"]');
+      if (m) m.content = dark ? '#0c1e3a' : '#13315c';
+    }
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('[id$="Modal"]:not(.hidden)').forEach(m => m.classList.add('hidden'));
+    });
+    document.addEventListener('mousedown', e => {
+      if (e.target.id && e.target.id.endsWith('Modal')) closeModal(e.target.id);
+    });
 
     loadState();
     populateSelects();
