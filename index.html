@@ -80,10 +80,65 @@
     .dark .pill-s{background:rgb(var(--b100));color:rgb(var(--b400))}
     #sectionViolation .rounded-2xl{border-radius:24px}
     #violationSearch{border-radius:14px}
-    @media(prefers-reduced-motion:reduce){.live i{animation:none}}
+
+    /* Màn hình chọn giao diện khi mới vào */
+    .layout-picker{position:fixed;inset:0;z-index:70;background:rgb(var(--bg)/.96);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px}
+    .layout-picker-box{width:100%;max-width:520px;background:rgb(var(--surface));border:1px solid rgb(var(--s200));border-radius:28px;padding:28px 22px;box-shadow:0 24px 60px -18px rgb(15 23 42/.35);text-align:center}
+    .layout-choices{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+    .layout-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px 14px;border-radius:22px;border:1.5px solid rgb(var(--s200));background:rgb(var(--s50));color:rgb(var(--s900));transition:.18s}
+    .layout-card:hover{border-color:rgb(var(--b500));background:rgb(var(--b50));transform:translateY(-2px);box-shadow:0 12px 24px -12px rgb(var(--b600)/.35)}
+    .layout-card svg{width:34px;height:34px;color:rgb(var(--b600))}
+    .layout-card span{font-weight:800;font-size:1.05rem;letter-spacing:-.02em}
+
+    /* Chế độ giao diện dọc cho điện thoại */
+    body.layout-mobile .hero{padding:20px 14px 54px}
+    body.layout-mobile .hero-in{flex-direction:column;align-items:flex-start;gap:14px}
+    body.layout-mobile .today{width:100%;justify-content:space-between;text-align:left}
+    body.layout-mobile .dock{position:static;margin:-28px auto 0;padding:0 12px;max-width:30rem}
+    body.layout-mobile .dock-in{flex-direction:column;align-items:stretch;gap:8px;padding:10px;border-radius:20px}
+    body.layout-mobile .tabs{width:100%}
+    body.layout-mobile .tab{flex:1;text-align:center;padding:8px 10px;font-size:.82rem}
+    body.layout-mobile .dock-actions{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}
+    body.layout-mobile .dock-actions .btn{justify-content:center;padding:8px 10px;font-size:.78rem}
+    body.layout-mobile .dock-actions .btn-p{grid-column:1 / -1}
+    body.layout-mobile .dock-search{flex-wrap:wrap}
+    body.layout-mobile .dock-search input[type="date"]{flex:1;min-width:0}
+    body.layout-mobile main{max-width:30rem;padding:14px 12px}
+    body.layout-mobile #syncStatusBar,body.layout-mobile #dateSearchResult{max-width:30rem;padding-left:12px;padding-right:12px}
+    body.layout-mobile .week{padding:15px;border-radius:20px}
+    body.layout-mobile .shifts{grid-template-columns:1fr;gap:8px}
+    body.layout-mobile .shift{padding:11px 12px;border-radius:14px}
+
+    @media(prefers-reduced-motion:reduce){.live i{animation:none}.layout-card{transition:none}}
   </style>
 </head>
 <body class="min-h-screen flex flex-col">
+
+  <!-- Màn hình chọn giao diện PC / Điện thoại khi mới vào -->
+  <div id="layoutPickerModal" class="layout-picker" role="dialog" aria-modal="true" aria-labelledby="layoutPickerTitle">
+    <div class="layout-picker-box">
+      <p class="text-xs font-bold uppercase tracking-wider text-blue-600">Lớp 12A1</p>
+      <h2 id="layoutPickerTitle" class="text-xl font-extrabold text-slate-900 mt-1">Chọn giao diện hiển thị</h2>
+      <p class="text-xs text-slate-500 mt-1">Chọn kiểu hiển thị phù hợp thiết bị của bạn</p>
+      <div class="layout-choices">
+        <button type="button" onclick="selectLayoutMode('pc')" class="layout-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <line x1="8" y1="21" x2="16" y2="21"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+          </svg>
+          <span>PC</span>
+        </button>
+        <button type="button" onclick="selectLayoutMode('mobile')" class="layout-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span>Điện thoại</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Header -->
   <header class="hero">
@@ -107,16 +162,17 @@
       <button id="tabDuty" onclick="switchTab('duty')" class="tab tab-on">Phân công trực nhật</button>
       <button id="tabViolation" onclick="switchTab('violation')" class="tab">Thống kê vi phạm</button>
     </nav>
-    <div class="flex flex-wrap items-center gap-2">
+    <div class="dock-actions flex flex-wrap items-center gap-2">
       <button onclick="openScanModal()" class="btn btn-p">Dán / Tải ảnh vi phạm <kbd>Ctrl+V</kbd></button>
       <button onclick="openManualModal()" class="btn">+ Phân thủ công</button>
       <button onclick="openHolidayModal()" class="btn btn-w">Ngày nghỉ lễ</button>
       <button onclick="openBcsModal()" class="btn">BCS.txt</button>
       <button onclick="openSyncModal()" class="btn btn-e">Đồng bộ GitHub</button>
     </div>
-    <div class="flex items-center gap-2">
+    <div class="dock-search flex items-center gap-2">
       <input id="searchDateInput" type="date" class="px-3 py-2 rounded-xl border border-slate-200 text-sm" />
       <button onclick="findByDate()" class="btn">Tìm ngày</button>
+      <button type="button" onclick="openLayoutPicker()" class="btn btn-s" title="Đổi giao diện PC / Điện thoại">Đổi layout</button>
       <button onclick="resetData()" title="Khôi phục mặc định" class="btn btn-s text-slate-500 hover:text-red-600" style="border-color:transparent">Reset</button>
     </div>
   </div></div>
@@ -505,6 +561,7 @@ Bí thư - Gia An`;
     ];
 
     const STORAGE_KEY = "duty_12a1_v16";
+    const LAYOUT_STORAGE_KEY = "duty_12a1_layout_mode";
 
     let state = {
       bcsText: DEFAULT_BCS,
@@ -523,6 +580,31 @@ Bí thư - Gia An`;
     let currentImageBase64 = "";
     let currentImageMime = "image/png";
     let editingManualDate = "";
+
+    function applyLayoutMode(mode) {
+      document.body.classList.toggle("layout-mobile", mode === "mobile");
+    }
+
+    function selectLayoutMode(mode) {
+      try { localStorage.setItem(LAYOUT_STORAGE_KEY, mode); } catch (e) {}
+      applyLayoutMode(mode);
+      document.getElementById("layoutPickerModal")?.classList.add("hidden");
+    }
+
+    function openLayoutPicker() {
+      document.getElementById("layoutPickerModal")?.classList.remove("hidden");
+    }
+
+    function initLayoutPicker() {
+      let saved = "";
+      try { saved = localStorage.getItem(LAYOUT_STORAGE_KEY) || ""; } catch (e) {}
+      if (saved === "pc" || saved === "mobile") {
+        applyLayoutMode(saved);
+        document.getElementById("layoutPickerModal")?.classList.add("hidden");
+      } else {
+        document.getElementById("layoutPickerModal")?.classList.remove("hidden");
+      }
+    }
 
     function getRealToday() {
       const now = new Date();
@@ -1617,6 +1699,7 @@ Bí thư - Gia An`;
       if (e.target.id && e.target.id.endsWith('Modal')) closeModal(e.target.id);
     });
 
+    initLayoutPicker();
     loadState();
     populateSelects();
     renderAll();
