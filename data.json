@@ -1,7 +1,37 @@
 {
-  "bcsText": "",
-  "holidays": [],
-  "violations": [],
-  "manualInsertions": [],
+  "bcsText": "TTT1 - Gia Bảo\nTTT2 - Minh Châu\nTTT3 - Minh Đông\nTTT4 - Phúc An\nLớp trưởng - Bảo Nhi\nLớp phó học tập - Cát Tường\nLớp phó kỉ luật - Minh Duy\nLớp phó văn nghệ - Ngọc Linh\nBí thư - Gia An",
+  "holidays": [
+    {
+      "date": "2026-11-24",
+      "note": "văn hóa vn"
+    }
+  ],
+  "violations": [
+    {
+      "id": 1,
+      "studentName": "Nguyễn Minh Khang",
+      "date": "2026-11-18",
+      "type": "Trễ Chính khóa"
+    },
+    {
+      "id": 2,
+      "studentName": "Tập thể lớp",
+      "date": "2026-11-16",
+      "type": "Vệ sinh lớp dơ"
+    },
+    {
+      "id": 3,
+      "studentName": "Tập thể lớp",
+      "date": "2026-11-18",
+      "type": "Vệ sinh lớp dơ"
+    }
+  ],
+  "manualInsertions": [
+    {
+      "startDate": "2026-11-26",
+      "student1": "Nguyễn Minh Khang",
+      "student2": "Tô Thuận Hưng"
+    }
+  ],
   "priorityQueue": []
 }
