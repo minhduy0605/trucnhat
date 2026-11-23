@@ -112,7 +112,7 @@
       <div class="flex items-center justify-between">
         <div>
           <h2 class="text-base font-bold text-slate-800">Danh sách trực nhật các tuần</h2>
-          <p class="text-xs text-slate-500">Cuộn ngang hoặc dọc để xem tuần trước, tuần hiện tại (màu xanh nổi bật) và các tuần sau.</p>
+          <p class="text-xs text-slate-500">Cuộn để xem tuần trước, tuần hiện tại (màu xanh nổi bật) và các tuần sau.</p>
         </div>
         <div class="text-xs text-slate-500">
           Mốc hiện tại: <span class="font-semibold text-blue-600">23/11/2026</span>
@@ -171,7 +171,7 @@
 
       <div class="space-y-2">
         <label class="block text-xs font-semibold text-slate-600">
-          Gemini API Key (tuỳ chọn - nếu không nhập sẽ dùng bộ quét/nhập nhanh):
+          Gemini API Key (tuỳ chọn - nếu không nhập sẽ tạo dòng mẫu để bạn điền/chỉnh):
         </label>
         <input id="geminiApiKey" type="password" placeholder="AIza..."
           class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
@@ -194,7 +194,7 @@
     </div>
   </div>
 
-  <!-- MODAL 2: PHÂN THỦ CÔNG THEO NGÀY -->
+  <!-- MODAL 2: PHÂN THỦ CÔNG (1 HỌC SINH & TỰ ĐẨY LỊCH) -->
   <div id="manualModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
@@ -210,13 +210,8 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Học sinh 1</label>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Chọn 1 học sinh</label>
           <select id="manualStudent1" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
-        </div>
-
-        <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Học sinh 2 (tuỳ chọn)</label>
-          <select id="manualStudent2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
         </div>
       </div>
 
@@ -362,21 +357,20 @@ Lớp phó học tập - Cát Tường
 Lớp phó kỉ luật - Minh Duy
 Lớp phó văn nghệ - Ngọc Linh`;
 
-    // Dữ liệu vi phạm ban đầu (đã bỏ nghỉ có phép)
     const INITIAL_VIOLATIONS = [
       { id: 1, studentName: "Nguyễn Minh Khang", date: "2026-11-18", type: "Trễ Chính khóa" },
       { id: 2, studentName: "Tập thể lớp", date: "2026-11-16", type: "Vệ sinh lớp dơ" },
       { id: 3, studentName: "Tập thể lớp", date: "2026-11-18", type: "Vệ sinh lớp dơ" }
     ];
 
-    const STORAGE_KEY = "duty_12a1_v3";
+    const STORAGE_KEY = "duty_12a1_v4";
 
     let state = {
       bcsText: DEFAULT_BCS,
       githubBcsUrl: "",
       violations: [...INITIAL_VIOLATIONS],
-      manualInsertions: [], // { startDate: 'YYYY-MM-DD', pair: [name1, name2] }
-      priorityQueue: []     // tên học sinh vi phạm ưu tiên đưa vào lịch
+      manualInsertions: [], // { startDate: 'YYYY-MM-DD', student: 'Tên HS' }
+      priorityQueue: []
     };
 
     let parsedDraft = [];
@@ -416,7 +410,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderAll();
     }
 
-    // Chuẩn hóa tên & tìm học sinh
     function normalizeStr(s = "") {
       return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
     }
@@ -441,13 +434,11 @@ Lớp phó văn nghệ - Ngọc Linh`;
       return exempt;
     }
 
-    // Kiểm tra lỗi nghỉ có phép (bỏ qua hoàn toàn)
     function isExcusedAbsence(typeStr = "") {
       const n = normalizeStr(typeStr);
       return n.includes("nghi hoc co phep") || n.includes("co phep") || /\b(cp|sp)\b/.test(n);
     }
 
-    // Xử lý ngày học T2 - T6 từ 23/11/2026 đến hết năm học (31/05/2027)
     function toDateObj(yyyyMmDd) {
       const [y, m, d] = yyyyMmDd.split("-").map(Number);
       return new Date(y, m - 1, d);
@@ -490,34 +481,54 @@ Lớp phó văn nghệ - Ngọc Linh`;
       return formatIsoDate(copy);
     }
 
-    // Sinh danh sách ca trực 2 ngày (nếu rơi vào T6 thì đẩy sang T2 tuần sau)
+    // Định dạng nhãn thứ & ngày: ví dụ "T2,T3 • 23–24/11" hoặc "T2 • 23/11"
+    function formatShiftLabel(daysInShift) {
+      if (!daysInShift || daysInShift.length === 0) return "";
+      if (daysInShift.length === 1) {
+        const d1 = daysInShift[0];
+        return `${getDayLabel(d1.getDay())} • ${formatShortDate(d1)}`;
+      }
+      const d1 = daysInShift[0];
+      const d2 = daysInShift[1];
+      const sameMonth = d1.getMonth() === d2.getMonth();
+      const rangeStr = sameMonth
+        ? `${String(d1.getDate()).padStart(2, "0")}–${formatShortDate(d2)}`
+        : `${formatShortDate(d1)}–${formatShortDate(d2)}`;
+      return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
+    }
+
+    // Xây dựng lịch trực: tiếp tục đúng sau STT 21 (Minh), bỏ qua T6 đẩy sang T2, hỗ trợ chèn thủ công 1 HS & tự đẩy lịch
     function buildSchedule() {
       const schoolDays = getSchoolDays("2026-11-23", "2027-05-31");
       const exempt = getExemptNames();
 
-      // Danh sách học sinh xoay vòng theo STT (bỏ Long & Minh vì đã trực ca đầu 23/11)
-      const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"];
-      const rotationPool = STUDENTS
+      const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"]; // STT 20 & 21
+      const minhIndex = STUDENTS.findIndex(s => s.name === "Nguyễn Khắc Hoàng Minh");
+
+      // Sắp xếp danh sách xoay vòng bắt đầu ngay sau STT 21 (STT 22 -> 43 rồi mới tới 1 -> 21), loại trừ BCS
+      const orderedFromAfterMinh = [
+        ...STUDENTS.slice(minhIndex + 1),
+        ...STUDENTS.slice(0, minhIndex + 1)
+      ]
         .map(s => s.name)
         .filter(name => !exempt.has(name) && !firstPair.includes(name));
 
-      // Ghép queue ưu tiên (học sinh vi phạm) trước, sau đó đến xoay vòng STT
       const candidateQueue = [...state.priorityQueue];
       for (let i = 0; i < 6; i++) {
-        candidateQueue.push(...rotationPool);
+        candidateQueue.push(...orderedFromAfterMinh);
       }
 
       let queueIdx = 0;
       const takePair = () => {
-        const p1 = candidateQueue[queueIdx++] || "Trực bổ sung";
-        const p2 = candidateQueue[queueIdx++] || rotationPool[0] || "Trực bổ sung";
+        const p1 = candidateQueue[queueIdx++] || "";
+        const p2 = candidateQueue[queueIdx++] || "";
         return [p1, p2];
       };
 
-      // Map ca thủ công theo ngày bắt đầu
+      // Map phân thủ công 1 học sinh theo ngày bắt đầu
       const manualMap = new Map();
       for (const m of state.manualInsertions) {
-        manualMap.set(m.startDate, m.pair);
+        manualMap.set(m.startDate, m.student);
       }
 
       const shifts = [];
@@ -529,60 +540,57 @@ Lớp phó văn nghệ - Ngọc Linh`;
         const iso = formatIsoDate(curDay);
         const dow = curDay.getDay();
 
-        // Nếu chèn thủ công đúng ngày này
-        if (manualMap.has(iso)) {
-          const pair = manualMap.get(iso);
-          const nextDay = schoolDays[i + 1] || curDay;
-          const daysInShift = nextDay.getDay() === 1 && curDay.getDay() === 5 ? [curDay] : (i + 1 < schoolDays.length && schoolDays[i + 1].getDay() !== 1 ? [curDay, schoolDays[i + 1]] : [curDay]);
-          shifts.push({
-            startDate: iso,
-            days: daysInShift,
-            label: daysInShift.length === 2
-              ? `${getDayLabel(daysInShift[0].getDay())},${getDayLabel(daysInShift[1].getDay())} - ${formatShortDate(daysInShift[0])}`
-              : `${getDayLabel(daysInShift[0].getDay())} - ${formatShortDate(daysInShift[0])}`,
-            students: pair,
-            isManual: true
-          });
-          i += daysInShift.length;
-          continue;
-        }
-
-        // Nếu rơi vào Thứ 6 (dow === 5) và còn ngày tiếp theo (T2 tuần sau) -> đẩy ca sang T2
-        if (dow === 5 && i + 1 < schoolDays.length) {
+        // Nếu rơi vào Thứ 6 (dow === 5): đẩy ca sang Thứ 2 tuần sau (nếu còn ngày học)
+        if (dow === 5) {
+          if (i + 1 >= schoolDays.length) break;
           const monNext = schoolDays[i + 1];
-          const tueNext = schoolDays[i + 2];
+          const tueNext = (i + 2 < schoolDays.length && schoolDays[i + 2].getDay() !== 1) ? schoolDays[i + 2] : null;
+          const shiftDays = tueNext ? [monNext, tueNext] : [monNext];
           const pair = isFirstShift ? firstPair : takePair();
           isFirstShift = false;
 
-          const shiftDays = tueNext ? [monNext, tueNext] : [monNext];
           shifts.push({
             startDate: formatIsoDate(monNext),
             days: shiftDays,
-            label: shiftDays.length === 2
-              ? `${getDayLabel(monNext.getDay())},${getDayLabel(tueNext.getDay())} - ${formatShortDate(monNext)}`
-              : `${getDayLabel(monNext.getDay())} - ${formatShortDate(monNext)}`,
+            label: formatShiftLabel(shiftDays),
             students: pair,
             isManual: false
           });
+
           i += 1 + shiftDays.length;
           continue;
         }
 
-        // Ca 2 ngày bình thường
+        // Xác định cụm ngày của ca hiện tại (tối đa 2 ngày trong cùng tuần, dừng trước Thứ 6 hoặc Thứ 2)
+        const shiftDays = [curDay];
+        if (i + 1 < schoolDays.length) {
+          const nextD = schoolDays[i + 1];
+          if (nextD.getDay() !== 1 && nextD.getDay() !== 5) {
+            shiftDays.push(nextD);
+          }
+        }
+
+        // Nếu có phân thủ công 1 học sinh tại ngày bắt đầu ca -> chèn vào & tự đẩy lịch (không tiêu hao cặp xoay vòng thường)
+        if (manualMap.has(iso)) {
+          const manualStudent = manualMap.get(iso);
+          shifts.push({
+            startDate: iso,
+            days: shiftDays,
+            label: formatShiftLabel(shiftDays),
+            students: [manualStudent, ""],
+            isManual: true
+          });
+          i += shiftDays.length;
+          continue;
+        }
+
         const pair = isFirstShift ? firstPair : takePair();
         isFirstShift = false;
-
-        let shiftDays = [curDay];
-        if (i + 1 < schoolDays.length && schoolDays[i + 1].getDay() !== 1) {
-          shiftDays.push(schoolDays[i + 1]);
-        }
 
         shifts.push({
           startDate: iso,
           days: shiftDays,
-          label: shiftDays.length === 2
-            ? `${getDayLabel(shiftDays[0].getDay())},${getDayLabel(shiftDays[1].getDay())} - ${formatShortDate(shiftDays[0])}`
-            : `${getDayLabel(shiftDays[0].getDay())} - ${formatShortDate(shiftDays[0])}`,
+          label: formatShiftLabel(shiftDays),
           students: pair,
           isManual: false
         });
@@ -606,7 +614,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
     function renderWeeks() {
       const weeks = buildSchedule();
       const container = document.getElementById("weeksContainer");
-      const currentWeekKey = "2026-11-23"; // Tuần đang trực mặc định
+      const currentWeekKey = "2026-11-23";
 
       container.innerHTML = weeks.map((wk, idx) => {
         const isCurrent = wk.weekMonday === currentWeekKey;
@@ -615,7 +623,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
         fridayObj.setDate(mondayObj.getDate() + 4);
 
         const cardStyle = isCurrent
-          ? "bg-blue-50/70 border-blue-400 ring-2 ring-blue-100"
+          ? "bg-blue-50/75 border-blue-400 ring-2 ring-blue-100"
           : "bg-white border-slate-200";
 
         const badgeHtml = isCurrent
@@ -630,7 +638,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
               <div class="text-xs font-bold text-blue-600 mb-2">${sh.label}</div>
               <div class="space-y-1 text-sm text-slate-800 font-medium">
                 <div class="truncate" title="${s1}">${s1}</div>
-                <div class="truncate" title="${s2}">${s2}</div>
+                ${s2 ? `<div class="truncate" title="${s2}">${s2}</div>` : ""}
               </div>
             </div>
           `;
@@ -641,7 +649,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
               <div class="flex items-center gap-2.5">
                 <span class="text-sm font-bold text-blue-700">
-                  Tuần ${formatShortDate(mondayObj)} - ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()}
+                  Tuần ${formatShortDate(mondayObj)} – ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()}
                 </span>
                 ${badgeHtml}
               </div>
@@ -681,20 +689,17 @@ Lớp phó văn nghệ - Ngọc Linh`;
       const ctx = canvas.getContext("2d");
       ctx.scale(scale, scale);
 
-      // Nền trắng
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, width, height);
 
-      // Tiêu đề màu xanh dương
       ctx.fillStyle = "#1d4ed8";
       ctx.font = "bold 22px Inter, sans-serif";
       ctx.fillText(`LỊCH TRỰC NHẬT 12A1 - TUẦN ${weekNumber}`, 32, 44);
 
       ctx.fillStyle = "#2563eb";
       ctx.font = "600 14px Inter, sans-serif";
-      ctx.fillText(`(${formatShortDate(mondayObj)} - ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()})`, 32, 70);
+      ctx.fillText(`(${formatShortDate(mondayObj)} – ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()})`, 32, 70);
 
-      // Đường kẻ ngang xanh nhạt
       ctx.strokeStyle = "#bfdbfe";
       ctx.lineWidth = 1.5;
       ctx.beginPath();
@@ -702,7 +707,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       ctx.lineTo(width - 32, 88);
       ctx.stroke();
 
-      // Các ca trực: thứ/ngày xanh dương, tên học sinh chữ bình thường
       let y = 118;
       for (const sh of wk.shifts) {
         ctx.fillStyle = "#2563eb";
@@ -711,8 +715,10 @@ Lớp phó văn nghệ - Ngọc Linh`;
 
         ctx.fillStyle = "#0f172a";
         ctx.font = "400 16px Inter, sans-serif";
-        ctx.fillText(sh.students[0] || "", 230, y);
-        ctx.fillText(sh.students[1] || "", 230, y + 24);
+        ctx.fillText(sh.students[0] || "", 240, y);
+        if (sh.students[1]) {
+          ctx.fillText(sh.students[1], 240, y + 24);
+        }
 
         ctx.strokeStyle = "#f1f5f9";
         ctx.lineWidth = 1;
@@ -735,7 +741,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       const keyword = normalizeStr(document.getElementById("violationSearch")?.value || "");
       const tbody = document.getElementById("violationTableBody");
 
-      // Nhóm theo học sinh -> đếm từng loại lỗi
       const mapByStudent = new Map();
 
       for (const v of state.violations) {
@@ -796,7 +801,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderViolations();
     }
 
-    // Xử lý thêm vi phạm (nếu là Tập thể lớp -> tìm 2 bạn trực ngày đó, cộng lỗi & thêm vào hàng ưu tiên)
     function addViolationRecord(studentName, dateIso, typeStr) {
       if (isExcusedAbsence(typeStr)) return;
 
@@ -808,7 +812,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
           type: typeStr || "Vệ sinh lớp dơ"
         });
 
-        // Tìm ca trực đúng ngày vi phạm
         const weeks = buildSchedule();
         let dutyPair = null;
         for (const wk of weeks) {
@@ -860,7 +863,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderAll();
     }
 
-    // Tìm ngày xem ai trực
     function findByDate() {
       const iso = document.getElementById("searchDateInput").value;
       if (!iso) return;
@@ -893,23 +895,22 @@ Lớp phó văn nghệ - Ngọc Linh`;
         return;
       }
 
+      const namesText = found.students.filter(Boolean).join(" và ");
       content.innerHTML = `
         Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> (${found.label}):
-        <span class="font-semibold text-blue-700">${found.students[0]}</span> và
-        <span class="font-semibold text-blue-700">${found.students[1]}</span>
+        <span class="font-semibold text-blue-700">${namesText}</span>
       `;
     }
 
-    // Phân thủ công theo ngày & tự đẩy lịch
+    // Phân thủ công 1 học sinh & tự đẩy lịch
     function submitManualDuty() {
       const startDate = document.getElementById("manualDate").value;
       const s1 = document.getElementById("manualStudent1").value;
-      const s2 = document.getElementById("manualStudent2").value;
       if (!startDate || !s1) return;
 
       state.manualInsertions.push({
         startDate,
-        pair: s2 && s2 !== s1 ? [s1, s2] : [s1, ""]
+        student: s1
       });
       saveState();
       closeModal("manualModal");
@@ -980,7 +981,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
             parsedDraft = arr
               .filter(item => item.type && !isExcusedAbsence(item.type))
               .map(item => ({
-                student: item.student || "Nguyễn Minh Khang",
+                student: item.student || "",
                 date: item.date || "2026-11-23",
                 type: item.type
               }));
@@ -990,10 +991,9 @@ Lớp phó văn nghệ - Ngọc Linh`;
         }
       }
 
-      // Nếu chưa nhập API key, tạo sẵn dòng mẫu để người dùng xác nhận/chỉnh nhanh
       if (parsedDraft.length === 0) {
         parsedDraft = [
-          { student: "Nguyễn Minh Khang", date: "2026-11-23", type: "Trễ Chính khóa" }
+          { student: "", date: "2026-11-23", type: "Trễ Chính khóa" }
         ];
       }
 
@@ -1022,8 +1022,8 @@ Lớp phó văn nghệ - Ngọc Linh`;
 
     function applyParsedViolations() {
       for (const item of parsedDraft) {
-        if (item.type && !isExcusedAbsence(item.type)) {
-          addViolationRecord(item.student, item.date, item.type);
+        if (item.student.trim() && item.type && !isExcusedAbsence(item.type)) {
+          addViolationRecord(item.student.trim(), item.date, item.type);
         }
       }
       saveState();
@@ -1098,7 +1098,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
     function populateSelects() {
       const optionsHtml = STUDENTS.map(s => `<option value="${s.name}">${s.stt}. ${s.name}</option>`).join("");
       document.getElementById("manualStudent1").innerHTML = optionsHtml;
-      document.getElementById("manualStudent2").innerHTML = `<option value="">-- Không chọn --</option>` + optionsHtml;
       document.getElementById("violTargetSelect").innerHTML =
         `<option value="Tập thể lớp">Tập thể lớp</option>` + optionsHtml;
     }
@@ -1108,7 +1107,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderViolations();
     }
 
-    // Khởi tạo
     loadState();
     populateSelects();
     renderAll();
