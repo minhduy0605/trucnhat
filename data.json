@@ -24,6 +24,12 @@
       "studentName": "Tập thể lớp",
       "date": "2026-11-18",
       "type": "Vệ sinh lớp dơ"
+    },
+    {
+      "id": 1795450532390.3772,
+      "studentName": "Lê Ngân Hạnh",
+      "date": "2026-11-23",
+      "type": "Trễ Chính khóa"
     }
   ],
   "manualInsertions": [
@@ -33,5 +39,7 @@
       "student2": "Tô Thuận Hưng"
     }
   ],
-  "priorityQueue": []
+  "priorityQueue": [
+    "Lê Ngân Hạnh"
+  ]
 }
