@@ -104,16 +104,19 @@
     body.layout-mobile .dock-in{flex-direction:column;align-items:stretch;gap:8px;padding:10px;border-radius:20px}
     body.layout-mobile .tabs{width:100%}
     body.layout-mobile .tab{flex:1;text-align:center;padding:8px 10px;font-size:.82rem}
-    body.layout-mobile .dock-actions{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}
+    body.layout-mobile .dock-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     body.layout-mobile .dock-actions .btn{justify-content:center;padding:8px 10px;font-size:.78rem}
     body.layout-mobile .dock-actions .btn-p{grid-column:1 / -1}
     body.layout-mobile .dock-search{flex-wrap:wrap}
     body.layout-mobile .dock-search input[type="date"]{flex:1;min-width:0}
-    body.layout-mobile main{max-width:30rem;padding:14px 12px}
-    body.layout-mobile #syncStatusBar,body.layout-mobile #dateSearchResult{max-width:30rem;padding-left:12px;padding-right:12px}
+    body.layout-mobile main,
+    body.layout-mobile #syncStatusBar,
+    body.layout-mobile #dateSearchResult{max-width:30rem;padding-left:12px;padding-right:12px}
     body.layout-mobile .week{padding:15px;border-radius:20px}
     body.layout-mobile .shifts{grid-template-columns:1fr;gap:8px}
     body.layout-mobile .shift{padding:11px 12px;border-radius:14px}
+    body.layout-mobile th,
+    body.layout-mobile td{padding:10px 8px;font-size:.8rem}
 
     @media(prefers-reduced-motion:reduce){.live i{animation:none}.layout-card{transition:none}}
   </style>
@@ -121,7 +124,7 @@
 <body class="min-h-screen flex flex-col">
 
   <!-- Màn hình chọn giao diện PC / Điện thoại khi mới vào -->
-  <div id="layoutPickerModal" class="layout-picker" role="dialog" aria-modal="true" aria-labelledby="layoutPickerTitle">
+  <div id="layoutPickerModal" class="layout-picker hidden" role="dialog" aria-modal="true" aria-labelledby="layoutPickerTitle">
     <div class="layout-picker-box">
       <p class="text-xs font-bold uppercase tracking-wider text-blue-600">Lớp 12A1</p>
       <h2 id="layoutPickerTitle" class="text-xl font-extrabold text-slate-900 mt-1">Chọn giao diện hiển thị</h2>
@@ -215,7 +218,7 @@
         </div>
       </div>
 
-      <div id="weeksContainer" class="space-y-4 "></div>
+      <div id="weeksContainer" class="space-y-4"></div>
     </section>
 
     <!-- PHẦN 2: THỐNG KÊ VI PHẠM -->
@@ -835,7 +838,7 @@ Bí thư - Gia An`;
           <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200/80 rounded-lg px-3 py-1.5 text-xs">
             <div>
               <span class="font-bold text-amber-900">${formatShortDate(d)}/${d.getFullYear()}</span>
-              <span class="text-slate-700 ml-1.5">— ${h.note}</span>
+              <span class="text-slate-700 ml-1.5">— ${esc(h.note)}</span>
             </div>
             <button type="button" onclick="removeHolidayDate('${h.date}')" class="text-red-600 font-bold hover:underline">
               Xóa
@@ -1359,8 +1362,9 @@ Bí thư - Gia An`;
       const repeated = grouped.filter(item => item.count >= 2);
       const width = 820;
       const rowHeight = 44;
-      const warnExtraHeight = repeated.length > 0 ? 54 : 0;
-      const height = 140 + warnExtraHeight + Math.max(1, grouped.length) * rowHeight;
+      const warnLines = repeated.length > 0 ? repeated.map(r => `• ${r.name} — ${r.errName} (${r.count} lần)`) : [];
+      const warnBoxHeight = warnLines.length > 0 ? 34 + warnLines.length * 20 : 0;
+      const height = 130 + warnBoxHeight + Math.max(1, grouped.length) * rowHeight;
 
       const canvas = document.createElement("canvas");
       const scale = 2;
@@ -1381,14 +1385,17 @@ Bí thư - Gia An`;
       ctx.fillText(`Cập nhật: ${formatShortDate(getRealToday())}/${getRealToday().getFullYear()}`, 32, 68);
 
       let y = 96;
-      if (repeated.length > 0) {
+      if (warnLines.length > 0) {
         ctx.fillStyle = "#fef2f2";
-        ctx.fillRect(32, y - 16, width - 64, 34);
+        ctx.fillRect(32, y - 16, width - 64, warnBoxHeight - 8);
         ctx.fillStyle = "#b91c1c";
         ctx.font = "bold 13px Inter, sans-serif";
-        const warnText = "CẢNH BÁO LẶP LỖI (TỪ 2 LẦN): " + repeated.map(r => `${r.name} - ${r.errName} (${r.count} lần)`).join(" | ");
-        ctx.fillText(warnText.slice(0, 105), 42, y + 5);
-        y += 48;
+        ctx.fillText("CẢNH BÁO LẶP LỖI (TỪ 2 LẦN CÙNG 1 LỖI):", 44, y + 4);
+        ctx.font = "600 13px Inter, sans-serif";
+        warnLines.forEach((line, idx) => {
+          ctx.fillText(line, 56, y + 24 + idx * 20);
+        });
+        y += warnBoxHeight + 8;
       }
 
       ctx.fillStyle = "#0f172a";
@@ -1577,7 +1584,7 @@ Bí thư - Gia An`;
 
       const holiday = (state.holidays || []).find(h => h.date === iso);
       if (holiday) {
-        content.innerHTML = `Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> là ngày nghỉ lễ (<b>${holiday.note}</b>).`;
+        content.innerHTML = `Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> là ngày nghỉ lễ (<b>${esc(holiday.note)}</b>).`;
         return;
       }
 
@@ -1603,9 +1610,9 @@ Bí thư - Gia An`;
         return;
       }
 
-      const namesText = found.students.filter(Boolean).join(" và ");
+      const namesText = found.students.filter(Boolean).map(esc).join(" và ");
       content.innerHTML = `
-        Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> (${found.label}):
+        Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> (${esc(found.label)}):
         <span class="font-semibold text-blue-700">${namesText}</span>
       `;
     }
@@ -1723,13 +1730,15 @@ Bí thư - Gia An`;
           const jsonMatch = text.match(/\[[\s\S]*\]/);
           if (jsonMatch) {
             const arr = JSON.parse(jsonMatch[0]);
-            parsedDraft = arr
-              .filter(item => item.type && !isExcusedAbsence(item.type))
-              .map(item => ({
-                student: item.student || "",
-                date: item.date || formatIsoDate(getRealToday()),
-                type: item.type
-              }));
+            if (Array.isArray(arr)) {
+              parsedDraft = arr
+                .filter(item => item && item.type && !isExcusedAbsence(item.type))
+                .map(item => ({
+                  student: String(item.student || ""),
+                  date: /^\d{4}-\d{2}-\d{2}$/.test(item.date || "") ? item.date : formatIsoDate(getRealToday()),
+                  type: String(item.type)
+                }));
+            }
           }
           setScanStatus(`Đã nhận diện ${parsedDraft.length} mục bằng ${modelName} (đã lọc bỏ nghỉ có phép).`);
         } catch (err) {
@@ -1774,7 +1783,7 @@ Bí thư - Gia An`;
         <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-white p-2 rounded-lg border border-slate-200 text-xs items-center">
           <input type="text" value="${esc(item.student)}" oninput="parsedDraft[${idx}].student = this.value"
             class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Họ tên / Tập thể lớp" />
-          <input type="date" value="${item.date}" oninput="parsedDraft[${idx}].date = this.value"
+          <input type="date" value="${esc(item.date)}" oninput="parsedDraft[${idx}].date = this.value"
             class="sm:col-span-3 px-2 py-1 border border-slate-200 rounded" />
           <input type="text" value="${esc(item.type)}" oninput="parsedDraft[${idx}].type = this.value"
             class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Lỗi vi phạm" />
@@ -1794,11 +1803,21 @@ Bí thư - Gia An`;
         return;
       }
 
+      let appliedCount = 0;
       for (const item of parsedDraft) {
-        if (item.student.trim() && item.type && !isExcusedAbsence(item.type)) {
-          addViolationRecord(item.student.trim(), item.date, item.type, { duty: optDuty, stats: optStats });
+        const studentClean = (item.student || "").trim();
+        const typeClean = (item.type || "").trim();
+        if (studentClean && typeClean && !isExcusedAbsence(typeClean)) {
+          addViolationRecord(studentClean, item.date || formatIsoDate(getRealToday()), typeClean, { duty: optDuty, stats: optStats });
+          appliedCount++;
         }
       }
+
+      if (appliedCount === 0) {
+        alert("Chưa có dòng hợp lệ (cần điền Họ tên / Tập thể lớp và Lỗi vi phạm).");
+        return;
+      }
+
       saveState();
       closeModal("scanModal");
       renderAll();
@@ -1879,7 +1898,7 @@ Bí thư - Gia An`;
     }
 
     function populateSelects() {
-      const optionsHtml = STUDENTS.map(s => `<option value="${s.name}">${s.stt}. ${s.name}</option>`).join("");
+      const optionsHtml = STUDENTS.map(s => `<option value="${esc(s.name)}">${s.stt}. ${esc(s.name)}</option>`).join("");
       document.getElementById("manualStudent1").innerHTML = optionsHtml;
       document.getElementById("manualStudent2").innerHTML =
         `<option value="">-- Không có / Bỏ trống --</option>` +
