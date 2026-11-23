@@ -80,7 +80,7 @@
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
-        <input id="searchDateInput" type="date" value="2026-11-23"
+        <input id="searchDateInput" type="date"
           class="px-3 py-1.5 rounded-lg border border-slate-300 text-sm text-slate-700 focus:outline-none focus:border-blue-500" />
         <button onclick="findByDate()"
           class="px-3.5 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-semibold border border-blue-200 transition">
@@ -109,13 +109,13 @@
   <main class="max-w-6xl w-full mx-auto px-4 py-5 flex-1">
     <!-- PHẦN 1: PHÂN CÔNG TRỰC NHẬT -->
     <section id="sectionDuty" class="space-y-4">
-      <div class="flex items-center justify-between">
+      <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h2 class="text-base font-bold text-slate-800">Danh sách trực nhật các tuần</h2>
-          <p class="text-xs text-slate-500">Cuộn để xem tuần trước, tuần hiện tại (màu xanh nổi bật) và các tuần sau.</p>
+          <h2 class="text-base font-bold text-slate-800">Danh sách trực nhật theo thời gian thực</h2>
+          <p class="text-xs text-slate-500">Giữ tối đa 1 tuần đã qua, tuần đang trực (màu xanh nổi bật) và 3 tuần tiếp theo.</p>
         </div>
         <div class="text-xs text-slate-500">
-          Mốc hiện tại: <span class="font-semibold text-blue-600">23/11/2026</span>
+          Hôm nay: <span id="todayLabel" class="font-semibold text-blue-600"></span>
         </div>
       </div>
 
@@ -162,23 +162,30 @@
       </div>
 
       <div id="pasteZone" onclick="document.getElementById('imageFileInput').click()"
-        class="border-2 border-dashed border-blue-300 bg-blue-50/40 hover:bg-blue-50 rounded-xl p-6 text-center cursor-pointer transition">
+        class="border-2 border-dashed border-blue-300 bg-blue-50/40 hover:bg-blue-50 rounded-xl p-5 text-center cursor-pointer transition">
         <input id="imageFileInput" type="file" accept="image/*" class="hidden" onchange="handleImageFile(event)" />
         <p class="text-sm font-semibold text-blue-700">Nhấn <kbd class="px-1.5 py-0.5 bg-white border border-blue-200 rounded text-xs">Ctrl + V</kbd> để dán ảnh trực tiếp</p>
         <p class="text-xs text-slate-500 mt-1">Hoặc bấm chọn file ảnh • Tự động bỏ qua "Nghỉ có phép"</p>
-        <img id="previewImage" class="hidden max-h-44 mx-auto mt-3 rounded-lg border border-slate-200 object-contain" />
+        <img id="previewImage" class="hidden max-h-40 mx-auto mt-3 rounded-lg border border-slate-200 object-contain" />
       </div>
 
-      <div class="space-y-2">
+      <div id="scanStatusText" class="hidden text-xs font-medium px-3 py-2 rounded-lg bg-slate-100 text-slate-700"></div>
+
+      <div class="space-y-1.5">
         <label class="block text-xs font-semibold text-slate-600">
-          Gemini API Key (tuỳ chọn - nếu không nhập sẽ tạo dòng mẫu để bạn điền/chỉnh):
+          Gemini API Key (tự lưu trên trình duyệt):
         </label>
-        <input id="geminiApiKey" type="password" placeholder="AIza..."
+        <input id="geminiApiKey" type="password" onchange="saveApiKey()" placeholder="AIza..."
           class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
       </div>
 
       <div id="parsedPreviewBox" class="hidden space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-        <div class="text-xs font-bold text-slate-700">Kết quả nhận diện (chỉnh sửa nếu cần trước khi áp dụng):</div>
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-700">Danh sách vi phạm (kiểm tra trước khi áp dụng):</span>
+          <button type="button" onclick="addParsedRow()" class="text-xs font-semibold text-blue-600 hover:underline">
+            + Thêm dòng
+          </button>
+        </div>
         <div id="parsedItemsList" class="space-y-2 max-h-48 overflow-y-auto custom-scroll"></div>
       </div>
 
@@ -205,7 +212,7 @@
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày bắt đầu trực</label>
-          <input id="manualDate" type="date" value="2026-11-26"
+          <input id="manualDate" type="date"
             class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
         </div>
 
@@ -276,7 +283,7 @@
 
         <div>
           <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày vi phạm</label>
-          <input id="violDateInput" type="date" value="2026-11-23"
+          <input id="violDateInput" type="date"
             class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
         </div>
 
@@ -365,17 +372,25 @@ Bí thư - Gia An`;
       { id: 3, studentName: "Tập thể lớp", date: "2026-11-18", type: "Vệ sinh lớp dơ" }
     ];
 
-    const STORAGE_KEY = "duty_12a1_v6";
+    const STORAGE_KEY = "duty_12a1_v10";
 
     let state = {
       bcsText: DEFAULT_BCS,
       githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
+      geminiApiKey: "",
       violations: [...INITIAL_VIOLATIONS],
       manualInsertions: [],
       priorityQueue: []
     };
 
     let parsedDraft = [];
+    let currentImageBase64 = "";
+    let currentImageMime = "image/png";
+
+    function getRealToday() {
+      const now = new Date();
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
 
     function loadState() {
       try {
@@ -385,6 +400,7 @@ Bí thư - Gia An`;
           state = {
             bcsText: parsed.bcsText ?? DEFAULT_BCS,
             githubBcsUrl: parsed.githubBcsUrl || DEFAULT_GITHUB_BCS_URL,
+            geminiApiKey: parsed.geminiApiKey || "",
             violations: Array.isArray(parsed.violations) ? parsed.violations : [...INITIAL_VIOLATIONS],
             manualInsertions: Array.isArray(parsed.manualInsertions) ? parsed.manualInsertions : [],
             priorityQueue: Array.isArray(parsed.priorityQueue) ? parsed.priorityQueue : []
@@ -393,10 +409,19 @@ Bí thư - Gia An`;
       } catch (e) {
         console.error(e);
       }
+      const keyInput = document.getElementById("geminiApiKey");
+      if (keyInput && state.geminiApiKey) {
+        keyInput.value = state.geminiApiKey;
+      }
     }
 
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function saveApiKey() {
+      state.geminiApiKey = (document.getElementById("geminiApiKey")?.value || "").trim();
+      saveState();
     }
 
     function resetData() {
@@ -405,6 +430,7 @@ Bí thư - Gia An`;
       state = {
         bcsText: DEFAULT_BCS,
         githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
+        geminiApiKey: "",
         violations: [...INITIAL_VIOLATIONS],
         manualInsertions: [],
         priorityQueue: []
@@ -483,7 +509,6 @@ Bí thư - Gia An`;
       return formatIsoDate(copy);
     }
 
-    // Nhãn thứ & ngày: ví dụ "T2,T3 • 23–24/11" hoặc "T6 • 27/11" hoặc "T2 • 30/11"
     function formatShiftLabel(daysInShift) {
       if (!daysInShift || daysInShift.length === 0) return "";
       if (daysInShift.length === 1) {
@@ -499,12 +524,9 @@ Bí thư - Gia An`;
       return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
     }
 
-    // Xây dựng lịch trực:
-    // - Ca đầu T2,T3 (23-24/11): Long & Minh
-    // - Ca T4,T5 (25-26/11): cặp tiếp theo sau Minh (bỏ qua BCS)
-    // - Nếu bắt đầu vào Thứ 6 (vd T6 • 27/11): cặp đó trực Thứ 6 và nối tiếp Thứ 2 tuần sau (T2 • 30/11),
-    //   sau đó cặp kế tiếp trực T3,T4 • 01–02/12
-    function buildSchedule() {
+    // Chuỗi cụm ngày cố định lặp lại liên tục:
+    // 23 (T2,T3) -> 45 (T4,T5) -> 62 (T6 nối T2 tuần sau) -> 34 (T3,T4) -> 56 (T5,T6) -> lặp lại
+    function buildAllWeeksSchedule() {
       const schoolDays = getSchoolDays("2026-11-23", "2027-05-31");
       const exempt = getExemptNames();
 
@@ -519,7 +541,7 @@ Bí thư - Gia An`;
         .filter(name => !exempt.has(name) && !firstPair.includes(name));
 
       const candidateQueue = [...state.priorityQueue];
-      for (let i = 0; i < 6; i++) {
+      for (let i = 0; i < 8; i++) {
         candidateQueue.push(...orderedFromAfterMinh);
       }
 
@@ -535,112 +557,132 @@ Bí thư - Gia An`;
         manualMap.set(m.startDate, m.student);
       }
 
+      // Danh sách mẫu cụm thứ trong chu kỳ 5 cụm:
+      // 0: [2, 3] (T2, T3)
+      // 1: [4, 5] (T4, T5)
+      // 2: [5, 1] (T6 nối T2 tuần sau)
+      // 3: [2, 3] (T3, T4)
+      // 4: [4, 5] (T5, T6)
+      const cyclePatterns = [
+        [2, 3],
+        [4, 5],
+        [5, 1],
+        [2, 3],
+        [4, 5]
+      ];
+
       const shifts = [];
-      let i = 0;
+      let dayCursor = 0;
+      let patIdx = 0;
       let isFirstShift = true;
 
-      while (i < schoolDays.length) {
-        const curDay = schoolDays[i];
-        const iso = formatIsoDate(curDay);
-        const dow = curDay.getDay();
+      while (dayCursor < schoolDays.length) {
+        const expectedDows = cyclePatterns[patIdx % cyclePatterns.length];
+        const groupDays = [];
 
-        // Nếu ca bắt đầu vào Thứ 6 (dow === 5):
-        // Tạo 1 ca riêng cho Thứ 6 (hiển thị T6 • dd/MM) VÀ nếu có Thứ 2 tuần sau thì tạo ca nối tiếp T2 • dd/MM cho CÙNG cặp đó,
-        // sau đó bước nhảy tiếp tục từ Thứ 3 tuần sau (T3,T4).
-        if (dow === 5) {
-          const pair = isFirstShift ? firstPair : takePair();
+        for (const targetDow of expectedDows) {
+          if (dayCursor < schoolDays.length && schoolDays[dayCursor].getDay() === targetDow) {
+            groupDays.push(schoolDays[dayCursor]);
+            dayCursor++;
+          }
+        }
+
+        if (groupDays.length === 0) {
+          dayCursor++;
+          continue;
+        }
+
+        const startIso = formatIsoDate(groupDays[0]);
+        let pair;
+        let isManual = false;
+
+        if (manualMap.has(startIso)) {
+          pair = [manualMap.get(startIso), ""];
+          isManual = true;
+        } else if (isFirstShift) {
+          pair = firstPair;
           isFirstShift = false;
-
-          shifts.push({
-            startDate: iso,
-            days: [curDay],
-            label: formatShiftLabel([curDay]),
-            students: pair,
-            isManual: false
-          });
-
-          if (i + 1 < schoolDays.length) {
-            const monNext = schoolDays[i + 1];
-            shifts.push({
-              startDate: formatIsoDate(monNext),
-              days: [monNext],
-              label: formatShiftLabel([monNext]),
-              students: pair,
-              isManual: false
-            });
-            i += 2; // Đã xử lý T6 và T2 tuần sau -> tiếp theo là T3 tuần sau
-          } else {
-            i += 1;
-          }
-          continue;
+        } else {
+          pair = takePair();
         }
 
-        // Các ngày T2, T3, T4: ghép tối đa 2 ngày liên tiếp trong cùng tuần (không vượt qua T5)
-        const shiftDays = [curDay];
-        if (i + 1 < schoolDays.length) {
-          const nextD = schoolDays[i + 1];
-          if (nextD.getDay() !== 1 && nextD.getDay() !== 5) {
-            shiftDays.push(nextD);
-          }
-        }
-
-        if (manualMap.has(iso)) {
-          const manualStudent = manualMap.get(iso);
-          shifts.push({
-            startDate: iso,
-            days: shiftDays,
-            label: formatShiftLabel(shiftDays),
-            students: [manualStudent, ""],
-            isManual: true
-          });
-          i += shiftDays.length;
-          continue;
-        }
-
-        const pair = isFirstShift ? firstPair : takePair();
-        isFirstShift = false;
+        // Nếu cụm là 62 (T6 nối T2 tuần sau) có đủ 2 ngày, hiển thị rõ "T6,T2 • dd–dd/MM" và gắn vào tuần có T6
+        const anchorDate = groupDays[0];
+        const wkKey = getWeekMonday(anchorDate);
 
         shifts.push({
-          startDate: iso,
-          days: shiftDays,
-          label: formatShiftLabel(shiftDays),
+          weekKey: wkKey,
+          startDate: startIso,
+          days: groupDays,
+          label: formatShiftLabel(groupDays),
           students: pair,
-          isManual: false
+          isManual
         });
 
-        i += shiftDays.length;
+        patIdx++;
       }
 
       const weeksMap = new Map();
       for (const sh of shifts) {
-        const wkKey = getWeekMonday(sh.days[0]);
-        if (!weeksMap.has(wkKey)) {
-          weeksMap.set(wkKey, { weekMonday: wkKey, shifts: [] });
+        if (!weeksMap.has(sh.weekKey)) {
+          weeksMap.set(sh.weekKey, { weekMonday: sh.weekKey, shifts: [] });
         }
-        weeksMap.get(wkKey).shifts.push(sh);
+        weeksMap.get(sh.weekKey).shifts.push(sh);
       }
 
-      return Array.from(weeksMap.values());
+      return Array.from(weeksMap.values()).map((w, idx) => ({
+        weekNumber: idx + 1,
+        weekMonday: w.weekMonday,
+        shifts: w.shifts
+      }));
+    }
+
+    function getVisibleWeeks() {
+      const allWeeks = buildAllWeeksSchedule();
+      if (allWeeks.length === 0) return [];
+
+      const todayMonday = getWeekMonday(getRealToday());
+      let currentIdx = allWeeks.findIndex(w => w.weekMonday === todayMonday);
+
+      if (currentIdx === -1) {
+        if (todayMonday < allWeeks[0].weekMonday) {
+          currentIdx = 0;
+        } else {
+          currentIdx = allWeeks.length - 1;
+        }
+      }
+
+      const startIdx = Math.max(0, currentIdx - 1);
+      const endIdx = Math.min(allWeeks.length - 1, currentIdx + 3);
+
+      return allWeeks.slice(startIdx, endIdx + 1).map(w => ({
+        ...w,
+        isCurrent: w.weekMonday === allWeeks[currentIdx].weekMonday
+      }));
     }
 
     function renderWeeks() {
-      const weeks = buildSchedule();
-      const container = document.getElementById("weeksContainer");
-      const currentWeekKey = "2026-11-23";
+      const today = getRealToday();
+      const todayEl = document.getElementById("todayLabel");
+      if (todayEl) {
+        todayEl.textContent = `${formatShortDate(today)}/${today.getFullYear()}`;
+      }
 
-      container.innerHTML = weeks.map((wk, idx) => {
-        const isCurrent = wk.weekMonday === currentWeekKey;
+      const visibleWeeks = getVisibleWeeks();
+      const container = document.getElementById("weeksContainer");
+
+      container.innerHTML = visibleWeeks.map(wk => {
         const mondayObj = toDateObj(wk.weekMonday);
         const fridayObj = new Date(mondayObj);
         fridayObj.setDate(mondayObj.getDate() + 4);
 
-        const cardStyle = isCurrent
+        const cardStyle = wk.isCurrent
           ? "bg-blue-50/75 border-blue-400 ring-2 ring-blue-100"
           : "bg-white border-slate-200";
 
-        const badgeHtml = isCurrent
+        const badgeHtml = wk.isCurrent
           ? `<span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-600 text-white">Đang trực</span>`
-          : `<span class="text-xs text-slate-400 font-medium">Tuần ${idx + 1}</span>`;
+          : `<span class="text-xs text-slate-400 font-medium">Tuần ${wk.weekNumber}</span>`;
 
         const shiftsHtml = wk.shifts.map(sh => {
           const s1 = sh.students[0] || "";
@@ -666,7 +708,7 @@ Bí thư - Gia An`;
                 ${badgeHtml}
               </div>
 
-              <button onclick="downloadWeekPng('${wk.weekMonday}', ${idx + 1})"
+              <button onclick="downloadWeekPng('${wk.weekMonday}', ${wk.weekNumber})"
                 class="px-3 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold transition">
                 Tải hình PNG
               </button>
@@ -681,7 +723,7 @@ Bí thư - Gia An`;
     }
 
     function downloadWeekPng(weekMonday, weekNumber) {
-      const weeks = buildSchedule();
+      const weeks = buildAllWeeksSchedule();
       const wk = weeks.find(w => w.weekMonday === weekMonday);
       if (!wk) return;
 
@@ -822,7 +864,7 @@ Bí thư - Gia An`;
           type: typeStr || "Vệ sinh lớp dơ"
         });
 
-        const weeks = buildSchedule();
+        const weeks = buildAllWeeksSchedule();
         let dutyPair = null;
         for (const wk of weeks) {
           for (const sh of wk.shifts) {
@@ -888,7 +930,7 @@ Bí thư - Gia An`;
         return;
       }
 
-      const weeks = buildSchedule();
+      const weeks = buildAllWeeksSchedule();
       let found = null;
       for (const wk of weeks) {
         for (const sh of wk.shifts) {
@@ -926,8 +968,15 @@ Bí thư - Gia An`;
       renderWeeks();
     }
 
-    let currentImageBase64 = "";
-    let currentImageMime = "image/png";
+    function setScanStatus(msg, isError = false) {
+      const el = document.getElementById("scanStatusText");
+      if (!el) return;
+      el.textContent = msg;
+      el.classList.remove("hidden");
+      el.className = isError
+        ? "text-xs font-medium px-3 py-2 rounded-lg bg-red-50 text-red-700 border border-red-200"
+        : "text-xs font-medium px-3 py-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200";
+    }
 
     window.addEventListener("paste", (e) => {
       const items = e.clipboardData?.items;
@@ -936,6 +985,7 @@ Bí thư - Gia An`;
         if (item.type.startsWith("image/")) {
           const file = item.getAsFile();
           if (file) {
+            e.preventDefault();
             openScanModal();
             readImageFile(file);
           }
@@ -952,7 +1002,7 @@ Bí thư - Gia An`;
       currentImageMime = file.type || "image/png";
       const reader = new FileReader();
       reader.onload = async () => {
-        const result = reader.result;
+        const result = String(reader.result || "");
         const img = document.getElementById("previewImage");
         img.src = result;
         img.classList.remove("hidden");
@@ -963,10 +1013,12 @@ Bí thư - Gia An`;
     }
 
     async function analyzeImage() {
-      const apiKey = document.getElementById("geminiApiKey").value.trim();
+      saveApiKey();
+      const apiKey = state.geminiApiKey;
       parsedDraft = [];
 
       if (apiKey && currentImageBase64) {
+        setScanStatus("Đang nhận diện bảng vi phạm bằng Gemini...");
         try {
           const prompt = `Đọc bảng báo cáo vi phạm học sinh trong ảnh. Trả về đúng JSON array gồm các object: {"student":"tên hoặc Tập thể lớp","date":"YYYY-MM-DD","type":"tên lỗi"}. TUYỆT ĐỐI BỎ QUA mọi lỗi liên quan đến nghỉ có phép (CP, SP).`;
           const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
@@ -982,6 +1034,9 @@ Bí thư - Gia An`;
             })
           });
           const data = await res.json();
+          if (!res.ok) {
+            throw new Error(data.error?.message || "Lỗi gọi Gemini API");
+          }
           const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
           const jsonMatch = text.match(/\[[\s\S]*\]/);
           if (jsonMatch) {
@@ -990,21 +1045,38 @@ Bí thư - Gia An`;
               .filter(item => item.type && !isExcusedAbsence(item.type))
               .map(item => ({
                 student: item.student || "",
-                date: item.date || "2026-11-23",
+                date: item.date || formatIsoDate(getRealToday()),
                 type: item.type
               }));
           }
+          setScanStatus(`Đã nhận diện ${parsedDraft.length} mục (đã lọc bỏ nghỉ có phép).`);
         } catch (err) {
-          console.error(err);
+          setScanStatus(`Không quét tự động được (${err.message}). Bạn có thể nhập/chỉnh tay bên dưới.`, true);
         }
+      } else {
+        setScanStatus("Đã nhận ảnh. Chưa có Gemini API Key nên bạn có thể điền/thêm dòng nhanh bên dưới.");
       }
 
       if (parsedDraft.length === 0) {
         parsedDraft = [
-          { student: "", date: "2026-11-23", type: "Trễ Chính khóa" }
+          { student: "", date: formatIsoDate(getRealToday()), type: "Trễ Chính khóa" }
         ];
       }
 
+      renderParsedPreview();
+    }
+
+    function addParsedRow() {
+      parsedDraft.push({
+        student: "",
+        date: formatIsoDate(getRealToday()),
+        type: "Trễ Chính khóa"
+      });
+      renderParsedPreview();
+    }
+
+    function removeParsedRow(idx) {
+      parsedDraft.splice(idx, 1);
       renderParsedPreview();
     }
 
@@ -1017,13 +1089,16 @@ Bí thư - Gia An`;
       btn.disabled = parsedDraft.length === 0;
 
       list.innerHTML = parsedDraft.map((item, idx) => `
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 bg-white p-2 rounded-lg border border-slate-200 text-xs">
-          <input type="text" value="${item.student}" onchange="parsedDraft[${idx}].student = this.value"
-            class="px-2 py-1 border border-slate-200 rounded" placeholder="Họ tên / Tập thể lớp" />
-          <input type="date" value="${item.date}" onchange="parsedDraft[${idx}].date = this.value"
-            class="px-2 py-1 border border-slate-200 rounded" />
-          <input type="text" value="${item.type}" onchange="parsedDraft[${idx}].type = this.value"
-            class="px-2 py-1 border border-slate-200 rounded" placeholder="Lỗi vi phạm" />
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-white p-2 rounded-lg border border-slate-200 text-xs items-center">
+          <input type="text" value="${item.student}" oninput="parsedDraft[${idx}].student = this.value"
+            class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Họ tên / Tập thể lớp" />
+          <input type="date" value="${item.date}" oninput="parsedDraft[${idx}].date = this.value"
+            class="sm:col-span-3 px-2 py-1 border border-slate-200 rounded" />
+          <input type="text" value="${item.type}" oninput="parsedDraft[${idx}].type = this.value"
+            class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Lỗi vi phạm" />
+          <button type="button" onclick="removeParsedRow(${idx})" class="sm:col-span-1 text-red-600 font-bold text-center hover:underline">
+            &times;
+          </button>
         </div>
       `).join("");
     }
@@ -1113,6 +1188,11 @@ Bí thư - Gia An`;
       document.getElementById("manualStudent1").innerHTML = optionsHtml;
       document.getElementById("violTargetSelect").innerHTML =
         `<option value="Tập thể lớp">Tập thể lớp</option>` + optionsHtml;
+
+      const todayIso = formatIsoDate(getRealToday());
+      document.getElementById("searchDateInput").value = todayIso;
+      document.getElementById("manualDate").value = todayIso;
+      document.getElementById("violDateInput").value = todayIso;
     }
 
     function renderAll() {
