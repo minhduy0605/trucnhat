@@ -36,6 +36,12 @@
       "studentName": "Nguyễn Ngọc Bảo Nhi",
       "date": "2026-11-23",
       "type": "Trễ Chính khóa"
+    },
+    {
+      "id": 1795450565195.7288,
+      "studentName": "Trần Ngọc Minh Châu",
+      "date": "2026-11-23",
+      "type": "Trễ Chính khóa"
     }
   ],
   "manualInsertions": [
@@ -46,6 +52,7 @@
     }
   ],
   "priorityQueue": [
+    "Trần Ngọc Minh Châu",
     "Nguyễn Ngọc Bảo Nhi",
     "Lê Ngân Hạnh"
   ]
