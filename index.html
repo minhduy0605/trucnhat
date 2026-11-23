@@ -1415,7 +1415,7 @@ Bí thư - Gia An`;
         setScanStatus("Đang nhận diện bảng vi phạm bằng Gemini...");
         try {
           const prompt = `Đọc bảng báo cáo vi phạm học sinh trong ảnh. Trả về đúng JSON array gồm các object: {"student":"tên hoặc Tập thể lớp","date":"YYYY-MM-DD","type":"tên lỗi"}. TUYỆT ĐỐI BỎ QUA mọi lỗi liên quan đến nghỉ có phép (CP, SP).`;
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${encodeURIComponent(apiKey)}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
