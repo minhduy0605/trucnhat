@@ -54,6 +54,12 @@
       "studentName": "Trương Gia Phát",
       "date": "2026-11-23",
       "type": "Trễ Chính khóa"
+    },
+    {
+      "id": 1795450643006.0022,
+      "studentName": "Nguyễn Minh Quân",
+      "date": "2026-11-23",
+      "type": "Sử dụng điện thoại trong giờ học"
     }
   ],
   "manualInsertions": [
@@ -64,6 +70,7 @@
     }
   ],
   "priorityQueue": [
+    "Nguyễn Minh Quân",
     "Trương Gia Phát",
     "Nguyễn Khắc Hoàng Minh",
     "Trần Ngọc Minh Châu",
