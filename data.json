@@ -48,6 +48,12 @@
       "studentName": "Nguyễn Khắc Hoàng Minh",
       "date": "2026-11-23",
       "type": "Không chuận bị bài; Không chép bài"
+    },
+    {
+      "id": 1795450615357.98,
+      "studentName": "Trương Gia Phát",
+      "date": "2026-11-23",
+      "type": "Trễ Chính khóa"
     }
   ],
   "manualInsertions": [
@@ -58,6 +64,7 @@
     }
   ],
   "priorityQueue": [
+    "Trương Gia Phát",
     "Nguyễn Khắc Hoàng Minh",
     "Trần Ngọc Minh Châu",
     "Nguyễn Ngọc Bảo Nhi",
