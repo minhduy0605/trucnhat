@@ -94,7 +94,7 @@
     </div>
   </div>
 
-  <!-- Kết quả tìm ngày (ẩn mặc định) -->
+  <!-- Kết quả tìm ngày -->
   <div id="dateSearchResult" class="hidden max-w-6xl w-full mx-auto px-4 pt-4">
     <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 flex items-center justify-between gap-4">
       <div id="dateSearchContent" class="text-sm text-slate-800"></div>
@@ -237,15 +237,15 @@
 
       <div class="flex flex-wrap items-center gap-2">
         <input id="githubBcsUrl" type="text"
-          placeholder="Link raw BCS.txt trên GitHub (VD: https://raw.githubusercontent.com/.../BCS.txt)"
+          placeholder="Link raw BCS.txt trên GitHub"
           class="flex-1 px-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:outline-none focus:border-blue-500" />
-        <button onclick="fetchGithubBcs()"
+        <button onclick="fetchGithubBcs(true)"
           class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold">
           Tải từ GitHub
         </button>
       </div>
 
-      <textarea id="bcsTextarea" rows="8"
+      <textarea id="bcsTextarea" rows="9"
         class="w-full p-3 rounded-xl border border-slate-300 text-sm font-mono focus:outline-none focus:border-blue-500"></textarea>
 
       <div class="flex items-center justify-end gap-2">
@@ -301,7 +301,6 @@
   </div>
 
   <script>
-    // Danh sách 43 học sinh 12A1
     const STUDENTS = [
       { stt: 1, name: "Huỳnh Phúc An" },
       { stt: 2, name: "Phù Lý Gia An" },
@@ -355,7 +354,10 @@ TTT4 - Phúc An
 Lớp trưởng - Bảo Nhi
 Lớp phó học tập - Cát Tường
 Lớp phó kỉ luật - Minh Duy
-Lớp phó văn nghệ - Ngọc Linh`;
+Lớp phó văn nghệ - Ngọc Linh
+Bí thư - Gia An`;
+
+    const DEFAULT_GITHUB_BCS_URL = "https://raw.githubusercontent.com/minhduy0605/trucnhat/main/BCS.txt";
 
     const INITIAL_VIOLATIONS = [
       { id: 1, studentName: "Nguyễn Minh Khang", date: "2026-11-18", type: "Trễ Chính khóa" },
@@ -363,13 +365,13 @@ Lớp phó văn nghệ - Ngọc Linh`;
       { id: 3, studentName: "Tập thể lớp", date: "2026-11-18", type: "Vệ sinh lớp dơ" }
     ];
 
-    const STORAGE_KEY = "duty_12a1_v4";
+    const STORAGE_KEY = "duty_12a1_v6";
 
     let state = {
       bcsText: DEFAULT_BCS,
-      githubBcsUrl: "",
+      githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
       violations: [...INITIAL_VIOLATIONS],
-      manualInsertions: [], // { startDate: 'YYYY-MM-DD', student: 'Tên HS' }
+      manualInsertions: [],
       priorityQueue: []
     };
 
@@ -382,7 +384,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
           const parsed = JSON.parse(raw);
           state = {
             bcsText: parsed.bcsText ?? DEFAULT_BCS,
-            githubBcsUrl: parsed.githubBcsUrl ?? "",
+            githubBcsUrl: parsed.githubBcsUrl || DEFAULT_GITHUB_BCS_URL,
             violations: Array.isArray(parsed.violations) ? parsed.violations : [...INITIAL_VIOLATIONS],
             manualInsertions: Array.isArray(parsed.manualInsertions) ? parsed.manualInsertions : [],
             priorityQueue: Array.isArray(parsed.priorityQueue) ? parsed.priorityQueue : []
@@ -402,7 +404,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
       localStorage.removeItem(STORAGE_KEY);
       state = {
         bcsText: DEFAULT_BCS,
-        githubBcsUrl: "",
+        githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
         violations: [...INITIAL_VIOLATIONS],
         manualInsertions: [],
         priorityQueue: []
@@ -460,7 +462,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
       const cur = toDateObj(startIso);
       const end = toDateObj(endIso);
       while (cur <= end) {
-        const dow = cur.getDay(); // 1=T2 ... 5=T6
+        const dow = cur.getDay();
         if (dow >= 1 && dow <= 5) {
           days.push(new Date(cur));
         }
@@ -481,7 +483,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
       return formatIsoDate(copy);
     }
 
-    // Định dạng nhãn thứ & ngày: ví dụ "T2,T3 • 23–24/11" hoặc "T2 • 23/11"
+    // Nhãn thứ & ngày: ví dụ "T2,T3 • 23–24/11" hoặc "T6 • 27/11" hoặc "T2 • 30/11"
     function formatShiftLabel(daysInShift) {
       if (!daysInShift || daysInShift.length === 0) return "";
       if (daysInShift.length === 1) {
@@ -497,15 +499,18 @@ Lớp phó văn nghệ - Ngọc Linh`;
       return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
     }
 
-    // Xây dựng lịch trực: tiếp tục đúng sau STT 21 (Minh), bỏ qua T6 đẩy sang T2, hỗ trợ chèn thủ công 1 HS & tự đẩy lịch
+    // Xây dựng lịch trực:
+    // - Ca đầu T2,T3 (23-24/11): Long & Minh
+    // - Ca T4,T5 (25-26/11): cặp tiếp theo sau Minh (bỏ qua BCS)
+    // - Nếu bắt đầu vào Thứ 6 (vd T6 • 27/11): cặp đó trực Thứ 6 và nối tiếp Thứ 2 tuần sau (T2 • 30/11),
+    //   sau đó cặp kế tiếp trực T3,T4 • 01–02/12
     function buildSchedule() {
       const schoolDays = getSchoolDays("2026-11-23", "2027-05-31");
       const exempt = getExemptNames();
 
-      const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"]; // STT 20 & 21
+      const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"];
       const minhIndex = STUDENTS.findIndex(s => s.name === "Nguyễn Khắc Hoàng Minh");
 
-      // Sắp xếp danh sách xoay vòng bắt đầu ngay sau STT 21 (STT 22 -> 43 rồi mới tới 1 -> 21), loại trừ BCS
       const orderedFromAfterMinh = [
         ...STUDENTS.slice(minhIndex + 1),
         ...STUDENTS.slice(0, minhIndex + 1)
@@ -525,7 +530,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
         return [p1, p2];
       };
 
-      // Map phân thủ công 1 học sinh theo ngày bắt đầu
       const manualMap = new Map();
       for (const m of state.manualInsertions) {
         manualMap.set(m.startDate, m.student);
@@ -540,28 +544,38 @@ Lớp phó văn nghệ - Ngọc Linh`;
         const iso = formatIsoDate(curDay);
         const dow = curDay.getDay();
 
-        // Nếu rơi vào Thứ 6 (dow === 5): đẩy ca sang Thứ 2 tuần sau (nếu còn ngày học)
+        // Nếu ca bắt đầu vào Thứ 6 (dow === 5):
+        // Tạo 1 ca riêng cho Thứ 6 (hiển thị T6 • dd/MM) VÀ nếu có Thứ 2 tuần sau thì tạo ca nối tiếp T2 • dd/MM cho CÙNG cặp đó,
+        // sau đó bước nhảy tiếp tục từ Thứ 3 tuần sau (T3,T4).
         if (dow === 5) {
-          if (i + 1 >= schoolDays.length) break;
-          const monNext = schoolDays[i + 1];
-          const tueNext = (i + 2 < schoolDays.length && schoolDays[i + 2].getDay() !== 1) ? schoolDays[i + 2] : null;
-          const shiftDays = tueNext ? [monNext, tueNext] : [monNext];
           const pair = isFirstShift ? firstPair : takePair();
           isFirstShift = false;
 
           shifts.push({
-            startDate: formatIsoDate(monNext),
-            days: shiftDays,
-            label: formatShiftLabel(shiftDays),
+            startDate: iso,
+            days: [curDay],
+            label: formatShiftLabel([curDay]),
             students: pair,
             isManual: false
           });
 
-          i += 1 + shiftDays.length;
+          if (i + 1 < schoolDays.length) {
+            const monNext = schoolDays[i + 1];
+            shifts.push({
+              startDate: formatIsoDate(monNext),
+              days: [monNext],
+              label: formatShiftLabel([monNext]),
+              students: pair,
+              isManual: false
+            });
+            i += 2; // Đã xử lý T6 và T2 tuần sau -> tiếp theo là T3 tuần sau
+          } else {
+            i += 1;
+          }
           continue;
         }
 
-        // Xác định cụm ngày của ca hiện tại (tối đa 2 ngày trong cùng tuần, dừng trước Thứ 6 hoặc Thứ 2)
+        // Các ngày T2, T3, T4: ghép tối đa 2 ngày liên tiếp trong cùng tuần (không vượt qua T5)
         const shiftDays = [curDay];
         if (i + 1 < schoolDays.length) {
           const nextD = schoolDays[i + 1];
@@ -570,7 +584,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
           }
         }
 
-        // Nếu có phân thủ công 1 học sinh tại ngày bắt đầu ca -> chèn vào & tự đẩy lịch (không tiêu hao cặp xoay vòng thường)
         if (manualMap.has(iso)) {
           const manualStudent = manualMap.get(iso);
           shifts.push({
@@ -598,7 +611,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
         i += shiftDays.length;
       }
 
-      // Nhóm các ca theo tuần (Thứ 2 đầu tuần)
       const weeksMap = new Map();
       for (const sh of shifts) {
         const wkKey = getWeekMonday(sh.days[0]);
@@ -668,7 +680,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       }).join("");
     }
 
-    // Xuất ảnh PNG sạch đẹp bằng Canvas (tiêu đề/thứ/ngày xanh dương, tên bình thường)
     function downloadWeekPng(weekMonday, weekNumber) {
       const weeks = buildSchedule();
       const wk = weeks.find(w => w.weekMonday === weekMonday);
@@ -736,7 +747,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       link.click();
     }
 
-    // Thống kê vi phạm: chỉ hiển thị lỗi đó mấy lần
     function renderViolations() {
       const keyword = normalizeStr(document.getElementById("violationSearch")?.value || "");
       const tbody = document.getElementById("violationTableBody");
@@ -902,7 +912,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       `;
     }
 
-    // Phân thủ công 1 học sinh & tự đẩy lịch
     function submitManualDuty() {
       const startDate = document.getElementById("manualDate").value;
       const s1 = document.getElementById("manualStudent1").value;
@@ -917,7 +926,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderWeeks();
     }
 
-    // Dán / Tải ảnh vi phạm (Ctrl+V)
     let currentImageBase64 = "";
     let currentImageMime = "image/png";
 
@@ -1031,24 +1039,30 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderAll();
     }
 
-    // BCS.txt
     function openBcsModal() {
       document.getElementById("bcsTextarea").value = state.bcsText;
-      document.getElementById("githubBcsUrl").value = state.githubBcsUrl;
+      document.getElementById("githubBcsUrl").value = state.githubBcsUrl || DEFAULT_GITHUB_BCS_URL;
       document.getElementById("bcsModal").classList.remove("hidden");
     }
 
-    async function fetchGithubBcs() {
-      const url = document.getElementById("githubBcsUrl").value.trim();
+    async function fetchGithubBcs(showAlert = false) {
+      const url = (document.getElementById("githubBcsUrl")?.value || state.githubBcsUrl || DEFAULT_GITHUB_BCS_URL).trim();
       if (!url) return;
       try {
-        const res = await fetch(url);
+        const res = await fetch(`${url}?t=${Date.now()}`);
         if (!res.ok) throw new Error("Fetch failed");
-        const txt = await res.text();
-        document.getElementById("bcsTextarea").value = txt;
-        state.githubBcsUrl = url;
+        const txt = (await res.text()).trim();
+        if (txt) {
+          state.bcsText = txt;
+          state.githubBcsUrl = url;
+          saveState();
+          const ta = document.getElementById("bcsTextarea");
+          if (ta) ta.value = txt;
+          renderWeeks();
+          if (showAlert) alert("Đã tải BCS.txt mới nhất từ GitHub!");
+        }
       } catch (e) {
-        alert("Không tải được file BCS.txt từ link này.");
+        if (showAlert) alert("Không tải được file BCS.txt từ link này.");
       }
     }
 
@@ -1059,7 +1073,6 @@ Lớp phó văn nghệ - Ngọc Linh`;
       renderWeeks();
     }
 
-    // Điều hướng tab & modal
     function switchTab(tab) {
       const dutySec = document.getElementById("sectionDuty");
       const violSec = document.getElementById("sectionViolation");
@@ -1110,6 +1123,7 @@ Lớp phó văn nghệ - Ngọc Linh`;
     loadState();
     populateSelects();
     renderAll();
+    fetchGithubBcs(false);
   </script>
 </body>
 </html>
