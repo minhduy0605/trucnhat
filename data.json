@@ -66,6 +66,12 @@
       "studentName": "Nguyễn Khắc Hoàng Minh",
       "date": "2026-11-23",
       "type": "Không chuẩn bị bài; Không chép bài"
+    },
+    {
+      "id": 1795528299780.9338,
+      "studentName": "Nguyễn Khắc Hoàng Minh",
+      "date": "2026-11-24",
+      "type": "Trễ Chính khóa"
     }
   ],
   "manualInsertions": [
@@ -76,6 +82,7 @@
     }
   ],
   "priorityQueue": [
+    "Nguyễn Khắc Hoàng Minh",
     "Nguyễn Khắc Hoàng Minh",
     "Nguyễn Khắc Hoàng Minh",
     "Nguyễn Tiểu Long",
