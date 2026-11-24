@@ -19,7 +19,6 @@
     body.layout-mobile{--m:8px}
     html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;background:rgb(var(--bg))}
     body{isolation:isolate;font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;color:rgb(var(--s900));line-height:1.55;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
-    /* trang vở: dòng kẻ ngang + lề đỏ đôi */
     body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent 0 var(--m),rgb(var(--r600)/.5) var(--m) calc(var(--m) + 1.5px),transparent calc(var(--m) + 1.5px) calc(var(--m) + 5px),rgb(var(--r600)/.5) calc(var(--m) + 5px) calc(var(--m) + 6.5px),transparent calc(var(--m) + 6.5px)),repeating-linear-gradient(0deg,transparent 0 31px,rgb(var(--line)/.13) 31px 32px)}
     html .bg-white{background-color:rgb(var(--surface))}
     input,select,textarea{background-color:rgb(var(--surface));color:rgb(var(--s900));border-radius:10px}
@@ -35,7 +34,6 @@
     ::-webkit-scrollbar-thumb:hover{background:rgb(var(--s400))}
     .hand,.hero h1,.crest,.leaf b,.week h3,.sec-title,.fixed.z-50 h3{font-family:'Patrick Hand','Be Vietnam Pro',sans-serif;font-weight:400;font-synthesis:none}
 
-    /* đầu trang */
     .hero{position:relative;padding:36px 16px 64px}
     .hero-in{position:relative;max-width:72rem;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
     .brand{display:flex;align-items:center;gap:22px}
@@ -53,7 +51,6 @@
     #themeBtn{width:42px;height:42px;border-radius:50%;border:1.5px solid rgb(var(--s300));background:rgb(var(--surface));color:rgb(var(--s700));font-size:1.15rem;box-shadow:0 2px 0 rgb(var(--s300))}
     #themeBtn:hover{background:rgb(var(--b50));color:rgb(var(--b700))}
 
-    /* thanh công cụ */
     .dock{position:relative;z-index:30;max-width:72rem;margin:-32px auto 0;padding:0 16px}
     .dock-in{background:rgb(var(--surface)/.95);backdrop-filter:blur(10px);border:1.5px solid rgb(var(--s300));border-radius:16px;padding:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;box-shadow:0 4px 0 rgb(var(--s200)),0 20px 34px -20px rgb(40 30 120/.4)}
     .dock-search{margin-left:auto}
@@ -79,7 +76,6 @@
     .sec-title{font-size:1.65rem;line-height:1.1;color:rgb(var(--b700))}
     .dark .sec-title{color:rgb(var(--b400))}
 
-    /* tuần trực */
     .week{position:relative;background:rgb(var(--surface));border:1.5px solid rgb(var(--s300));border-radius:14px;padding:20px 20px 18px;box-shadow:0 3px 0 rgb(var(--s200))}
     .week-now{border-color:rgb(var(--b500));box-shadow:0 3px 0 rgb(var(--b300))}
     .week-past{opacity:.66}
@@ -107,7 +103,6 @@
     .lnk{font-size:.75rem;font-weight:600;color:rgb(var(--s500));padding:2px 9px;border-radius:8px}.lnk:hover{background:rgb(var(--b50));color:rgb(var(--b600))}
     .dark .lnk:hover{color:rgb(var(--b400))}
 
-    /* bảng vi phạm */
     .sheet{background:rgb(var(--surface));border:1.5px solid rgb(var(--s300));border-radius:14px;overflow:hidden;box-shadow:0 3px 0 rgb(var(--s200))}
     .vhead{background:rgb(var(--b50));border-bottom:1.5px solid rgb(var(--b200));color:rgb(var(--b700));font-size:.8rem;font-weight:700}
     .dark .vhead{color:rgb(var(--b400))}
@@ -129,7 +124,6 @@
     .warn-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
     .warn-chip{display:inline-flex;align-items:center;gap:6px;background:rgb(var(--surface));border:1.5px solid rgb(var(--r200));color:rgb(var(--r700));border-radius:999px;padding:5px 12px;font-size:.8rem;font-weight:600}
 
-    /* hộp thoại */
     .fixed.z-50.inset-0{background:rgb(20 16 60/.5)}
     .fixed.z-50>.bg-white{border:1.5px solid rgb(var(--s300));border-radius:16px;box-shadow:0 4px 0 rgb(var(--s200)),0 34px 70px -28px rgb(30 20 90/.55)}
     .fixed.z-50 h3{font-size:1.5rem;line-height:1.1;color:rgb(var(--b700))}
@@ -267,7 +261,6 @@
 
     <!-- PHẦN 2: THỐNG KÊ VI PHẠM -->
     <section id="sectionViolation" class="hidden space-y-4">
-      <!-- Phần cảnh báo lặp từ 2 lần cùng 1 lỗi -->
       <div id="repeatWarningSection" class="hidden warn-box">
         <div class="warn-title">
           <span>Cảnh báo lặp lỗi (từ 2 lần trở lên cùng 1 lỗi)</span>
@@ -431,7 +424,6 @@
         </div>
         <div id="parsedItemsList" class="space-y-2 max-h-48 overflow-y-auto custom-scroll"></div>
 
-        <!-- Chọn 1 trong 2 hoặc cả 2 khi áp dụng -->
         <div class="pt-2 border-t border-slate-200 flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700">
           <span>Áp dụng cho:</span>
           <label class="inline-flex items-center gap-1.5 cursor-pointer select-none">
@@ -473,14 +465,24 @@
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">HS 1</label>
-          <select id="manualStudent1" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">HS 1 (chọn STT)</label>
+          <select id="manualStudent1" onchange="onManualStudent1Change()" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">HS 2</label>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-semibold text-slate-600">HS 2</label>
+            <div class="inline-flex rounded-lg border border-slate-200 overflow-hidden text-xs font-semibold">
+              <button type="button" id="hs2ModeNextBtn" onclick="setHs2Mode('next')" class="px-2.5 py-1 bg-blue-600 text-white">STT tiếp theo</button>
+              <button type="button" id="hs2ModeCustomBtn" onclick="setHs2Mode('custom')" class="px-2.5 py-1 bg-white text-slate-700 hover:bg-slate-50">Bất kỳ</button>
+            </div>
+          </div>
           <select id="manualStudent2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
         </div>
+
+        <p class="text-xs text-slate-500">
+          Lưu ý: Khi lưu sẽ tự động đổi toàn bộ lịch trực ở phía sau kể từ ca này theo chuỗi STT tiếp theo.
+        </p>
       </div>
 
       <div class="flex items-center justify-between gap-2 pt-2">
@@ -663,6 +665,7 @@ Bí thư - Gia An`;
     let currentImageBase64 = "";
     let currentImageMime = "image/png";
     let editingManualDate = "";
+    let hs2SelectionMode = "next"; // "next" | "custom"
 
     function applyLayoutMode(mode) {
       document.body.classList.toggle("layout-mobile", mode === "mobile");
@@ -959,6 +962,19 @@ Bí thư - Gia An`;
       return "";
     }
 
+    function buildSttCycleFrom(startStudentName, exemptSet, includeStart = true) {
+      const idx = STUDENTS.findIndex(s => s.name === startStudentName);
+      const startIdx = idx === -1 ? 0 : idx;
+      const result = [];
+      for (let step = includeStart ? 0 : 1; step < STUDENTS.length * 6 + 2; step++) {
+        const cand = STUDENTS[(startIdx + step) % STUDENTS.length]?.name;
+        if (cand && !exemptSet.has(cand)) {
+          result.push(cand);
+        }
+      }
+      return result;
+    }
+
     function isExcusedAbsence(typeStr = "") {
       const n = normalizeStr(typeStr);
       return n.includes("nghi hoc co phep") || n.includes("co phep") || /\b(cp|sp)\b/.test(n);
@@ -1084,15 +1100,6 @@ Bí thư - Gia An`;
 
         const shifts = groups.map(grp => {
           const startIso = formatIsoDate(grp[0]);
-          if (startIso === "2026-12-04" && !manualMap.has(startIso)) {
-            return {
-              startDate: startIso,
-              days: grp,
-              label: formatShiftLabel(grp),
-              students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"],
-              isManual: false
-            };
-          }
           if (manualMap.has(startIso)) {
             return {
               startDate: startIso,
@@ -1100,6 +1107,15 @@ Bí thư - Gia An`;
               label: formatShiftLabel(grp),
               students: manualMap.get(startIso),
               isManual: true
+            };
+          }
+          if (startIso === "2026-12-04") {
+            return {
+              startDate: startIso,
+              days: grp,
+              label: formatShiftLabel(grp),
+              students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"],
+              isManual: false
             };
           }
           const pair = isFirstShift ? firstPair : takePair();
@@ -1201,6 +1217,38 @@ Bí thư - Gia An`;
       }).join("");
     }
 
+    function updateHs2ModeButtons() {
+      const nextBtn = document.getElementById("hs2ModeNextBtn");
+      const customBtn = document.getElementById("hs2ModeCustomBtn");
+      if (!nextBtn || !customBtn) return;
+      if (hs2SelectionMode === "next") {
+        nextBtn.className = "px-2.5 py-1 bg-blue-600 text-white";
+        customBtn.className = "px-2.5 py-1 bg-white text-slate-700 hover:bg-slate-50";
+      } else {
+        customBtn.className = "px-2.5 py-1 bg-blue-600 text-white";
+        nextBtn.className = "px-2.5 py-1 bg-white text-slate-700 hover:bg-slate-50";
+      }
+    }
+
+    function setHs2Mode(mode) {
+      hs2SelectionMode = mode;
+      updateHs2ModeButtons();
+      if (mode === "next") {
+        onManualStudent1Change();
+      }
+    }
+
+    function onManualStudent1Change() {
+      if (hs2SelectionMode !== "next") return;
+      const s1 = document.getElementById("manualStudent1")?.value || "";
+      const exempt = getExemptNames();
+      const nextStudent = getNextStudentByStt(s1, exempt);
+      const s2Select = document.getElementById("manualStudent2");
+      if (s2Select && nextStudent) {
+        s2Select.value = nextStudent;
+      }
+    }
+
     function openEditShiftModal(startDate) {
       const weeks = buildAllWeeksSchedule();
       let targetShift = null;
@@ -1214,21 +1262,31 @@ Bí thư - Gia An`;
         if (targetShift) break;
       }
 
+      const exempt = getExemptNames();
       editingManualDate = startDate;
       document.getElementById("manualModalTitle").textContent = "Chỉnh sửa phân công trực";
       document.getElementById("manualDate").value = startDate;
 
       const s1Val = targetShift?.students?.[0] || STUDENTS[0].name;
-      const s2Val = targetShift?.students?.[1] || "";
-      document.getElementById("manualStudent1").value = findStudent(s1Val)?.name || STUDENTS[0].name;
-      document.getElementById("manualStudent2").value = s2Val ? (findStudent(s2Val)?.name || "__NEXT_STT__") : "";
+      const chosenS1 = findStudent(s1Val)?.name || STUDENTS[0].name;
+      document.getElementById("manualStudent1").value = chosenS1;
+
+      const autoS2 = getNextStudentByStt(chosenS1, exempt);
+      const currentS2 = targetShift?.students?.[1] || "";
+      if (currentS2 && currentS2 !== autoS2) {
+        hs2SelectionMode = "custom";
+        document.getElementById("manualStudent2").value = findStudent(currentS2)?.name || currentS2;
+      } else {
+        hs2SelectionMode = "next";
+        document.getElementById("manualStudent2").value = autoS2 || currentS2;
+      }
+      updateHs2ModeButtons();
 
       const hasManual = state.manualInsertions.some(m => m.startDate === startDate);
       document.getElementById("btnDeleteManualDuty").classList.toggle("hidden", !hasManual);
       document.getElementById("manualModal").classList.remove("hidden");
     }
 
-    // Xóa 1 người trực -> tự động đẩy người tiếp theo lên lấp chỗ trống và dồn đều các ca sau
     function removePersonFromShift(startDate, slotIndex) {
       const exempt = getExemptNames();
       const weeks = buildAllWeeksSchedule();
@@ -1245,7 +1303,6 @@ Bí thư - Gia An`;
       const startShiftIdx = flatShifts.findIndex(s => s.startDate === startDate);
       if (startShiftIdx === -1) return;
 
-      // Xây dựng chuỗi học sinh liên tục từ ca bị xóa trở đi, bỏ đúng người ở slotIndex
       const stream = [];
       for (let idx = startShiftIdx; idx < flatShifts.length; idx++) {
         const pair = flatShifts[idx].students;
@@ -1255,15 +1312,9 @@ Bí thư - Gia An`;
         }
       }
 
-      // Bổ sung thêm vòng quay học sinh tiếp theo để không bao giờ thiếu người
       const lastPerson = stream[stream.length - 1] || flatShifts[startShiftIdx].students[1 - slotIndex] || STUDENTS[0].name;
-      const startIdxInRoster = Math.max(0, STUDENTS.findIndex(s => s.name === lastPerson));
-      for (let step = 1; step <= STUDENTS.length * 4; step++) {
-        const cand = STUDENTS[(startIdxInRoster + step) % STUDENTS.length]?.name;
-        if (cand && !exempt.has(cand)) {
-          stream.push(cand);
-        }
-      }
+      const extraCycle = buildSttCycleFrom(lastPerson, exempt, false);
+      stream.push(...extraCycle);
 
       let cursor = 0;
       for (let idx = startShiftIdx; idx < flatShifts.length; idx++) {
@@ -1763,7 +1814,9 @@ Bí thư - Gia An`;
     function submitManualDuty() {
       const startDate = document.getElementById("manualDate").value;
       const s1 = document.getElementById("manualStudent1").value;
-      const s2 = document.getElementById("manualStudent2").value;
+      const exempt = getExemptNames();
+      const rawS2 = document.getElementById("manualStudent2").value;
+      const s2 = hs2SelectionMode === "next" ? getNextStudentByStt(s1, exempt) : rawS2;
       if (!startDate || !s1) return;
 
       state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== startDate);
@@ -1772,6 +1825,32 @@ Bí thư - Gia An`;
         student1: s1,
         student2: s2
       });
+
+      const weeks = buildAllWeeksSchedule();
+      const flatShifts = [];
+      for (const wk of weeks) {
+        for (const sh of wk.shifts) {
+          flatShifts.push(sh.startDate);
+        }
+      }
+      const startIdx = flatShifts.indexOf(startDate);
+      if (startIdx !== -1 && startIdx + 1 < flatShifts.length) {
+        const anchorName = s2 || s1;
+        const nextCycle = buildSttCycleFrom(anchorName, exempt, false);
+        let cursor = 0;
+        for (let idx = startIdx + 1; idx < flatShifts.length; idx++) {
+          const shDate = flatShifts[idx];
+          const p1 = nextCycle[cursor++] || "";
+          const p2 = nextCycle[cursor++] || "";
+          state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== shDate);
+          state.manualInsertions.push({
+            startDate: shDate,
+            student1: p1,
+            student2: p2
+          });
+        }
+      }
+
       saveState();
       closeModal("manualModal");
       renderWeeks();
@@ -2025,9 +2104,11 @@ Bí thư - Gia An`;
 
     function openManualModal() {
       editingManualDate = "";
+      hs2SelectionMode = "next";
+      updateHs2ModeButtons();
       document.getElementById("manualModalTitle").textContent = "Phân trực thủ công";
       document.getElementById("manualDate").value = formatIsoDate(getRealToday());
-      document.getElementById("manualStudent2").value = "__NEXT_STT__";
+      onManualStudent1Change();
       document.getElementById("btnDeleteManualDuty").classList.add("hidden");
       document.getElementById("manualModal").classList.remove("hidden");
     }
@@ -2045,10 +2126,7 @@ Bí thư - Gia An`;
     function populateSelects() {
       const optionsHtml = STUDENTS.map(s => `<option value="${esc(s.name)}">${s.stt}. ${esc(s.name)}</option>`).join("");
       document.getElementById("manualStudent1").innerHTML = optionsHtml;
-      document.getElementById("manualStudent2").innerHTML =
-        `<option value="">-- Không có / Bỏ trống --</option>` +
-        `<option value="__NEXT_STT__">STT tiếp theo (tự động)</option>` +
-        optionsHtml;
+      document.getElementById("manualStudent2").innerHTML = optionsHtml;
       document.getElementById("violTargetSelect").innerHTML =
         `<option value="Tập thể lớp">Tập thể lớp</option>` + optionsHtml;
 
