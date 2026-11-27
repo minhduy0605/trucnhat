@@ -3,592 +3,636 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quản Lý Trực Nhật & Vi Phạm - 12A1</title>
+  <title>Trực Nhật & Vi Phạm - 12A1</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230284c7'/%3E%3Ctext x='32' y='40' text-anchor='middle' fill='%23ffffff' font-family='Arial,sans-serif' font-weight='800' font-size='22'%3E12A1%3C/text%3E%3C/svg%3E" />
   <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#F6F8FD">
-  <script>(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')}catch(e){}})()</script>
+  <meta name="theme-color" content="#f0f7ff">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('theme_12a1');
+        if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      } catch (e) {}
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{colors:{slate:{50:'rgb(var(--s50) / <alpha-value>)',100:'rgb(var(--s100) / <alpha-value>)',200:'rgb(var(--s200) / <alpha-value>)',300:'rgb(var(--s300) / <alpha-value>)',400:'rgb(var(--s400) / <alpha-value>)',500:'rgb(var(--s500) / <alpha-value>)',600:'rgb(var(--s600) / <alpha-value>)',700:'rgb(var(--s700) / <alpha-value>)',800:'rgb(var(--s800) / <alpha-value>)',900:'rgb(var(--s900) / <alpha-value>)'},blue:{50:'rgb(var(--b50) / <alpha-value>)',100:'rgb(var(--b100) / <alpha-value>)',200:'rgb(var(--b200) / <alpha-value>)',300:'rgb(var(--b300) / <alpha-value>)',400:'rgb(var(--b400) / <alpha-value>)',500:'rgb(var(--b500) / <alpha-value>)',600:'rgb(var(--b600) / <alpha-value>)',700:'rgb(var(--b700) / <alpha-value>)'},red:{50:'rgb(var(--r50) / <alpha-value>)',100:'rgb(var(--r100) / <alpha-value>)',200:'rgb(var(--r200) / <alpha-value>)',600:'rgb(var(--r600) / <alpha-value>)',700:'rgb(var(--r700) / <alpha-value>)'},emerald:{50:'rgb(var(--e50) / <alpha-value>)',100:'rgb(var(--e100) / <alpha-value>)',200:'rgb(var(--e200) / <alpha-value>)',600:'rgb(var(--e600) / <alpha-value>)',700:'rgb(var(--e700) / <alpha-value>)'},amber:{50:'rgb(var(--a50) / <alpha-value>)',100:'rgb(var(--a100) / <alpha-value>)',200:'rgb(var(--a200) / <alpha-value>)',500:'rgb(var(--a500) / <alpha-value>)',600:'rgb(var(--a600) / <alpha-value>)',800:'rgb(var(--a800) / <alpha-value>)',900:'rgb(var(--a900) / <alpha-value>)'}},fontFamily:{sans:['"Be Vietnam Pro"','system-ui','sans-serif']}}}}</script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'system-ui', '-apple-system', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    :root{--s50:247 248 253;--s100:238 240 249;--s200:222 226 241;--s300:196 202 226;--s400:144 152 186;--s500:98 106 142;--s600:72 80 116;--s700:50 56 90;--s800:33 37 66;--s900:23 24 48;--b50:241 238 255;--b100:226 220 255;--b200:197 187 250;--b300:162 148 241;--b400:126 108 229;--b500:96 76 212;--b600:74 53 200;--b700:52 36 150;--r50:255 241 242;--r100:255 224 227;--r200:247 184 190;--r600:205 40 54;--r700:158 28 42;--e50:230 247 241;--e100:206 239 225;--e200:156 222 192;--e600:20 134 96;--e700:14 106 76;--a50:255 248 219;--a100:255 238 163;--a200:243 214 92;--a500:214 150 10;--a600:178 118 8;--a800:120 80 6;--a900:96 64 6;--bg:246 248 253;--surface:255 255 255;--line:90 120 210;--hi:255 228 92;--m:10px;color-scheme:light}
-    .dark{--s50:27 30 50;--s100:34 38 62;--s200:48 53 82;--s300:68 74 108;--s400:116 124 158;--s500:146 154 186;--s600:172 179 208;--s700:194 200 224;--s800:218 222 240;--s900:240 242 252;--b50:35 31 76;--b100:46 40 104;--b200:66 58 148;--b300:98 86 196;--b400:164 150 255;--b500:130 112 245;--b600:108 88 235;--b700:84 64 214;--r50:60 28 36;--r100:78 34 44;--r200:116 48 60;--r600:244 122 134;--r700:250 152 162;--e50:20 48 40;--e100:24 62 50;--e200:36 92 72;--e600:22 140 100;--e700:110 220 170;--a50:52 40 20;--a100:66 50 24;--a200:100 76 30;--a500:230 170 60;--a600:240 190 90;--a800:240 196 120;--a900:250 215 150;--bg:14 16 30;--surface:22 25 44;--line:140 150 255;--hi:255 214 64;color-scheme:dark}
-    @media(min-width:640px){:root{--m:40px}}
-    body.layout-mobile{--m:8px}
-    html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;background:rgb(var(--bg))}
-    body{isolation:isolate;font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;color:rgb(var(--s900));line-height:1.55;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
-    body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,transparent 0 var(--m),rgb(var(--r600)/.5) var(--m) calc(var(--m) + 1.5px),transparent calc(var(--m) + 1.5px) calc(var(--m) + 5px),rgb(var(--r600)/.5) calc(var(--m) + 5px) calc(var(--m) + 6.5px),transparent calc(var(--m) + 6.5px)),repeating-linear-gradient(0deg,transparent 0 31px,rgb(var(--line)/.13) 31px 32px)}
-    html .bg-white{background-color:rgb(var(--surface))}
-    input,select,textarea{background-color:rgb(var(--surface));color:rgb(var(--s900));border-radius:10px}
-    input::placeholder,textarea::placeholder{color:rgb(var(--s400))}
-    input:focus,select:focus,textarea:focus{outline:none;border-color:rgb(var(--b500));box-shadow:0 0 0 3px rgb(var(--b500)/.2)}
-    input[type=checkbox]{accent-color:rgb(var(--b600))}
-    button:focus-visible,a:focus-visible{outline:2px solid rgb(var(--b500));outline-offset:2px}
-    button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
-    .dark .text-blue-600,.dark .text-blue-700{color:rgb(var(--b400))}
-    .dark .bg-amber-500{background-color:#b7791f}.dark .hover\:bg-amber-600:hover{background-color:#9c640f}.dark .hover\:bg-emerald-700:hover{background-color:#0f7050}
-    ::-webkit-scrollbar{width:8px;height:8px}
-    ::-webkit-scrollbar-thumb{background:rgb(var(--s300));border-radius:9999px}
-    ::-webkit-scrollbar-thumb:hover{background:rgb(var(--s400))}
-    .hand,.hero h1,.crest,.leaf b,.week h3,.sec-title,.fixed.z-50 h3{font-family:'Patrick Hand','Be Vietnam Pro',sans-serif;font-weight:400;font-synthesis:none}
+    :root {
+      --bg: #f0f7ff;
+      --surface: #ffffff;
+      --surface-2: #f6fafe;
+      --text: #0f2942;
+      --muted: #526b82;
+      --border: #cfe1f5;
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --primary-soft: #e0f2fe;
+      --accent: #0d9488;
+      --accent-soft: #ccfbf1;
+      --today-bg: #e0f7fa;
+      --today-border: #06b6d4;
+      --danger: #dc2626;
+      --danger-soft: #fee2e2;
+      --warn: #b45309;
+      --warn-soft: #fef3c7;
+    }
 
-    .hero{position:relative;padding:36px 16px 64px}
-    .hero-in{position:relative;max-width:72rem;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
-    .brand{display:flex;align-items:center;gap:22px}
-    .crest{position:relative;flex:none;background:rgb(var(--surface));border:2px solid rgb(var(--b600));color:rgb(var(--b600));font-size:2.3rem;line-height:1;padding:12px 18px 8px;border-radius:8px;transform:rotate(-3deg);box-shadow:3px 4px 0 rgb(var(--b200))}
-    .crest::before{content:"";position:absolute;left:50%;top:-11px;width:56px;height:20px;transform:translateX(-50%) rotate(3deg);background:rgb(var(--hi)/.72)}
-    .dark .crest{color:rgb(var(--b400));border-color:rgb(var(--b400))}
-    .hero h1{font-size:clamp(2.1rem,5.5vw,3.3rem);line-height:1.02;color:rgb(var(--b700))}
-    .dark .hero h1{color:rgb(var(--b400))}
-    .hero p{color:rgb(var(--s500));font-size:.88rem;margin-top:8px}
-    .today{display:flex;align-items:center;gap:14px}
-    .leaf{width:136px;text-align:center;background:rgb(var(--surface));border:1.5px solid rgb(var(--s300));border-radius:12px;overflow:hidden;box-shadow:0 3px 0 rgb(var(--s200))}
-    .leaf small{display:block;background:rgb(var(--r600));color:#fff;font-weight:700;font-size:.78rem;padding:3px 0}
-    .dark .leaf small{background:#b3232f}
-    .leaf b{display:block;font-size:1.6rem;line-height:1;padding:10px 6px 9px}
-    #themeBtn{width:42px;height:42px;border-radius:50%;border:1.5px solid rgb(var(--s300));background:rgb(var(--surface));color:rgb(var(--s700));font-size:1.15rem;box-shadow:0 2px 0 rgb(var(--s300))}
-    #themeBtn:hover{background:rgb(var(--b50));color:rgb(var(--b700))}
+    html.dark {
+      --bg: #081422;
+      --surface: #0e2034;
+      --surface-2: #132942;
+      --text: #e6f2ff;
+      --muted: #8fb0cf;
+      --border: #1e3b5c;
+      --primary: #38bdf8;
+      --primary-hover: #0ea5e9;
+      --primary-soft: rgba(56, 189, 248, 0.16);
+      --accent: #2dd4bf;
+      --accent-soft: rgba(45, 212, 191, 0.16);
+      --today-bg: rgba(14, 165, 233, 0.16);
+      --today-border: #38bdf8;
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.16);
+      --warn: #fbbf24;
+      --warn-soft: rgba(251, 191, 36, 0.16);
+    }
 
-    .dock{position:relative;z-index:30;max-width:72rem;margin:-32px auto 0;padding:0 16px}
-    .dock-in{background:rgb(var(--surface)/.95);backdrop-filter:blur(10px);border:1.5px solid rgb(var(--s300));border-radius:16px;padding:10px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;box-shadow:0 4px 0 rgb(var(--s200)),0 20px 34px -20px rgb(40 30 120/.4)}
-    .dock-search{margin-left:auto}
-    @media(min-width:768px){.dock{position:sticky;top:10px}}
-    .tabs{display:flex;gap:6px}
-    .tab{padding:8px 16px;border-radius:10px;font-weight:600;font-size:.875rem;color:rgb(var(--s600));transition:background-color .15s}
-    .tab:hover{background:rgb(var(--s100))}
-    .tab-on,.tab-on:hover{background:rgb(var(--b600));color:#fff;box-shadow:0 2px 0 rgb(var(--b700))}
-    .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;font-size:.84rem;font-weight:600;border:1.5px solid rgb(var(--s300));background:rgb(var(--surface));color:rgb(var(--s800));box-shadow:0 2px 0 rgb(var(--s300));transition:transform .1s,box-shadow .1s,background-color .15s}
-    .btn:hover{background:rgb(var(--b50));border-color:rgb(var(--b300));color:rgb(var(--b700))}
-    .btn:active{transform:translateY(2px);box-shadow:none}
-    .btn-p,.btn-p:hover{border-color:rgb(var(--b700));color:#fff;box-shadow:0 2px 0 rgb(var(--b700))}
-    .btn-p{background:rgb(var(--b600))}.btn-p:hover{background:rgb(var(--b700))}
-    .btn-w,.btn-w:hover{border-color:rgb(var(--a200));color:rgb(var(--a800))}
-    .btn-w{background:rgb(var(--a50));box-shadow:0 2px 0 rgb(var(--a200))}.btn-w:hover{background:rgb(var(--a100))}
-    .btn-e,.btn-e:hover{border-color:rgb(var(--e200));color:rgb(var(--e700))}
-    .btn-e{background:rgb(var(--e50));box-shadow:0 2px 0 rgb(var(--e200))}.btn-e:hover{background:rgb(var(--e100))}
-    .btn-s{padding:5px 11px;font-size:.78rem}
-    .btn[style*=transparent]{box-shadow:none;background:transparent}
-    kbd{font:inherit;font-size:11px;background:rgb(255 255 255/.22);padding:1px 6px;border-radius:6px}
-    #violationSearch{border-radius:10px;border-width:1.5px}
-    #dateSearchResult>div{background:rgb(var(--hi)/.26);border:1.5px solid rgb(var(--a500)/.55)}
-    .sec-title{font-size:1.65rem;line-height:1.1;color:rgb(var(--b700))}
-    .dark .sec-title{color:rgb(var(--b400))}
+    /* Các cặp màu phối theo bảng màu */
+    body[data-palette="azure-ice"] {
+      --primary: #0284c7; --primary-hover: #0369a1; --primary-soft: #e0f2fe;
+      --accent: #0284c7; --accent-soft: #e0f2fe;
+      --today-bg: #e0f2fe; --today-border: #0284c7;
+    }
+    html.dark body[data-palette="azure-ice"] {
+      --primary: #38bdf8; --primary-hover: #0ea5e9; --primary-soft: rgba(56,189,248,.16);
+      --accent: #38bdf8; --accent-soft: rgba(56,189,248,.16);
+      --today-bg: rgba(56,189,248,.16); --today-border: #38bdf8;
+    }
 
-    .week{position:relative;background:rgb(var(--surface));border:1.5px solid rgb(var(--s300));border-radius:14px;padding:20px 20px 18px;box-shadow:0 3px 0 rgb(var(--s200))}
-    .week-now{border-color:rgb(var(--b500));box-shadow:0 3px 0 rgb(var(--b300))}
-    .week-past{opacity:.66}
-    .week h3{font-size:1.55rem;line-height:1.1;padding:0 .3em;color:rgb(var(--b700))}
-    .dark .week h3{color:rgb(var(--b400))}
-    .week-now h3,.dark .week-now h3{color:rgb(var(--s900));background:linear-gradient(rgb(var(--hi)/.85),rgb(var(--hi)/.85)) 0 88%/100% 52% no-repeat}
-    .dark .week-now h3{background-image:linear-gradient(rgb(var(--hi)/.34),rgb(var(--hi)/.34))}
-    .live{display:inline-flex;align-items:center;gap:6px;color:rgb(var(--r600));border:2px solid rgb(var(--r600));border-radius:6px;font-weight:800;font-size:.72rem;padding:2px 9px;transform:rotate(-4deg);animation:stamp .5s cubic-bezier(.2,1.4,.4,1) .15s both}
-    .live i{width:7px;height:7px;border-radius:50%;background:currentColor}
-    @keyframes stamp{from{opacity:0;transform:rotate(-14deg) scale(1.9)}to{opacity:1;transform:rotate(-4deg) scale(1)}}
-    .shifts{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
-    .shift{background:rgb(var(--s50));border:1.5px solid rgb(var(--s200));border-radius:10px;padding:11px 12px 12px}
-    .shift-today{background:rgb(var(--hi)/.16);border-color:rgb(var(--a500)/.7)}
-    .shift-day{background:rgb(var(--b100));color:rgb(var(--b700));font-weight:700;font-size:.75rem;padding:2px 9px;border-radius:6px}
-    .dark .shift-day{color:rgb(var(--b400))}
-    .today-tag{background:rgb(var(--a100));color:rgb(var(--a800));font-weight:700;font-size:.7rem;padding:1px 8px;border-radius:999px}
-    .person{display:flex;align-items:center;gap:9px;margin-top:9px;font-size:.9rem;font-weight:500;min-width:0}
-    .person .x{margin-left:auto;color:rgb(var(--s400));padding:0 4px;font-weight:700}.person .x:hover{color:rgb(var(--r600))}
-    .av{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:700;background:color-mix(in srgb,currentColor 16%,transparent)}
-    .av0{color:#6a55e0}.av1{color:#d6384a}.av2{color:#159868}.av3{color:#c68a0a}.av4{color:#3b7be8}
-    .av.av-female{background:rgba(236,72,153,.16);color:#db2777;box-shadow:inset 0 0 0 1.5px rgba(236,72,153,.35)}
-    .dark .av.av-female{background:rgba(244,114,182,.18);color:#f472b6;box-shadow:inset 0 0 0 1.5px rgba(244,114,182,.35)}
-    .av.av-male{background:rgba(59,130,246,.16);color:#2563eb;box-shadow:inset 0 0 0 1.5px rgba(59,130,246,.35)}
-    .dark .av.av-male{background:rgba(96,165,250,.18);color:#60a5fa;box-shadow:inset 0 0 0 1.5px rgba(96,165,250,.35)}
-    .lnk{font-size:.75rem;font-weight:600;color:rgb(var(--s500));padding:2px 9px;border-radius:8px}.lnk:hover{background:rgb(var(--b50));color:rgb(var(--b600))}
-    .dark .lnk:hover{color:rgb(var(--b400))}
+    body[data-palette="pine-carolina"] {
+      --bg: #f1f7f6; --surface: #ffffff; --surface-2: #f6fbfa;
+      --text: #0d332d; --muted: #4b6e68; --border: #cbe0dc;
+      --primary: #14532d; --primary-hover: #166534; --primary-soft: #dcfce7;
+      --accent: #5b9bd5; --accent-soft: #e0f2fe;
+      --today-bg: #e6f4f1; --today-border: #2b7a78;
+    }
+    html.dark body[data-palette="pine-carolina"] {
+      --bg: #081c19; --surface: #0e2b27; --surface-2: #133732;
+      --text: #e2f5f1; --muted: #8ab8b0; --border: #1e4d46;
+      --primary: #4ade80; --primary-hover: #22c55e; --primary-soft: rgba(74,222,128,.15);
+      --accent: #7dd3fc; --accent-soft: rgba(125,211,252,.15);
+      --today-bg: rgba(45,212,191,.16); --today-border: #2dd4bf;
+    }
 
-    .sheet{background:rgb(var(--surface));border:1.5px solid rgb(var(--s300));border-radius:14px;overflow:hidden;box-shadow:0 3px 0 rgb(var(--s200))}
-    .vhead{background:rgb(var(--b50));border-bottom:1.5px solid rgb(var(--b200));color:rgb(var(--b700));font-size:.8rem;font-weight:700}
-    .dark .vhead{color:rgb(var(--b400))}
-    .vrow{transition:background-color .15s}.vrow:hover{background:rgb(var(--hi)/.14)}
-    .pill{display:inline-block;padding:2px 12px;border-radius:999px;font-weight:700;font-size:.8rem}
-    .pill-s{background:rgb(var(--b50));color:rgb(var(--b700))}.pill-a{background:rgb(var(--a100));color:rgb(var(--a800))}.pill-r{background:rgb(var(--r100));color:rgb(var(--r700))}
-    .dark .pill-s{background:rgb(var(--b100));color:rgb(var(--b400))}
-    .cat-tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.7rem;font-weight:700;background:rgb(var(--b50));color:rgb(var(--b700));border:1px solid rgb(var(--b200))}
-    .dark .cat-tag{color:rgb(var(--b400))}
-    .cnt{min-width:30px;padding:3px 8px;border-radius:8px;font-size:.75rem;font-weight:700;border:1.5px solid;transition:transform .1s}
-    .cnt:active{transform:scale(.92)}
-    .cnt-m{background:rgb(var(--r50));border-color:rgb(var(--r200));color:rgb(var(--r700))}.cnt-m:hover{background:rgb(var(--r100))}
-    .cnt-p{background:rgb(var(--b50));border-color:rgb(var(--b200));color:rgb(var(--b700))}.cnt-p:hover{background:rgb(var(--b100))}
-    .dark .cnt-p{color:rgb(var(--b400))}
-    .err-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0}
-    .err-item+.err-item{border-top:1px dashed rgb(var(--s200))}
-    .warn-box{background:rgb(var(--r50));border:1.5px dashed rgb(var(--r600)/.6);border-radius:14px;padding:14px 16px}
-    .warn-title{font-weight:800;font-size:.9rem;color:rgb(var(--r700));display:flex;align-items:center;gap:8px}
-    .warn-title::before{content:"!";display:grid;place-items:center;flex:none;width:22px;height:22px;border-radius:50%;background:rgb(var(--r600));color:#fff;font-size:.8rem}
-    .dark .warn-title::before{color:rgb(var(--r50))}
-    .warn-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-    .warn-chip{display:inline-flex;align-items:center;gap:6px;background:rgb(var(--surface));border:1.5px solid rgb(var(--r200));color:rgb(var(--r700));border-radius:999px;padding:5px 12px;font-size:.8rem;font-weight:600}
+    body[data-palette="slate-mint"] {
+      --bg: #f3f6f4; --surface: #ffffff; --surface-2: #f7faf8;
+      --text: #1e293b; --muted: #556575; --border: #d2ddd7;
+      --primary: #475569; --primary-hover: #334155; --primary-soft: #e2e8f0;
+      --accent: #689f7c; --accent-soft: #dcfce7;
+      --today-bg: #e8f5ee; --today-border: #529970;
+    }
+    html.dark body[data-palette="slate-mint"] {
+      --bg: #0f1519; --surface: #162026; --surface-2: #1d2a32;
+      --text: #e6eef2; --muted: #94a9b5; --border: #293b46;
+      --primary: #94a3b8; --primary-hover: #cbd5e1; --primary-soft: rgba(148,163,184,.16);
+      --accent: #86efac; --accent-soft: rgba(134,239,172,.15);
+      --today-bg: rgba(134,239,172,.14); --today-border: #6ee7b7;
+    }
 
-    .fixed.z-50.inset-0{background:rgb(20 16 60/.5)}
-    .fixed.z-50>.bg-white{border:1.5px solid rgb(var(--s300));border-radius:16px;box-shadow:0 4px 0 rgb(var(--s200)),0 34px 70px -28px rgb(30 20 90/.55)}
-    .fixed.z-50 h3{font-size:1.5rem;line-height:1.1;color:rgb(var(--b700))}
-    .dark .fixed.z-50 h3{color:rgb(var(--b400))}
-    .layout-picker{position:fixed;inset:0;z-index:70;background:rgb(var(--bg)/.94);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:20px}
-    .layout-picker-box{width:100%;max-width:520px;background:rgb(var(--surface));border:1.5px solid rgb(var(--s300));border-radius:18px;padding:28px 22px;box-shadow:0 4px 0 rgb(var(--s200)),0 30px 60px -24px rgb(30 20 90/.45);text-align:center}
-    .layout-picker-box h2{font-family:'Patrick Hand','Be Vietnam Pro',sans-serif;font-weight:400;font-size:1.8rem}
-    .layout-choices{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
-    .layout-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px 14px;border-radius:14px;border:1.5px solid rgb(var(--s300));background:rgb(var(--s50));color:rgb(var(--s900));box-shadow:0 3px 0 rgb(var(--s200));transition:.15s}
-    .layout-card:hover{border-color:rgb(var(--b500));background:rgb(var(--b50));transform:translateY(-2px)}
-    .layout-card svg{width:34px;height:34px;color:rgb(var(--b600))}
-    .layout-card span{font-weight:800;font-size:1.05rem}
+    body[data-palette="wisteria-apricot"] {
+      --bg: #f7f5fc; --surface: #ffffff; --surface-2: #faf9fd;
+      --text: #272238; --muted: #635c7a; --border: #ddd6ee;
+      --primary: #6d597a; --primary-hover: #564462; --primary-soft: #ede9fe;
+      --accent: #e07a5f; --accent-soft: #ffedd5;
+      --today-bg: #fff3eb; --today-border: #e07a5f;
+    }
+    html.dark body[data-palette="wisteria-apricot"] {
+      --bg: #151221; --surface: #1e1a30; --surface-2: #27223e;
+      --text: #efeafd; --muted: #a69ec2; --border: #362f54;
+      --primary: #c4b5fd; --primary-hover: #a78bfa; --primary-soft: rgba(196,181,253,.16);
+      --accent: #fdba74; --accent-soft: rgba(253,186,116,.16);
+      --today-bg: rgba(253,186,116,.14); --today-border: #fb923c;
+    }
 
-    @media(max-width:640px){.brand{gap:16px}.crest{font-size:1.8rem;padding:10px 14px 6px}}
-    body.layout-mobile .hero{padding:26px 14px 54px}
-    body.layout-mobile .hero-in{flex-direction:column;align-items:flex-start;gap:16px}
-    body.layout-mobile .brand{gap:16px}
-    body.layout-mobile .crest{font-size:1.8rem;padding:10px 14px 6px}
-    body.layout-mobile .today{width:100%;justify-content:space-between}
-    body.layout-mobile .dock{position:static;margin:-28px auto 0;padding:0 12px;max-width:30rem}
-    body.layout-mobile .dock-in{flex-direction:column;align-items:stretch;gap:8px;padding:10px}
-    body.layout-mobile .tabs{width:100%}
-    body.layout-mobile .tab{flex:1;text-align:center;padding:8px 10px;font-size:.82rem}
-    body.layout-mobile .dock-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    body.layout-mobile .dock-actions .btn{justify-content:center;padding:8px 10px;font-size:.78rem}
-    body.layout-mobile .dock-actions .btn-p{grid-column:1 / -1}
-    body.layout-mobile .dock-search{flex-wrap:wrap;margin-left:0}
-    body.layout-mobile .dock-search input[type="date"]{flex:1;min-width:0}
-    body.layout-mobile main,body.layout-mobile #syncStatusBar,body.layout-mobile #dateSearchResult{max-width:30rem;padding-left:12px;padding-right:12px}
-    body.layout-mobile .week{padding:15px}
-    body.layout-mobile .shifts{grid-template-columns:1fr;gap:8px}
-    body.layout-mobile th,body.layout-mobile td{padding:10px 8px;font-size:.8rem}
-    @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+    body[data-palette="cream-cloud"] {
+      --bg: #f6f8fa; --surface: #ffffff; --surface-2: #f9fbfc;
+      --text: #1f2933; --muted: #5c6b7a; --border: #d8e1e8;
+      --primary: #2563eb; --primary-hover: #1d4ed8; --primary-soft: #dbeafe;
+      --accent: #64748b; --accent-soft: #f1f5f9;
+      --today-bg: #eff6ff; --today-border: #3b82f6;
+    }
+    html.dark body[data-palette="cream-cloud"] {
+      --bg: #0d131a; --surface: #151e29; --surface-2: #1c2836;
+      --text: #e4ebf2; --muted: #93a4b8; --border: #28384a;
+      --primary: #60a5fa; --primary-hover: #3b82f6; --primary-soft: rgba(96,165,250,.16);
+      --accent: #94a3b8; --accent-soft: rgba(148,163,184,.16);
+      --today-bg: rgba(96,165,250,.15); --today-border: #60a5fa;
+    }
+
+
+    * { box-sizing: border-box; }
+    html { background: var(--bg); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html, body { margin: 0; padding: 0; overflow-x: hidden; }
+    body {
+      background: transparent; color: var(--text);
+      font-family: 'Be Vietnam Pro', system-ui, -apple-system, sans-serif;
+      font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+    }
+    /* Tuyệt đối không dùng sọc biên trái */
+    body::before, body::after { content: none !important; display: none !important; }
+    .bg-orbs {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(640px 420px at 12% -6%, color-mix(in srgb, var(--primary) 24%, transparent), transparent 70%),
+        radial-gradient(560px 400px at 96% 4%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+        radial-gradient(700px 500px at 50% 110%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 70%);
+    }
+    @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 9px; }
+
+    .app-container { width: 100%; max-width: 72rem; margin: 0 auto; padding-left: 1rem; padding-right: 1rem; }
+    .muted { color: var(--muted); }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: color-mix(in srgb, var(--surface) 72%, transparent);
+      backdrop-filter: blur(16px) saturate(1.5); -webkit-backdrop-filter: blur(16px) saturate(1.5);
+      border-bottom: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    }
+    .nav-in { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .6rem; padding-top: .65rem; padding-bottom: .65rem; }
+    .brand { display: flex; align-items: center; gap: .65rem; }
+    .logo {
+      width: 2.5rem; height: 2.5rem; border-radius: .85rem; display: grid; place-items: center;
+      font-weight: 800; font-size: .78rem; color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 8px 18px -8px var(--primary);
+    }
+    html.dark .logo { color: #061322; }
+    .brand-t b { display: block; font-size: .92rem; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
+    .brand-t span { font-size: .7rem; color: var(--muted); }
+    .tabs { display: flex; gap: .2rem; padding: .25rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface-2); }
+    .tab-btn {
+      display: inline-flex; align-items: center; gap: .45rem; padding: .45rem 1rem; border-radius: 999px;
+      font-size: .82rem; font-weight: 600; color: var(--muted); background: transparent; border: 0;
+      white-space: nowrap; cursor: pointer; transition: all .18s ease;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 6px 16px -6px var(--primary); }
+    html.dark .tab-btn.active { color: #061322; }
+    .nav-actions { display: flex; gap: .4rem; }
+    .icon-btn {
+      width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: .8rem;
+      border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; transition: all .15s;
+    }
+    .icon-btn:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+    @media (min-width: 768px) { .tabs { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); } }
+    @media (max-width: 767px) { .tabs { order: 3; width: 100%; } .tab-btn { flex: 1; justify-content: center; } }
+
+    /* ===== HERO ===== */
+    .hero { text-align: center; padding: 2.6rem 0 1.4rem; animation: rise .5s ease-out; }
+    .badge {
+      display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .95rem; border-radius: 999px;
+      border: 1px solid var(--border); font-size: .74rem; color: var(--muted);
+      background: color-mix(in srgb, var(--surface) 70%, transparent); backdrop-filter: blur(8px);
+    }
+    .badge i { width: .45rem; height: .45rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); }
+    .hero h1 {
+      margin: 1.15rem auto .8rem; max-width: 40rem; font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.08;
+      font-weight: 700; letter-spacing: -.045em;
+      background: linear-gradient(120deg, var(--text) 30%, var(--primary) 100%);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { margin: 0 auto 1.6rem; max-width: 34rem; font-size: .92rem; color: var(--muted); }
+
+    .glass {
+      background: color-mix(in srgb, var(--surface) 80%, transparent);
+      border: 1px solid var(--border); border-radius: 1.3rem;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 24px 60px -34px color-mix(in srgb, var(--primary) 60%, transparent);
+    }
+    .today-card { max-width: 56rem; margin: 0 auto; padding: 1rem; display: grid; gap: 1rem; text-align: left; }
+    @media (min-width: 900px) { .today-card { grid-template-columns: auto 1fr auto auto; align-items: center; padding: 1.1rem 1.3rem; } }
+    .leaf { min-width: 6.4rem; text-align: center; border-radius: 1rem; overflow: hidden; border: 1px solid var(--border); background: var(--surface); }
+    .leaf small { display: block; padding: .22rem 0; font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #fff; background: linear-gradient(135deg, var(--primary), var(--accent)); }
+    html.dark .leaf small { color: #061322; }
+    .leaf b { display: block; padding: .55rem .5rem; font-size: 1.1rem; font-weight: 700; letter-spacing: -.02em; }
+    .eyebrow { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: .45rem; }
+    .duty-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .3rem .85rem .3rem .3rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-size: .85rem; font-weight: 600; }
+    .base-box { padding: .7rem .9rem; border-radius: 1rem; background: var(--surface-2); border: 1px solid var(--border); font-size: .78rem; max-width: 18rem; }
+    .base-box div + div { margin-top: .35rem; }
+    .base-box span { display: block; font-weight: 600; line-height: 1.35; }
+    .stats { display: flex; gap: .6rem; }
+    .stat { flex: 1; min-width: 6rem; padding: .7rem .9rem; border-radius: 1rem; background: var(--surface-2); border: 1px solid var(--border); }
+    .stat b { display: block; font-size: 1.6rem; font-weight: 700; letter-spacing: -.04em; line-height: 1.1; }
+    .stat span { font-size: .7rem; color: var(--muted); }
+    .stat.danger b { color: var(--danger); }
+
+    /* ===== BUTTON / CARD ===== */
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 1.2rem; box-shadow: 0 10px 30px -22px color-mix(in srgb, var(--primary) 60%, transparent); }
+    .card-soft { background: var(--surface-2); border: 1px solid var(--border); border-radius: .9rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .5rem .9rem; border-radius: .75rem;
+      font-size: .82rem; font-weight: 600; border: 1px solid var(--border); background: var(--surface); color: var(--text);
+      white-space: nowrap; cursor: pointer; transition: all .15s ease;
+    }
+    .btn:hover { background: var(--primary-soft); border-color: var(--primary); }
+    .btn:active { transform: scale(.97); }
+    .btn-primary { background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--accent))); border-color: transparent; color: #fff; box-shadow: 0 8px 18px -10px var(--primary); }
+    html.dark .btn-primary { color: #061322; }
+    .btn-primary:hover { filter: brightness(1.08); background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 70%, var(--accent))); border-color: transparent; }
+    .btn-accent { background: var(--accent-soft); border-color: transparent; color: var(--text); }
+    .btn-sm { padding: .3rem .65rem; font-size: .76rem; border-radius: .6rem; }
+    .mini { min-width: 2rem; height: 1.8rem; border-radius: .55rem; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: .76rem; font-weight: 700; cursor: pointer; transition: all .12s; }
+    .mini:hover { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+    .mini.m:hover { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
+    .toolbar { padding: .8rem; display: grid; gap: .7rem; }
+    .toolbar .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+    .toolbar .row + .row { padding-top: .7rem; border-top: 1px dashed var(--border); }
+    .sec-title { font-size: 1.25rem; font-weight: 700; letter-spacing: -.03em; }
+    .reveal { animation: rise .45s ease-out both; }
+
+    input, select, textarea { background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: .7rem; }
+    input::placeholder, textarea::placeholder { color: var(--muted); opacity: .7; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+    input[type=checkbox] { accent-color: var(--primary); }
+
+    /* ===== TUẦN TRỰC ===== */
+    .shift-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .8rem; }
+    .shift-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 1rem; padding: .8rem; min-width: 0; transition: transform .15s, box-shadow .15s; }
+    .shift-card:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -20px var(--primary); }
+    .shift-card.is-today { background: linear-gradient(160deg, var(--today-bg), var(--surface-2)); border-color: var(--today-border); box-shadow: 0 0 0 1px var(--today-border), 0 14px 32px -18px var(--today-border); }
+    .shift-top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; flex-wrap: nowrap; margin-bottom: .6rem; }
+    .shift-meta { display: inline-flex; align-items: center; gap: .4rem; flex-wrap: nowrap; min-width: 0; }
+    .shift-date-badge { display: inline-flex; padding: .2rem .6rem; border-radius: .55rem; font-size: .74rem; font-weight: 700; background: var(--primary-soft); color: var(--primary); white-space: nowrap; }
+    .today-pill { display: inline-flex; padding: .12rem .55rem; border-radius: 999px; font-size: .66rem; font-weight: 700; background: var(--primary); color: #fff; white-space: nowrap; flex-shrink: 0; }
+    html.dark .today-pill { color: #061322; }
+    .edit-link { display: inline-flex; align-items: center; gap: .25rem; font-size: .74rem; font-weight: 600; color: var(--muted); background: transparent; border: 0; padding: .15rem .4rem; border-radius: .45rem; cursor: pointer; flex-shrink: 0; }
+    .edit-link:hover { color: var(--primary); background: var(--primary-soft); }
+    .person-row { display: flex; align-items: center; gap: .5rem; padding: .4rem .5rem; border-radius: .75rem; background: var(--surface); border: 1px solid var(--border); margin-top: .45rem; min-width: 0; }
+    .stt-tag { display: inline-flex; align-items: center; justify-content: center; min-width: 2rem; height: 1.5rem; padding: 0 .4rem; border-radius: .5rem; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
+    .stt-tag.male { background: rgba(2,132,199,.14); color: #0369a1; }
+    html.dark .stt-tag.male { background: rgba(56,189,248,.18); color: #7dd3fc; }
+    .stt-tag.female { background: rgba(219,39,119,.14); color: #be185d; }
+    html.dark .stt-tag.female { background: rgba(244,114,182,.18); color: #f9a8d4; }
+    .person-name { font-size: .85rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+    .remove-btn { background: transparent; border: 0; color: var(--muted); font-size: 1rem; line-height: 1; padding: .15rem .35rem; border-radius: .45rem; cursor: pointer; flex-shrink: 0; }
+    .remove-btn:hover { color: var(--danger); background: var(--danger-soft); }
+    .live-badge { display: inline-flex; align-items: center; gap: .4rem; padding: .15rem .65rem; border-radius: 999px; font-size: .72rem; font-weight: 700; background: var(--accent-soft); color: var(--text); border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent); white-space: nowrap; }
+    .live-dot { width: .45rem; height: .45rem; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 0 var(--accent); animation: pulse 1.8s infinite; }
+    @keyframes pulse { 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+    /* ===== VI PHẠM ===== */
+    .pill { display: inline-block; padding: .1rem .65rem; border-radius: 999px; font-size: .74rem; font-weight: 700; white-space: nowrap; }
+    .pill-ok { background: var(--primary-soft); color: var(--primary); }
+    .pill-warn { background: var(--warn-soft); color: var(--warn); }
+    .pill-bad { background: var(--danger-soft); color: var(--danger); }
+    .warn-banner { background: var(--danger-soft); border: 1px solid color-mix(in srgb, var(--danger) 55%, transparent); border-radius: 1.2rem; padding: 1rem; }
+    .warn-grid { display: grid; gap: .6rem; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); margin-top: .75rem; }
+    .warn-card { background: var(--surface); border: 1px solid color-mix(in srgb, var(--danger) 40%, transparent); border-radius: .9rem; padding: .7rem .85rem; }
+    .warn-card .top { display: flex; align-items: center; justify-content: space-between; gap: .5rem; font-weight: 700; font-size: .9rem; }
+    .warn-card .cat { font-size: .74rem; color: var(--muted); margin-top: .15rem; }
+    .vgrid { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 370px), 1fr)); }
+    .vcard { background: var(--surface); border: 1px solid var(--border); border-radius: 1.1rem; padding: 1rem; animation: rise .4s ease-out both; }
+    .vcard-warn { border-color: color-mix(in srgb, var(--danger) 60%, transparent); box-shadow: 0 16px 36px -22px var(--danger); }
+    .vhead { display: flex; align-items: center; gap: .7rem; }
+    .vname { font-weight: 700; letter-spacing: -.01em; }
+    .vsub { font-size: .72rem; color: var(--muted); }
+    .meters { display: grid; grid-template-columns: repeat(3, 1fr); gap: .55rem; margin: .85rem 0 .6rem; }
+    .meter-top { display: flex; justify-content: space-between; font-size: .68rem; color: var(--muted); margin-bottom: .25rem; }
+    .meter-top b { color: var(--text); }
+    .bar { height: .4rem; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; }
+    .bar i { display: block; height: 100%; border-radius: 999px; background: var(--primary); transition: width .4s ease; }
+    .bar i.a { background: var(--warn); } .bar i.r { background: var(--danger); }
+    .verr { display: flex; align-items: center; justify-content: space-between; gap: .6rem; padding: .45rem 0; font-size: .82rem; border-top: 1px dashed var(--border); }
+    .verr .tag { display: inline-grid; place-items: center; min-width: 1.5rem; height: 1.2rem; padding: 0 .3rem; margin-right: .4rem; border-radius: .35rem; font-size: .62rem; font-weight: 800; background: var(--primary-soft); color: var(--primary); }
+
+    /* ===== MODAL ===== */
+    .modal-backdrop { position: fixed; inset: 0; z-index: 60; background: rgba(6,18,34,.55); backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-backdrop.hidden { display: none; }
+    .modal-box { width: 100%; max-width: 30rem; background: var(--surface); border: 1px solid var(--border); border-radius: 1.3rem; padding: 1.25rem; box-shadow: 0 30px 70px -20px rgba(0,0,0,.5); max-height: 90vh; overflow-y: auto; animation: rise .25s ease-out; }
+    .palette-swatch { display: inline-flex; width: 1.6rem; height: 1.6rem; border-radius: 999px; overflow: hidden; border: 1px solid rgba(0,0,0,.12); flex-shrink: 0; }
+    .palette-swatch span { flex: 1; height: 100%; }
+
+    /* Chế độ Điện thoại */
+    body.layout-mobile .app-container { max-width: 460px; }
+    body.layout-mobile .shift-grid { grid-template-columns: 1fr; }
+    body.layout-mobile .meters { grid-template-columns: 1fr; }
+    body.layout-mobile .tabs { position: static; transform: none; order: 3; width: 100%; }
+    body.layout-mobile .tab-btn { flex: 1; justify-content: center; }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body data-palette="azure-ice" class="min-h-screen flex flex-col">
+  <div class="bg-orbs" aria-hidden="true"></div>
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true">
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
+    <symbol id="i-user-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></symbol>
+    <symbol id="i-holiday" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+    <symbol id="i-cloud-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/></symbol>
+    <symbol id="i-cloud-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+  </svg>
 
-  <!-- Màn hình chọn giao diện PC / Điện thoại khi mới vào -->
-  <div id="layoutPickerModal" class="layout-picker hidden" role="dialog" aria-modal="true" aria-labelledby="layoutPickerTitle">
-    <div class="layout-picker-box">
-      <p class="text-sm font-semibold text-blue-600">Lớp 12A1</p>
-      <h2 id="layoutPickerTitle" class="text-slate-900 mt-1">Chọn giao diện hiển thị</h2>
-      <p class="text-xs text-slate-500 mt-1">Chọn kiểu hiển thị phù hợp thiết bị của bạn</p>
-      <div class="layout-choices">
-        <button type="button" onclick="selectLayoutMode('pc')" class="layout-card">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-          </svg>
-          <span>PC</span>
-        </button>
-        <button type="button" onclick="selectLayoutMode('mobile')" class="layout-card">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-            <line x1="12" y1="18" x2="12.01" y2="18"></line>
-          </svg>
-          <span>Điện thoại</span>
-        </button>
+  <header class="nav">
+    <div class="app-container nav-in">
+      <div class="brand"><div class="logo">12A1</div><div class="brand-t"><b>Trực nhật &amp; vi phạm</b><span>THPT Nguyễn Khuyến</span></div></div>
+      <div class="tabs">
+        <button id="tabDuty" type="button" onclick="switchTab('duty')" class="tab-btn active"><svg class="w-4 h-4"><use href="#i-list"/></svg><span>Trực nhật</span></button>
+        <button id="tabViolation" type="button" onclick="switchTab('violation')" class="tab-btn"><svg class="w-4 h-4"><use href="#i-alert"/></svg><span>Vi phạm</span></button>
       </div>
-    </div>
-  </div>
-
-  <!-- Header -->
-  <header class="hero">
-    <div class="hero-in">
-      <div class="brand">
-        <div class="crest">12A1</div>
-        <div>
-          <h1>Trực nhật &amp; vi phạm</h1>
-          <p>Lớp 12A1, THPT Nguyễn Khuyến, năm học 2026 – 2027</p>
-        </div>
-      </div>
-      <div class="today">
-        <div class="leaf"><small id="todayWeekday"></small><b id="todayLabel"></b></div>
-        <button id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Đổi giao diện sáng/tối" title="Sáng / Tối" class="flex items-center justify-center transition">◐</button>
+      <div class="nav-actions">
+        <button type="button" class="icon-btn" onclick="openDisplayModal()" title="Layout &amp; bảng màu"><svg class="w-4 h-4"><use href="#i-layout"/></svg></button>
+        <button type="button" class="icon-btn" onclick="toggleTheme()" title="Sáng / Tối"><svg class="w-4 h-4"><use href="#i-moon"/></svg></button>
       </div>
     </div>
   </header>
 
-  <div class="dock"><div class="dock-in">
-    <nav class="tabs">
-      <button id="tabDuty" onclick="switchTab('duty')" class="tab tab-on">Phân công trực nhật</button>
-      <button id="tabViolation" onclick="switchTab('violation')" class="tab">Thống kê vi phạm</button>
-    </nav>
-    <div class="dock-actions flex flex-wrap items-center gap-2">
-      <button onclick="openScanModal()" class="btn btn-p">Dán / Tải ảnh vi phạm <kbd>Ctrl+V</kbd></button>
-      <button onclick="openManualModal()" class="btn">+ Phân thủ công</button>
-      <button onclick="openHolidayModal()" class="btn btn-w">Ngày nghỉ lễ</button>
-      <button onclick="openBcsModal()" class="btn">BCS.txt</button>
-      <button onclick="openSyncModal()" class="btn btn-e">Đồng bộ GitHub</button>
-    </div>
-    <div class="dock-search flex items-center gap-2">
-      <input id="searchDateInput" type="date" class="px-3 py-2 rounded-xl border border-slate-200 text-sm" />
-      <button onclick="findByDate()" class="btn">Tìm ngày</button>
-      <button type="button" onclick="openLayoutPicker()" class="btn btn-s" title="Đổi giao diện PC / Điện thoại">Đổi layout</button>
-      <button onclick="resetData()" title="Khôi phục mặc định" class="btn btn-s text-slate-500 hover:text-red-600" style="border-color:transparent">Reset</button>
-    </div>
-  </div></div>
-
-  <!-- Trạng thái đồng bộ -->
-  <div id="syncStatusBar" class="max-w-6xl w-full mx-auto px-4 pt-3">
-    <div id="syncStatusText" class="text-xs text-slate-500 flex items-center justify-between gap-2">
-      <span>Đủ lịch T2–T6 từng tuần • Không tính vắng có phép • Đồng bộ qua <code>data.json</code> trên GitHub.</span>
-      <button onclick="pullCloudData(true)" class="text-blue-600 hover:underline font-medium shrink-0">
-        Tải dữ liệu mới nhất
-      </button>
-    </div>
-  </div>
-
-  <!-- Kết quả tìm ngày -->
-  <div id="dateSearchResult" class="hidden max-w-6xl w-full mx-auto px-4 pt-3">
-    <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 flex items-center justify-between gap-4">
-      <div id="dateSearchContent" class="text-sm text-slate-800"></div>
-      <button onclick="document.getElementById('dateSearchResult').classList.add('hidden')"
-        class="text-xs font-medium text-blue-700 hover:underline shrink-0">
-        Đóng
-      </button>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <main class="max-w-6xl w-full mx-auto px-4 py-4 flex-1">
-    <!-- PHẦN 1: PHÂN CÔNG TRỰC NHẬT -->
-    <section id="sectionDuty" class="space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <div>
-          <h2 class="sec-title">Danh sách trực nhật theo thời gian thực</h2>
-          <p class="text-xs text-slate-500">Đủ T2–T6 mỗi tuần • Giữ tối đa 1 tuần đã qua, tuần đang trực nổi bật và 3 tuần tiếp theo.</p>
+  <div class="app-container pb-10 flex-1">
+    <section class="hero">
+      <div class="badge"><i></i><span>Năm học 2026 – 2027 · Lớp 12A1</span></div>
+      <h1>Trực nhật gọn gàng,<br>nề nếp rõ ràng</h1>
+      <p>Lịch trực xoay vòng theo STT. Vi phạm cùng 1 mục lớn từ 3 lần sẽ được cảnh báo ngay.</p>
+      <div class="glass today-card">
+        <div class="leaf"><small id="todayWeekday"></small><b id="todayLabel"></b></div>
+        <div><div class="eyebrow">Hôm nay trực</div><div id="todayDuty" class="flex flex-wrap gap-2"></div></div>
+        <div class="base-box">
+          <div><div class="eyebrow" style="margin:0">STT chuẩn</div><span id="baseSttNow"></span></div>
+          <div><div class="eyebrow" style="margin:0">STT tiếp theo</div><span id="baseSttNext"></span></div>
+        </div>
+        <div class="stats">
+          <div class="stat"><b id="statViol">0</b><span>Lỗi đã ghi</span></div>
+          <div class="stat danger"><b id="statWarn">0</b><span>Cảnh báo</span></div>
         </div>
       </div>
+    </section>
 
+    <section class="card toolbar reveal">
+      <div class="row">
+        <div class="flex flex-wrap gap-2">
+          <button type="button" onclick="openManualModal()" class="btn btn-primary"><svg class="w-4 h-4"><use href="#i-user-plus"/></svg><span>Phân thủ công</span></button>
+          <button type="button" onclick="openHolidayModal()" class="btn"><svg class="w-4 h-4"><use href="#i-holiday"/></svg><span>Nghỉ lễ</span></button>
+          <button type="button" onclick="openBcsModal()" class="btn"><svg class="w-4 h-4"><use href="#i-shield"/></svg><span>BCS.txt</span></button>
+        </div>
+        <button type="button" onclick="resetData()" class="btn btn-sm" title="Khôi phục mặc định"><svg class="w-3.5 h-3.5"><use href="#i-reset"/></svg><span>Reset</span></button>
+      </div>
+      <div class="row">
+        <div class="flex flex-wrap items-center gap-2">
+          <input id="searchDateInput" type="date" class="px-3 py-1.5 text-sm" />
+          <button type="button" onclick="findByDate()" class="btn btn-sm"><svg class="w-3.5 h-3.5"><use href="#i-search"/></svg><span>Tìm ngày</span></button>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="syncBadgeText" class="text-xs font-medium muted">Chưa đồng bộ</span>
+          <button type="button" onclick="pullCloudData(true)" class="btn btn-sm btn-accent"><svg class="w-3.5 h-3.5"><use href="#i-cloud-down"/></svg><span>Tải dữ liệu</span></button>
+          <button type="button" onclick="openSyncModal()" class="btn btn-sm btn-primary"><svg class="w-3.5 h-3.5"><use href="#i-cloud-up"/></svg><span>Đẩy dữ liệu</span></button>
+        </div>
+      </div>
+    </section>
+
+    <div id="dateSearchResult" class="hidden card p-3.5 flex items-center justify-between gap-3 mt-4">
+      <div id="dateSearchContent" class="text-sm"></div>
+      <button type="button" onclick="document.getElementById('dateSearchResult').classList.add('hidden')" class="btn btn-sm">Đóng</button>
+    </div>
+
+    <section id="sectionDuty" class="space-y-4 mt-6">
+      <div><h2 class="sec-title">Lịch trực nhật</h2><p class="text-xs muted mt-1">T2–T6 mỗi tuần · hiện tuần đã qua, tuần đang trực và các tuần kế tiếp.</p></div>
       <div id="weeksContainer" class="space-y-4"></div>
     </section>
 
-    <!-- PHẦN 2: THỐNG KÊ VI PHẠM -->
-    <section id="sectionViolation" class="hidden space-y-4">
-      <div id="repeatWarningSection" class="hidden warn-box">
-        <div class="warn-title">
-          <span>Cảnh báo vi phạm (từ 3 lần trở lên trong cùng 1 mục lớn)</span>
-        </div>
-        <div id="repeatWarningList" class="warn-list"></div>
+    <section id="sectionViolation" class="hidden space-y-4 mt-6">
+      <div><h2 class="sec-title">Thống kê vi phạm</h2><p class="text-xs muted mt-1">Cùng 1 mục lớn (Chuyên cần / Tác phong / Kỷ luật) đủ 3 lần thì cảnh báo. Khác mục không cộng dồn.</p></div>
+      <div id="repeatWarningSection" class="hidden warn-banner">
+        <div class="flex items-center gap-2 text-sm font-extrabold" style="color: var(--danger);"><svg class="w-4 h-4 shrink-0"><use href="#i-alert"/></svg><span>Cảnh báo từ 3 lần trở lên trong cùng 1 mục lớn</span></div>
+        <div id="repeatWarningList" class="warn-grid"></div>
       </div>
-
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <input id="violationSearch" type="text" oninput="renderViolations()"
-          placeholder="Tìm tên học sinh, mục hoặc tên lỗi..."
-          class="w-full sm:w-80 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
-
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" onclick="downloadViolationsPng()" class="btn">
-            Tải hình PNG
-          </button>
-          <button onclick="openAddViolationModal()"
-            class="btn btn-p">
-            + Thêm lỗi vi phạm
-          </button>
-        </div>
-      </div>
-
-      <div class="sheet">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse">
-            <thead>
-              <tr class="vhead">
-                <th class="py-3 px-4 w-16">STT</th>
-                <th class="py-3 px-4 w-60">Họ và tên</th>
-                <th class="py-3 px-4">Lỗi vi phạm &amp; Thao tác</th>
-                <th class="py-3 px-4 w-32 text-center">Tổng lần</th>
-              </tr>
-            </thead>
-            <tbody id="violationTableBody" class="divide-y divide-slate-100 text-sm"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <!-- MODAL NGÀY NGHỈ LỄ -->
-  <div id="holidayModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-slate-900">Quản lý ngày nghỉ lễ</h3>
-        <button onclick="closeModal('holidayModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
-      </div>
-
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="block font-semibold text-slate-600 mb-1">Ngày nghỉ lễ</label>
-          <input id="holidayDateInput" type="date"
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-600 mb-1">Tên ngày lễ / ghi chú</label>
-          <input id="holidayNoteInput" type="text" placeholder="VD: Tết Dương lịch, Nghỉ Tết Âm lịch..."
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-        </div>
-        <button type="button" onclick="addHolidayDate()"
-          class="w-full py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold transition">
-          + Thêm ngày nghỉ lễ
-        </button>
-      </div>
-
-      <div class="space-y-1.5">
-        <div class="text-xs font-semibold text-slate-600">Danh sách ngày nghỉ lễ đã lưu:</div>
-        <div id="holidayListBox" class="max-h-44 overflow-y-auto space-y-1.5 custom-scroll"></div>
-      </div>
-
-      <div class="flex justify-end pt-1">
-        <button onclick="closeModal('holidayModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-          Đóng
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 0: ĐỒNG BỘ GITHUB (data.json) -->
-  <div id="syncModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl border border-slate-200 space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-slate-900">Đồng bộ dữ liệu qua GitHub</h3>
-        <button onclick="closeModal('syncModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
-      </div>
-
-      <div class="space-y-3 text-xs">
-        <div>
-          <label class="block font-semibold text-slate-600 mb-1">Repo (owner/repo)</label>
-          <input id="ghRepoInput" type="text" placeholder="minhduy0605/trucnhat"
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-600 mb-1">Đường dẫn file dữ liệu</label>
-          <input id="ghDataPathInput" type="text" placeholder="data.json"
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-        </div>
-        <div>
-          <label class="block font-semibold text-slate-600 mb-1">GitHub Token (chỉ lưu trên thiết bị này để ghi lên GitHub)</label>
-          <input id="ghTokenInput" type="password" placeholder="github_pat_..."
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
-        </div>
-      </div>
-
-      <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
-        <button type="button" onclick="pullCloudData(true)"
-          class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200">
-          Tải từ GitHub
-        </button>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <input id="violationSearch" type="text" oninput="renderViolations()" placeholder="Tìm tên học sinh, mục hoặc lỗi..." class="w-full sm:w-80 px-3.5 py-2 text-sm" />
         <div class="flex items-center gap-2">
-          <button onclick="closeModal('syncModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-            Đóng
-          </button>
-          <button type="button" onclick="saveSyncConfigAndPush()"
-            class="px-4 py-2 rounded-lg text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition">
-            Lưu & đẩy lên GitHub
-          </button>
+          <button type="button" onclick="downloadViolationsPng()" class="btn"><svg class="w-4 h-4"><use href="#i-image"/></svg><span>Xuất PNG</span></button>
+          <button type="button" onclick="openAddViolationModal()" class="btn btn-primary"><svg class="w-4 h-4"><use href="#i-plus"/></svg><span>Thêm lỗi</span></button>
         </div>
+      </div>
+      <div id="violationTableBody" class="vgrid"></div>
+    </section>
+  </div>
+
+  <footer class="text-center text-xs muted py-6">Lớp 12A1 · THPT Nguyễn Khuyến · 2026 – 2027</footer>
+
+  <!-- MODAL ĐỔI LAYOUT & BẢNG MÀU -->
+  <div id="displayModal" class="modal-backdrop hidden">
+    <div class="modal-box space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-extrabold">Layout &amp; Bảng màu</h3>
+        <button type="button" onclick="closeModal('displayModal')" class="btn btn-sm">&times;</button>
+      </div>
+
+      <div class="space-y-2">
+        <div class="text-xs font-bold uppercase" style="color: var(--muted);">Kiểu layout</div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <button type="button" onclick="selectLayoutMode('pc')" class="btn">PC</button>
+          <button type="button" onclick="selectLayoutMode('mobile')" class="btn">Điện thoại</button>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <div class="text-xs font-bold uppercase" style="color: var(--muted);">Cặp màu phối</div>
+        <div id="paletteList" class="space-y-2"></div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 1: DÁN / TẢI ẢNH VI PHẠM (Ctrl+V) -->
-  <div id="scanModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-xl w-full p-5 shadow-xl border border-slate-200 space-y-4">
+  <!-- MODAL PHÂN THỦ CÔNG -->
+  <div id="manualModal" class="modal-backdrop hidden">
+    <div class="modal-box space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-slate-900">Nhận diện ảnh vi phạm</h3>
-        <button onclick="closeModal('scanModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
+        <h3 id="manualModalTitle" class="text-base font-extrabold">Phân trực thủ công</h3>
+        <button type="button" onclick="closeModal('manualModal')" class="btn btn-sm">&times;</button>
       </div>
 
-      <div id="pasteZone" onclick="document.getElementById('imageFileInput').click()"
-        class="border-2 border-dashed border-blue-300 bg-blue-50/40 hover:bg-blue-50 rounded-xl p-5 text-center cursor-pointer transition">
-        <input id="imageFileInput" type="file" accept="image/*" class="hidden" onchange="handleImageFile(event)" />
-        <p class="text-sm font-semibold text-blue-700">Nhấn <kbd class="px-1.5 py-0.5 bg-white border border-blue-200 rounded text-xs">Ctrl + V</kbd> để dán ảnh trực tiếp</p>
-        <p class="text-xs text-slate-500 mt-1">Hoặc bấm chọn file ảnh • Tự động bỏ qua "Vắng có phép / Nghỉ có phép"</p>
-        <img id="previewImage" class="hidden max-h-40 mx-auto mt-3 rounded-lg border border-slate-200 object-contain" />
-      </div>
-
-      <div id="scanStatusText" class="hidden text-xs font-medium px-3 py-2 rounded-lg bg-slate-100 text-slate-700"></div>
-
-      <div class="space-y-1.5">
-        <div class="flex items-center justify-between">
-          <label class="block text-xs font-semibold text-slate-600">
-            Gemini API Key (tự lưu trên trình duyệt):
-          </label>
-          <button type="button" onclick="analyzeImage()" class="text-xs font-semibold text-blue-600 hover:underline">
-            Quét lại ảnh
-          </button>
-        </div>
-        <input id="geminiApiKey" type="password" onchange="saveApiKey()" placeholder="AIza..."
-          class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
-      </div>
-
-      <div id="parsedPreviewBox" class="hidden space-y-2 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
-        <div class="flex items-center justify-between">
-          <span class="text-xs font-bold text-slate-700">Danh sách vi phạm (kiểm tra trước khi áp dụng):</span>
-          <button type="button" onclick="addParsedRow()" class="text-xs font-semibold text-blue-600 hover:underline">
-            + Thêm dòng
-          </button>
-        </div>
-        <div id="parsedItemsList" class="space-y-2 max-h-48 overflow-y-auto custom-scroll"></div>
-
-        <div class="pt-2 border-t border-slate-200 flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-700">
-          <span>Áp dụng cho:</span>
-          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none">
-            <input id="applyOptDuty" type="checkbox" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-            <span>Phân trực</span>
-          </label>
-          <label class="inline-flex items-center gap-1.5 cursor-pointer select-none">
-            <input id="applyOptStats" type="checkbox" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-            <span>Thống kê</span>
-          </label>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-end gap-2 pt-1">
-        <button onclick="closeModal('scanModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-          Hủy
-        </button>
-        <button id="btnApplyParsed" onclick="applyParsedViolations()" disabled
-          class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 disabled:bg-slate-300 text-white hover:bg-blue-700 transition">
-          Áp dụng theo lựa chọn
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL 2: PHÂN / CHỈNH SỬA / XÓA NGƯỜI TRỰC THỦ CÔNG -->
-  <div id="manualModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
-      <div class="flex items-center justify-between">
-        <h3 id="manualModalTitle" class="text-base font-bold text-slate-900">Phân / Sửa người trực</h3>
-        <button onclick="closeModal('manualModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
-      </div>
-
-      <div class="space-y-3">
+      <div class="space-y-3 text-sm">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày trực</label>
-          <input id="manualDate" type="date"
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm focus:outline-none focus:border-blue-500" />
+          <label class="block text-xs font-bold mb-1" style="color: var(--muted);">Ngày trực</label>
+          <input id="manualDate" type="date" class="w-full px-3 py-2" />
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">HS 1 (chọn STT)</label>
-          <select id="manualStudent1" onchange="onManualStudent1Change()" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
+          <label class="block text-xs font-bold mb-1" style="color: var(--muted);">HS 1</label>
+          <select id="manualStudent1" onchange="onManualStudent1Change()" class="w-full px-3 py-2"></select>
         </div>
 
         <div>
           <div class="flex items-center justify-between mb-1">
-            <label class="block text-xs font-semibold text-slate-600">HS 2</label>
-            <div class="inline-flex rounded-lg border border-slate-200 overflow-hidden text-xs font-semibold">
-              <button type="button" id="hs2ModeNextBtn" onclick="setHs2Mode('next')" class="px-2.5 py-1 bg-blue-600 text-white">STT tiếp theo</button>
-              <button type="button" id="hs2ModeCustomBtn" onclick="setHs2Mode('custom')" class="px-2.5 py-1 bg-white text-slate-700 hover:bg-slate-50">Bất kỳ</button>
+            <label class="text-xs font-bold" style="color: var(--muted);">HS 2</label>
+            <div class="flex gap-1">
+              <button type="button" id="hs2ModeNextBtn" onclick="setHs2Mode('next')" class="btn btn-sm btn-primary">STT kế</button>
+              <button type="button" id="hs2ModeCustomBtn" onclick="setHs2Mode('custom')" class="btn btn-sm">Tùy chọn</button>
             </div>
           </div>
-          <select id="manualStudent2" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
+          <select id="manualStudent2" class="w-full px-3 py-2"></select>
         </div>
 
-        <p class="text-xs text-slate-500">
-          Lưu ý: Khi lưu sẽ tự động đổi toàn bộ lịch trực ở phía sau kể từ ca này theo chuỗi STT tiếp theo.
+        <p class="text-xs" style="color: var(--muted);">
+          Nếu ngày chọn đang có người trực, người trực cũ sẽ được đẩy sang ca/ngày tiếp theo.
         </p>
       </div>
 
       <div class="flex items-center justify-between gap-2 pt-2">
-        <button id="btnDeleteManualDuty" type="button" onclick="deleteManualDuty()"
-          class="hidden px-3 py-2 rounded-lg text-xs font-semibold text-red-600 bg-red-50 hover:bg-red-100 border border-red-200 transition">
-          Xóa phân công thủ công
+        <button id="btnDeleteManualDuty" type="button" onclick="deleteManualDuty()" class="btn btn-sm hidden" style="color: var(--danger); border-color: var(--danger);">
+          Xóa ca thủ công
         </button>
-
         <div class="flex items-center gap-2 ml-auto">
-          <button onclick="closeModal('manualModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-            Hủy
-          </button>
-          <button onclick="submitManualDuty()"
-            class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition">
-            Lưu & cập nhật
-          </button>
+          <button type="button" onclick="closeModal('manualModal')" class="btn btn-sm">Hủy</button>
+          <button type="button" onclick="submitManualDuty()" class="btn btn-sm btn-primary">Lưu</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 3: CẤU HÌNH BCS.TXT -->
-  <div id="bcsModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl border border-slate-200 space-y-4">
+  <!-- MODAL NGÀY NGHỈ LỄ -->
+  <div id="holidayModal" class="modal-backdrop hidden">
+    <div class="modal-box space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-slate-900">Danh sách miễn trừ / BCS.txt</h3>
-        <button onclick="closeModal('bcsModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
+        <h3 class="text-base font-extrabold">Ngày nghỉ lễ</h3>
+        <button type="button" onclick="closeModal('holidayModal')" class="btn btn-sm">&times;</button>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2">
-        <input id="githubBcsUrl" type="text"
-          placeholder="Link raw BCS.txt trên GitHub"
-          class="flex-1 px-3 py-1.5 rounded-lg border border-slate-300 text-xs focus:outline-none focus:border-blue-500" />
-        <button onclick="fetchGithubBcs(true)"
-          class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold">
-          Tải từ GitHub
+      <div class="space-y-2.5">
+        <input id="holidayDateInput" type="date" class="w-full px-3 py-2 text-sm" />
+        <input id="holidayNoteInput" type="text" placeholder="Tên ngày nghỉ lễ..." class="w-full px-3 py-2 text-sm" />
+        <button type="button" onclick="addHolidayDate()" class="btn btn-primary w-full">
+          <svg class="w-4 h-4"><use href="#i-plus"/></svg>
+          <span>Thêm ngày nghỉ lễ</span>
         </button>
       </div>
 
-      <textarea id="bcsTextarea" rows="9"
-        class="w-full p-3 rounded-xl border border-slate-300 text-sm font-mono focus:outline-none focus:border-blue-500"></textarea>
+      <div id="holidayListBox" class="space-y-1.5 max-h-48 overflow-y-auto"></div>
+    </div>
+  </div>
 
-      <div class="flex items-center justify-end gap-2">
-        <button onclick="closeModal('bcsModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-          Hủy
-        </button>
-        <button onclick="saveBcs()"
-          class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition">
-          Lưu & tính lại lịch
+  <!-- MODAL BCS.TXT -->
+  <div id="bcsModal" class="modal-backdrop hidden">
+    <div class="modal-box space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-extrabold">BCS.txt</h3>
+        <button type="button" onclick="closeModal('bcsModal')" class="btn btn-sm">&times;</button>
+      </div>
+
+      <div class="flex gap-2">
+        <input id="githubBcsUrl" type="text" class="flex-1 px-3 py-1.5 text-xs" placeholder="Link raw BCS.txt" />
+        <button type="button" onclick="fetchGithubBcs(true)" class="btn btn-sm">Tải BCS</button>
+      </div>
+
+      <textarea id="bcsTextarea" rows="8" class="w-full p-3 text-xs font-mono"></textarea>
+
+      <div class="flex justify-end gap-2">
+        <button type="button" onclick="closeModal('bcsModal')" class="btn btn-sm">Hủy</button>
+        <button type="button" onclick="saveBcs()" class="btn btn-sm btn-primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL ĐẨY DỮ LIỆU LÊN GITHUB -->
+  <div id="syncModal" class="modal-backdrop hidden">
+    <div class="modal-box space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-base font-extrabold">Đẩy dữ liệu lên GitHub</h3>
+        <button type="button" onclick="closeModal('syncModal')" class="btn btn-sm">&times;</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold mb-1" style="color: var(--muted);">Repo (owner/repo)</label>
+          <input id="ghRepoInput" type="text" class="w-full px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1" style="color: var(--muted);">File dữ liệu</label>
+          <input id="ghDataPathInput" type="text" class="w-full px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label class="block font-bold mb-1" style="color: var(--muted);">GitHub Token</label>
+          <input id="ghTokenInput" type="password" placeholder="github_pat_..." class="w-full px-3 py-2 text-sm" />
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeModal('syncModal')" class="btn btn-sm">Hủy</button>
+        <button type="button" onclick="saveSyncConfigAndPush()" class="btn btn-sm btn-primary">
+          <svg class="w-3.5 h-3.5"><use href="#i-cloud-up"/></svg>
+          <span>Lưu &amp; Đẩy dữ liệu</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 4: THÊM LỖI VI PHẠM NHANH -->
-  <div id="addViolationModal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl border border-slate-200 space-y-4">
+  <!-- MODAL THÊM LỖI VI PHẠM -->
+  <div id="addViolationModal" class="modal-backdrop hidden">
+    <div class="modal-box space-y-4">
       <div class="flex items-center justify-between">
-        <h3 class="text-base font-bold text-slate-900">Thêm vi phạm</h3>
-        <button onclick="closeModal('addViolationModal')" class="text-slate-400 hover:text-slate-700 text-lg font-bold">&times;</button>
+        <h3 class="text-base font-extrabold">Thêm lỗi vi phạm</h3>
+        <button type="button" onclick="closeModal('addViolationModal')" class="btn btn-sm">&times;</button>
       </div>
 
-      <div class="space-y-3">
+      <div class="space-y-3 text-sm">
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Học sinh / Tập thể</label>
-          <select id="violTargetSelect" class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
+          <label class="block text-xs font-bold mb-1" style="color: var(--muted);">Học sinh / Tập thể</label>
+          <select id="violTargetSelect" class="w-full px-3 py-2"></select>
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Ngày vi phạm</label>
-          <input id="violDateInput" type="date"
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+          <label class="block text-xs font-bold mb-1" style="color: var(--muted);">Ngày</label>
+          <input id="violDateInput" type="date" class="w-full px-3 py-2" />
         </div>
 
         <div>
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Chọn lỗi theo quy định (không tính vắng có phép)</label>
-          <select id="violCatalogSelect" onchange="onSelectViolationCatalog(this.value)"
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm bg-white"></select>
+          <label class="block text-xs font-bold mb-1" style="color: var(--muted);">Lỗi vi phạm (không tính vắng có phép)</label>
+          <select id="violCatalogSelect" onchange="onSelectViolationCatalog(this.value)" class="w-full px-3 py-2"></select>
         </div>
 
         <div id="violCustomWrap" class="hidden">
-          <label class="block text-xs font-semibold text-slate-600 mb-1">Nhập tên lỗi khác</label>
-          <input id="violTypeInput" type="text" value="Trễ"
-            placeholder="Nhập tên lỗi ngoài danh sách..."
-            class="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm" />
+          <label class="block text-xs font-bold mb-1" style="color: var(--muted);">Tên lỗi khác</label>
+          <input id="violTypeInput" type="text" class="w-full px-3 py-2" placeholder="Nhập lỗi khác..." />
         </div>
 
-        <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer select-none pt-1">
-          <input id="violAddDutyCheckbox" type="checkbox" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-          <span>Có thêm phân công trực (bỏ chọn nếu không thêm trực)</span>
+        <label class="inline-flex items-center gap-2 text-xs font-semibold cursor-pointer">
+          <input id="violAddDutyCheckbox" type="checkbox" checked />
+          <span>Ưu tiên đi trực bù</span>
         </label>
       </div>
 
-      <div class="flex items-center justify-end gap-2 pt-2">
-        <button onclick="closeModal('addViolationModal')" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-100">
-          Hủy
-        </button>
-        <button onclick="submitNewViolation()"
-          class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition">
-          Lưu vi phạm
-        </button>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="closeModal('addViolationModal')" class="btn btn-sm">Hủy</button>
+        <button type="button" onclick="submitNewViolation()" class="btn btn-sm btn-primary">Lưu</button>
       </div>
     </div>
   </div>
+
 
   <script>
     const STUDENTS = [
@@ -637,15 +681,29 @@
       { stt: 43, name: "Nguyễn Thị Thảo Yến" }
     ];
 
-    // Danh mục 57 lỗi vi phạm theo 3 mục lớn (loại bỏ Vắng có phép)
+    const FEMALE_NAMES = new Set([
+      "Phù Lý Gia An", "Lê Thanh Quế Anh", "Nguyễn Ngọc Trâm Anh",
+      "Trần Ngọc Minh Châu", "Lê Ngân Hạnh", "Phạm Ngọc Hân",
+      "Nguyễn Hồng Mỹ Kim", "Trịnh Thị Ngọc Linh", "Lê Nguyễn Thảo My",
+      "Trương Gia Nghi", "Nguyễn Ngọc Bảo Nhi", "Bùi Lê Như Thảo",
+      "Lưu Bảo Thy", "Lê Thủy Thiên Tú", "Nguyễn Cát Tường",
+      "Lê Ngọc Tường Vy", "Nguyễn Ngọc Hà Vy", "Nguyễn Thị Thảo Yến"
+    ]);
+
+    const COLOR_PALETTES = [
+      { id: "azure-ice", label: "Xanh Biển + Băng", c1: "#0284c7", c2: "#bae6fd" },
+      { id: "pine-carolina", label: "Xanh Rừng + Carolina", c1: "#14532d", c2: "#7dd3fc" },
+      { id: "slate-mint", label: "Đá Xám + Bạc Hà", c1: "#475569", c2: "#86efac" },
+      { id: "wisteria-apricot", label: "Oải Hương + Mơ Chín", c1: "#6d597a", c2: "#fdba74" },
+      { id: "cream-cloud", label: "Xanh Lam + Mây", c1: "#2563eb", c2: "#cbd5e1" }
+    ];
+
     const VIOLATION_CATALOG = [
-      // I. CHUYÊN CẦN
       { stt: 1, category: "I. Chuyên cần", name: "Phép đặc biệt" },
       { stt: 3, category: "I. Chuyên cần", name: "Trễ" },
       { stt: 4, category: "I. Chuyên cần", name: "Vắng không phép" },
       { stt: 5, category: "I. Chuyên cần", name: "Vắng tiết học không xin phép giáo viên" },
 
-      // II. TÁC PHONG
       { stt: 6, category: "II. Tác phong", name: "Áo bỏ ngoài quần" },
       { stt: 7, category: "II. Tác phong", name: "Váy ngắn, cao hơn đầu gối không đúng qui định" },
       { stt: 8, category: "II. Tác phong", name: "Giày sai qui định" },
@@ -656,7 +714,6 @@
       { stt: 13, category: "II. Tác phong", name: "Vi phạm về đầu tóc" },
       { stt: 14, category: "II. Tác phong", name: "Lỗi đeo hoa tai" },
 
-      // III. KỶ LUẬT
       { stt: 15, category: "III. Kỷ luật", name: "Ăn trong giờ học" },
       { stt: 16, category: "III. Kỷ luật", name: "Ăn trong lớp học" },
       { stt: 17, category: "III. Kỷ luật", name: "Không chuẩn bị bài, không chép bài" },
@@ -691,7 +748,7 @@
       { stt: 46, category: "III. Kỷ luật", name: "Không hát quốc ca trong giờ chào cờ" },
       { stt: 47, category: "III. Kỷ luật", name: "Nói tục, chửi thề trong trường hoặc ngoài trường" },
       { stt: 48, category: "III. Kỷ luật", name: "Tự ý ra cổng trong giờ học, giờ ra chơi" },
-      { stt: 49, category: "III. Kỷ luật", name: "Có hành vi hoặc cách ứng xử chưa phù hợp với môi trường học đường như ôm hôn, ngồi lên người bạn khác giới..." },
+      { stt: 49, category: "III. Kỷ luật", name: "Có hành vi hoặc cách ứng xử chưa phù hợp với môi trường học đường" },
       { stt: 50, category: "III. Kỷ luật", name: "Tự ý sửa chữa hoặc xóa nội dung trong sổ đầu bài" },
       { stt: 51, category: "III. Kỷ luật", name: "Vô lễ với GV - CNV" },
       { stt: 52, category: "III. Kỷ luật", name: "Hút thuốc lá, uống rượu bia trong hoặc ngoài nhà trường" },
@@ -716,11 +773,9 @@ Bí thư - Gia An`;
     const DEFAULT_GITHUB_BCS_URL = "https://raw.githubusercontent.com/minhduy0605/trucnhat/main/BCS.txt";
     const DEFAULT_GH_REPO = "minhduy0605/trucnhat";
     const DEFAULT_GH_DATA_PATH = "data.json";
-
-    const INITIAL_VIOLATIONS = [];
-
-    const STORAGE_KEY = "duty_12a1_v18";
-    const LAYOUT_STORAGE_KEY = "duty_12a1_layout_mode";
+    const STORAGE_KEY = "duty_12a1_v20";
+    const LAYOUT_KEY = "duty_12a1_layout";
+    const PALETTE_KEY = "duty_12a1_palette";
 
     let state = {
       bcsText: DEFAULT_BCS,
@@ -728,72 +783,50 @@ Bí thư - Gia An`;
       ghRepo: DEFAULT_GH_REPO,
       ghDataPath: DEFAULT_GH_DATA_PATH,
       ghToken: "",
-      geminiApiKey: "",
       holidays: [],
-      violations: [...INITIAL_VIOLATIONS],
+      violations: [],
       manualInsertions: [],
       priorityQueue: []
     };
 
-    let parsedDraft = [];
-    let currentImageBase64 = "";
-    let currentImageMime = "image/png";
+    let hasDirtyCloudChanges = false;
     let editingManualDate = "";
-    let hs2SelectionMode = "next"; // "next" | "custom"
+    let hs2SelectionMode = "next";
 
-    function normalizeStr(s = "") {
-      return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+
+    const norm = s => String(s ?? '').toLowerCase().normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
+
+    function findStudent(queryName) {
+      if (!queryName) return null;
+      const q = norm(queryName);
+      const exact = STUDENTS.find(s => norm(s.name) === q);
+      if (exact) return exact;
+      return STUDENTS.find(s => norm(s.name).includes(q));
+    }
+
+    function isFemale(name) {
+      const st = findStudent(name);
+      return FEMALE_NAMES.has(st ? st.name : name);
+    }
+
+    function isExcusedAbsence(typeStr = "") {
+      const n = norm(typeStr);
+      return n.includes("vang co phep") || n.includes("nghi hoc co phep") || n.includes("co phep") || /\b(cp|sp)\b/.test(n);
     }
 
     function resolveViolationCategory(typeStr = "") {
-      const n = normalizeStr(typeStr);
-      if (!n) return "III. Kỷ luật";
-
-      const exact = VIOLATION_CATALOG.find(item => normalizeStr(item.name) === n);
+      const n = norm(typeStr);
+      const exact = VIOLATION_CATALOG.find(v => norm(v.name) === n);
       if (exact) return exact.category;
-
-      const partial = VIOLATION_CATALOG.find(item =>
-        normalizeStr(item.name).includes(n) || n.includes(normalizeStr(item.name))
-      );
+      const partial = VIOLATION_CATALOG.find(v => norm(v.name).includes(n) || n.includes(norm(v.name)));
       if (partial) return partial.category;
-
-      if (n.includes("tre") || n.includes("vang") || n.includes("phep dac biet")) {
-        return "I. Chuyên cần";
-      }
-      if (
-        n.includes("dong phuc") || n.includes("phu hieu") || n.includes("logo") ||
-        n.includes("toc") || n.includes("giay") || n.includes("vay") ||
-        n.includes("ao bo ngoai") || n.includes("son mong") || n.includes("trang diem") ||
-        n.includes("hoa tai") || n.includes("tac phong")
-      ) {
-        return "II. Tác phong";
-      }
+      if (n.includes("tre") || n.includes("vang") || n.includes("phep")) return "I. Chuyên cần";
+      if (n.includes("dong phuc") || n.includes("phu hieu") || n.includes("toc") || n.includes("giay") || n.includes("vay") || n.includes("ao")) return "II. Tác phong";
       return "III. Kỷ luật";
-    }
-
-    function applyLayoutMode(mode) {
-      document.body.classList.toggle("layout-mobile", mode === "mobile");
-    }
-
-    function selectLayoutMode(mode) {
-      try { localStorage.setItem(LAYOUT_STORAGE_KEY, mode); } catch (e) {}
-      applyLayoutMode(mode);
-      document.getElementById("layoutPickerModal")?.classList.add("hidden");
-    }
-
-    function openLayoutPicker() {
-      document.getElementById("layoutPickerModal")?.classList.remove("hidden");
-    }
-
-    function initLayoutPicker() {
-      let saved = "";
-      try { saved = localStorage.getItem(LAYOUT_STORAGE_KEY) || ""; } catch (e) {}
-      if (saved === "pc" || saved === "mobile") {
-        applyLayoutMode(saved);
-        document.getElementById("layoutPickerModal")?.classList.add("hidden");
-      } else {
-        document.getElementById("layoutPickerModal")?.classList.remove("hidden");
-      }
     }
 
     function getRealToday() {
@@ -801,237 +834,58 @@ Bí thư - Gia An`;
       return new Date(now.getFullYear(), now.getMonth(), now.getDate());
     }
 
-    function setSyncMessage(msg) {
-      const bar = document.querySelector("#syncStatusText span");
-      if (bar) bar.innerHTML = msg;
+    function toDateObj(iso) {
+      const [y, m, d] = iso.split("-").map(Number);
+      return new Date(y, m - 1, d);
     }
 
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("duty_12a1_v17");
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          state = {
-            bcsText: parsed.bcsText ?? DEFAULT_BCS,
-            githubBcsUrl: parsed.githubBcsUrl || DEFAULT_GITHUB_BCS_URL,
-            ghRepo: parsed.ghRepo || DEFAULT_GH_REPO,
-            ghDataPath: parsed.ghDataPath || DEFAULT_GH_DATA_PATH,
-            ghToken: parsed.ghToken || "",
-            geminiApiKey: parsed.geminiApiKey || "",
-            holidays: Array.isArray(parsed.holidays) ? parsed.holidays : [],
-            violations: Array.isArray(parsed.violations) ? parsed.violations : [],
-            manualInsertions: Array.isArray(parsed.manualInsertions) ? parsed.manualInsertions : [],
-            priorityQueue: Array.isArray(parsed.priorityQueue) ? parsed.priorityQueue : []
-          };
+    function formatIsoDate(d) {
+      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    }
+
+    function formatShortDate(d) {
+      return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
+    }
+
+    function getDayLabel(dow) {
+      return { 1: "T2", 2: "T3", 3: "T4", 4: "T5", 5: "T6" }[dow] || "";
+    }
+
+    function getWeekMonday(d) {
+      const copy = new Date(d);
+      const dow = copy.getDay();
+      const diff = dow === 0 ? -6 : 1 - dow;
+      copy.setDate(copy.getDate() + diff);
+      return formatIsoDate(copy);
+    }
+
+    function formatShiftLabel(daysInShift) {
+      if (!daysInShift || !daysInShift.length) return "";
+      if (daysInShift.length === 1) {
+        const d1 = daysInShift[0];
+        return `${getDayLabel(d1.getDay())} • ${formatShortDate(d1)}`;
+      }
+      const d1 = daysInShift[0];
+      const d2 = daysInShift[1];
+      const rangeStr = d1.getMonth() === d2.getMonth()
+        ? `${String(d1.getDate()).padStart(2, "0")}–${formatShortDate(d2)}`
+        : `${formatShortDate(d1)}–${formatShortDate(d2)}`;
+      return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
+    }
+
+    function getSchoolDays(startIso, endIso, holidaySet) {
+      const days = [];
+      const cur = toDateObj(startIso);
+      const end = toDateObj(endIso);
+      while (cur <= end) {
+        const dow = cur.getDay();
+        const iso = formatIsoDate(cur);
+        if (dow >= 1 && dow <= 5 && !holidaySet.has(iso)) {
+          days.push(new Date(cur));
         }
-      } catch (e) {
-        console.error(e);
+        cur.setDate(cur.getDate() + 1);
       }
-      const keyInput = document.getElementById("geminiApiKey");
-      if (keyInput && state.geminiApiKey) {
-        keyInput.value = state.geminiApiKey;
-      }
-    }
-
-    function saveState(pushCloud = true) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      if (pushCloud && state.ghToken) {
-        pushCloudData(false);
-      }
-    }
-
-    async function pullCloudData(showNotice = false) {
-      const repo = (state.ghRepo || DEFAULT_GH_REPO).trim();
-      const path = (state.ghDataPath || DEFAULT_GH_DATA_PATH).trim();
-      if (!repo || !path) return;
-
-      const rawUrl = `https://raw.githubusercontent.com/${repo}/main/${path}?t=${Date.now()}`;
-      try {
-        const res = await fetch(rawUrl);
-        if (!res.ok) throw new Error("Chưa có file data.json");
-        const cloud = await res.json();
-        const hasCloudContent =
-          (Array.isArray(cloud.violations) && cloud.violations.length > 0) ||
-          (Array.isArray(cloud.manualInsertions) && cloud.manualInsertions.length > 0) ||
-          (Array.isArray(cloud.priorityQueue) && cloud.priorityQueue.length > 0) ||
-          (Array.isArray(cloud.holidays) && cloud.holidays.length > 0) ||
-          Boolean((cloud.bcsText || "").trim());
-
-        if (hasCloudContent) {
-          if (cloud.bcsText) state.bcsText = cloud.bcsText;
-          if (Array.isArray(cloud.holidays)) state.holidays = cloud.holidays;
-          if (Array.isArray(cloud.violations)) state.violations = cloud.violations;
-          if (Array.isArray(cloud.manualInsertions)) state.manualInsertions = cloud.manualInsertions;
-          if (Array.isArray(cloud.priorityQueue)) state.priorityQueue = cloud.priorityQueue;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          renderAll();
-          setSyncMessage(`Đã đồng bộ từ GitHub (<code>${repo}/${path}</code>).`);
-        } else if (showNotice) {
-          alert("File data.json trên GitHub hiện đang trống. Hãy bấm 'Lưu & đẩy lên GitHub' để tải dữ liệu hiện tại lên.");
-        }
-      } catch (e) {
-        if (showNotice) alert("Chưa tải được data.json từ GitHub.");
-      }
-    }
-
-    async function pushCloudData(showNotice = false) {
-      const repo = (state.ghRepo || DEFAULT_GH_REPO).trim();
-      const path = (state.ghDataPath || DEFAULT_GH_DATA_PATH).trim();
-      const token = (state.ghToken || "").trim();
-      if (!repo || !path || !token) {
-        if (showNotice) alert("Hãy nhập GitHub Token trước khi đẩy dữ liệu lên GitHub.");
-        return;
-      }
-
-      const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
-      const payloadObj = {
-        bcsText: state.bcsText,
-        holidays: state.holidays,
-        violations: state.violations,
-        manualInsertions: state.manualInsertions,
-        priorityQueue: state.priorityQueue
-      };
-      const base64Content = btoa(unescape(encodeURIComponent(JSON.stringify(payloadObj, null, 2))));
-
-      try {
-        setSyncMessage("Đang lưu dữ liệu lên GitHub...");
-        let sha = "";
-        const getRes = await fetch(apiUrl, {
-          headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" }
-        });
-        if (getRes.ok) {
-          const getJson = await getRes.json();
-          sha = getJson.sha || "";
-        }
-
-        const putRes = await fetch(apiUrl, {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/vnd.github+json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: `Sync 12A1 data ${new Date().toISOString()}`,
-            content: base64Content,
-            ...(sha ? { sha } : {})
-          })
-        });
-
-        if (!putRes.ok) {
-          const errJson = await putRes.json().catch(() => ({}));
-          throw new Error(errJson.message || "Lỗi ghi GitHub");
-        }
-
-        setSyncMessage(`Đã lưu đồng bộ lên GitHub lúc ${new Date().toLocaleTimeString("vi-VN")}.`);
-        if (showNotice) {
-          alert("Đã lưu & đẩy dữ liệu lên GitHub thành công!");
-        }
-      } catch (e) {
-        setSyncMessage(`Lỗi đồng bộ GitHub: ${e.message}`);
-        if (showNotice) alert(`Không đẩy được lên GitHub: ${e.message}`);
-      }
-    }
-
-    function openSyncModal() {
-      document.getElementById("ghRepoInput").value = state.ghRepo || DEFAULT_GH_REPO;
-      document.getElementById("ghDataPathInput").value = state.ghDataPath || DEFAULT_GH_DATA_PATH;
-      document.getElementById("ghTokenInput").value = state.ghToken || "";
-      document.getElementById("syncModal").classList.remove("hidden");
-    }
-
-    async function saveSyncConfigAndPush() {
-      state.ghRepo = (document.getElementById("ghRepoInput").value || DEFAULT_GH_REPO).trim();
-      state.ghDataPath = (document.getElementById("ghDataPathInput").value || DEFAULT_GH_DATA_PATH).trim();
-      state.ghToken = (document.getElementById("ghTokenInput").value || "").trim();
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      closeModal("syncModal");
-      await pushCloudData(true);
-    }
-
-    function openHolidayModal() {
-      document.getElementById("holidayDateInput").value = formatIsoDate(getRealToday());
-      document.getElementById("holidayNoteInput").value = "";
-      renderHolidayList();
-      document.getElementById("holidayModal").classList.remove("hidden");
-    }
-
-    function addHolidayDate() {
-      const dateVal = document.getElementById("holidayDateInput").value;
-      const noteVal = (document.getElementById("holidayNoteInput").value || "Nghỉ lễ").trim();
-      if (!dateVal) return;
-
-      state.holidays = state.holidays.filter(h => h.date !== dateVal);
-      state.holidays.push({ date: dateVal, note: noteVal });
-      state.holidays.sort((a, b) => a.date.localeCompare(b.date));
-      saveState();
-      renderHolidayList();
-      renderWeeks();
-    }
-
-    function removeHolidayDate(dateIso) {
-      state.holidays = state.holidays.filter(h => h.date !== dateIso);
-      saveState();
-      renderHolidayList();
-      renderWeeks();
-    }
-
-    function renderHolidayList() {
-      const box = document.getElementById("holidayListBox");
-      if (!box) return;
-      if (!state.holidays.length) {
-        box.innerHTML = `<div class="text-xs text-slate-400 py-2">Chưa có ngày nghỉ lễ nào.</div>`;
-        return;
-      }
-      box.innerHTML = state.holidays.map(h => {
-        const d = toDateObj(h.date);
-        return `
-          <div class="flex items-center justify-between bg-amber-50/70 border border-amber-200/80 rounded-lg px-3 py-1.5 text-xs">
-            <div>
-              <span class="font-bold text-amber-900">${formatShortDate(d)}/${d.getFullYear()}</span>
-              <span class="text-slate-700 ml-1.5">— ${esc(h.note)}</span>
-            </div>
-            <button type="button" onclick="removeHolidayDate('${h.date}')" class="text-red-600 font-bold hover:underline">
-              Xóa
-            </button>
-          </div>
-        `;
-      }).join("");
-    }
-
-    function saveApiKey() {
-      state.geminiApiKey = (document.getElementById("geminiApiKey")?.value || "").trim();
-      saveState(false);
-    }
-
-    function resetData() {
-      if (!confirm("Khôi phục toàn bộ dữ liệu mặc định?")) return;
-      const keepToken = state.ghToken;
-      const keepRepo = state.ghRepo;
-      const keepPath = state.ghDataPath;
-      localStorage.removeItem(STORAGE_KEY);
-      state = {
-        bcsText: DEFAULT_BCS,
-        githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
-        ghRepo: keepRepo,
-        ghDataPath: keepPath,
-        ghToken: keepToken,
-        geminiApiKey: "",
-        holidays: [],
-        violations: [...INITIAL_VIOLATIONS],
-        manualInsertions: [],
-        priorityQueue: []
-      };
-      saveState(Boolean(state.ghToken));
-      renderAll();
-    }
-
-    function findStudent(queryName) {
-      if (!queryName) return null;
-      const q = normalizeStr(queryName);
-      let exact = STUDENTS.find(s => normalizeStr(s.name) === q);
-      if (exact) return exact;
-      return STUDENTS.find(s => normalizeStr(s.name).includes(q) || q.includes(normalizeStr(s.name).split(" ").slice(-2).join(" ")));
+      return days;
     }
 
     function getExemptNames() {
@@ -1044,10 +898,6 @@ Bí thư - Gia An`;
         exempt.add(st ? st.name : rawName);
       }
       return exempt;
-    }
-
-    function getHolidaySet() {
-      return new Set((state.holidays || []).map(h => h.date));
     }
 
     function getNextStudentByStt(student1Name, exemptSet) {
@@ -1068,90 +918,83 @@ Bí thư - Gia An`;
       const result = [];
       for (let step = includeStart ? 0 : 1; step < STUDENTS.length * 6 + 2; step++) {
         const cand = STUDENTS[(startIdx + step) % STUDENTS.length]?.name;
-        if (cand && !exemptSet.has(cand)) {
-          result.push(cand);
-        }
+        if (cand && !exemptSet.has(cand)) result.push(cand);
       }
       return result;
     }
 
-    function isExcusedAbsence(typeStr = "") {
-      const n = normalizeStr(typeStr);
-      return n.includes("vang co phep") || n.includes("nghi hoc co phep") || n.includes("co phep") || /\b(cp|sp)\b/.test(n);
-    }
+    // Lịch chuẩn không xét vi phạm & không xét phân thủ công
+    function buildBaseScheduleOnly() {
+      const exempt = getExemptNames();
+      const holidays = new Set((state.holidays || []).map(h => h.date));
+      const schoolDays = getSchoolDays("2026-11-23", "2027-05-31", holidays);
+      const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"];
+      const minhIndex = STUDENTS.findIndex(s => s.name === "Nguyễn Khắc Hoàng Minh");
+      const baseOrder = [...STUDENTS.slice(minhIndex + 1), ...STUDENTS.slice(0, minhIndex + 1)]
+        .map(s => s.name)
+        .filter(n => !exempt.has(n) && !firstPair.includes(n));
 
-    function toDateObj(yyyyMmDd) {
-      const [y, m, d] = yyyyMmDd.split("-").map(Number);
-      return new Date(y, m - 1, d);
-    }
+      const byWeek = new Map();
+      for (const d of schoolDays) {
+        const wk = getWeekMonday(d);
+        if (!byWeek.has(wk)) byWeek.set(wk, []);
+        byWeek.get(wk).push(d);
+      }
 
-    function formatIsoDate(d) {
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, "0");
-      const day = String(d.getDate()).padStart(2, "0");
-      return `${y}-${m}-${day}`;
-    }
-
-    function formatShortDate(d) {
-      return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}`;
-    }
-
-    function getSchoolDays(startIso, endIso, holidaySet) {
-      const days = [];
-      const cur = toDateObj(startIso);
-      const end = toDateObj(endIso);
-      while (cur <= end) {
-        const dow = cur.getDay();
-        const iso = formatIsoDate(cur);
-        if (dow >= 1 && dow <= 5 && !holidaySet.has(iso)) {
-          days.push(new Date(cur));
+      let qIdx = 0;
+      let isFirst = true;
+      const shifts = [];
+      for (const [, daysInWeek] of byWeek.entries()) {
+        for (let i = 0; i < daysInWeek.length; i += 2) {
+          const grp = daysInWeek.slice(i, i + 2);
+          const startIso = formatIsoDate(grp[0]);
+          if (startIso === "2026-12-04") {
+            shifts.push({ startDate: startIso, days: grp, students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"] });
+            continue;
+          }
+          if (isFirst) {
+            shifts.push({ startDate: startIso, days: grp, students: firstPair });
+            isFirst = false;
+          } else {
+            const p1 = baseOrder[qIdx++ % baseOrder.length] || "";
+            const p2 = baseOrder[qIdx++ % baseOrder.length] || "";
+            shifts.push({ startDate: startIso, days: grp, students: [p1, p2] });
+          }
         }
-        cur.setDate(cur.getDate() + 1);
       }
-      return days;
+      return shifts;
     }
 
-    function getDayLabel(dow) {
-      return { 1: "T2", 2: "T3", 3: "T4", 4: "T5", 5: "T6" }[dow] || "";
-    }
-
-    function getWeekMonday(d) {
-      const copy = new Date(d);
-      const dow = copy.getDay();
-      const diff = dow === 0 ? -6 : 1 - dow;
-      copy.setDate(copy.getDate() + diff);
-      return formatIsoDate(copy);
-    }
-
-    function formatShiftLabel(daysInShift) {
-      if (!daysInShift || daysInShift.length === 0) return "";
-      if (daysInShift.length === 1) {
-        const d1 = daysInShift[0];
-        return `${getDayLabel(d1.getDay())} • ${formatShortDate(d1)}`;
+    function renderBaseSttIndicators() {
+      const todayIso = formatIsoDate(getRealToday());
+      const baseShifts = buildBaseScheduleOnly();
+      let idx = baseShifts.findIndex(sh => sh.days.some(d => formatIsoDate(d) === todayIso));
+      if (idx === -1) {
+        idx = baseShifts.findIndex(sh => sh.startDate >= todayIso);
+        if (idx === -1) idx = 0;
       }
-      const d1 = daysInShift[0];
-      const d2 = daysInShift[1];
-      const sameMonth = d1.getMonth() === d2.getMonth();
-      const rangeStr = sameMonth
-        ? `${String(d1.getDate()).padStart(2, "0")}–${formatShortDate(d2)}`
-        : `${formatShortDate(d1)}–${formatShortDate(d2)}`;
-      return `${getDayLabel(d1.getDay())},${getDayLabel(d2.getDay())} • ${rangeStr}`;
+      const curPair = baseShifts[idx]?.students || [];
+      const nextPair = baseShifts[idx + 1]?.students || [];
+
+      const fmtPair = arr => arr.filter(Boolean).map(name => {
+        const st = findStudent(name);
+        return st ? `#${st.stt} ${st.name}` : name;
+      }).join(" & ") || "—";
+
+      document.getElementById("baseSttNow").textContent = fmtPair(curPair);
+      document.getElementById("baseSttNext").textContent = fmtPair(nextPair);
     }
 
     function buildAllWeeksSchedule() {
       const exempt = getExemptNames();
-      const holidays = getHolidaySet();
+      const holidays = new Set((state.holidays || []).map(h => h.date));
       const schoolDays = getSchoolDays("2026-11-23", "2027-05-31", holidays);
 
       const firstPair = ["Nguyễn Tiểu Long", "Nguyễn Khắc Hoàng Minh"];
       const minhIndex = STUDENTS.findIndex(s => s.name === "Nguyễn Khắc Hoàng Minh");
-
-      const baseOrder = [
-        ...STUDENTS.slice(minhIndex + 1),
-        ...STUDENTS.slice(0, minhIndex + 1)
-      ]
+      const baseOrder = [...STUDENTS.slice(minhIndex + 1), ...STUDENTS.slice(0, minhIndex + 1)]
         .map(s => s.name)
-        .filter(name => !exempt.has(name) && !firstPair.includes(name));
+        .filter(n => !exempt.has(n) && !firstPair.includes(n));
 
       const queue = [];
       const seen = new Set();
@@ -1161,192 +1004,147 @@ Bí thư - Gia An`;
           queue.push(p);
         }
       }
-      for (const p of baseOrder) {
-        queue.push(p);
-      }
+      for (const p of baseOrder) queue.push(p);
 
       let qIdx = 0;
-      const takePair = () => {
-        const p1 = queue[qIdx++] || "";
-        const p2 = queue[qIdx++] || "";
-        return [p1, p2];
-      };
+      const takePair = () => [queue[qIdx++] || "", queue[qIdx++] || ""];
 
       const manualMap = new Map();
       for (const m of state.manualInsertions) {
         const s1 = m.student1 || "";
-        const s2 = m.student2 === "__NEXT_STT__"
-          ? getNextStudentByStt(s1, exempt)
-          : (m.student2 || "");
+        const s2 = m.student2 === "__NEXT_STT__" ? getNextStudentByStt(s1, exempt) : (m.student2 || "");
         manualMap.set(m.startDate, [s1, s2]);
       }
 
       const byWeek = new Map();
       for (const d of schoolDays) {
-        const wkKey = getWeekMonday(d);
-        if (!byWeek.has(wkKey)) byWeek.set(wkKey, []);
-        byWeek.get(wkKey).push(d);
+        const wk = getWeekMonday(d);
+        if (!byWeek.has(wk)) byWeek.set(wk, []);
+        byWeek.get(wk).push(d);
       }
 
-      const weekEntries = Array.from(byWeek.entries());
       const weeksResult = [];
       let isFirstShift = true;
+      let wNum = 1;
 
-      weekEntries.forEach(([wkKey, daysInWeek], wIdx) => {
-        const groups = [];
+      for (const [wkKey, daysInWeek] of byWeek.entries()) {
+        const shifts = [];
         for (let i = 0; i < daysInWeek.length; i += 2) {
-          groups.push(daysInWeek.slice(i, i + 2));
-        }
-
-        const shifts = groups.map(grp => {
+          const grp = daysInWeek.slice(i, i + 2);
           const startIso = formatIsoDate(grp[0]);
           if (manualMap.has(startIso)) {
-            return {
-              startDate: startIso,
-              days: grp,
-              label: formatShiftLabel(grp),
-              students: manualMap.get(startIso),
-              isManual: true
-            };
+            shifts.push({ startDate: startIso, days: grp, label: formatShiftLabel(grp), students: manualMap.get(startIso) });
+          } else if (startIso === "2026-12-04") {
+            shifts.push({ startDate: startIso, days: grp, label: formatShiftLabel(grp), students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"] });
+          } else {
+            const pair = isFirstShift ? firstPair : takePair();
+            isFirstShift = false;
+            shifts.push({ startDate: startIso, days: grp, label: formatShiftLabel(grp), students: pair });
           }
-          if (startIso === "2026-12-04") {
-            return {
-              startDate: startIso,
-              days: grp,
-              label: formatShiftLabel(grp),
-              students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"],
-              isManual: false
-            };
-          }
-          const pair = isFirstShift ? firstPair : takePair();
-          isFirstShift = false;
-          return {
-            startDate: startIso,
-            days: grp,
-            label: formatShiftLabel(grp),
-            students: pair,
-            isManual: false
-          };
-        });
-
-        weeksResult.push({
-          weekNumber: wIdx + 1,
-          weekMonday: wkKey,
-          shifts
-        });
-      });
-
+        }
+        weeksResult.push({ weekNumber: wNum++, weekMonday: wkKey, shifts });
+      }
       return weeksResult;
     }
 
     function getVisibleWeeks() {
       const allWeeks = buildAllWeeksSchedule();
-      if (allWeeks.length === 0) return [];
-
-      const todayMonday = getWeekMonday(getRealToday());
-      let currentIdx = allWeeks.findIndex(w => w.weekMonday === todayMonday);
-
-      if (currentIdx === -1) {
-        if (todayMonday < allWeeks[0].weekMonday) {
-          currentIdx = 0;
-        } else {
-          currentIdx = allWeeks.length - 1;
-        }
-      }
-
-      const startIdx = Math.max(0, currentIdx - 1);
-      const endIdx = Math.min(allWeeks.length - 1, currentIdx + 3);
-
+      if (!allWeeks.length) return [];
+      const todayMon = getWeekMonday(getRealToday());
+      let curIdx = allWeeks.findIndex(w => w.weekMonday === todayMon);
+      if (curIdx === -1) curIdx = todayMon < allWeeks[0].weekMonday ? 0 : allWeeks.length - 1;
+      const startIdx = Math.max(0, curIdx - 1);
+      const endIdx = Math.min(allWeeks.length - 1, curIdx + 3);
       return allWeeks.slice(startIdx, endIdx + 1).map(w => ({
         ...w,
-        isCurrent: w.weekMonday === allWeeks[currentIdx].weekMonday
+        isCurrent: w.weekMonday === allWeeks[curIdx].weekMonday
       }));
     }
 
-    const initialOf = n => (String(n).trim().split(/\s+/).pop() || "?").charAt(0).toUpperCase();
-    const hueOf = n => [...String(n)].reduce((s, c) => s + c.charCodeAt(0), 0) % 5;
-
     function renderWeeks() {
+      setTimeout(renderTodayDuty, 0);
       const today = getRealToday();
-      const dayNames = ["Chủ nhật","Thứ hai","Thứ ba","Thứ tư","Thứ năm","Thứ sáu","Thứ bảy"];
-      const tl = document.getElementById("todayLabel");
-      if (tl) tl.textContent = `${formatShortDate(today)}/${today.getFullYear()}`;
-      const tw = document.getElementById("todayWeekday");
-      if (tw) tw.textContent = dayNames[today.getDay()];
+      const todayIso = formatIsoDate(today);
+      const dayNames = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"];
+      document.getElementById("todayWeekday").textContent = dayNames[today.getDay()];
+      document.getElementById("todayLabel").textContent = `${formatShortDate(today)}/${today.getFullYear()}`;
+      renderBaseSttIndicators();
 
       const nowMon = getWeekMonday(today);
       const container = document.getElementById("weeksContainer");
 
       container.innerHTML = getVisibleWeeks().map(wk => {
         const mon = toDateObj(wk.weekMonday);
-        const fri = new Date(mon); fri.setDate(mon.getDate() + 4);
-        const cls = wk.isCurrent ? "week-now" : (wk.weekMonday < nowMon ? "week-past" : "");
+        const fri = new Date(mon);
+        fri.setDate(mon.getDate() + 4);
+        const pastStyle = !wk.isCurrent && wk.weekMonday < nowMon ? "opacity-70" : "";
 
-        const todayIso = formatIsoDate(today);
-        const shifts = wk.shifts.map(sh => {
+        const shiftsHtml = wk.shifts.map(sh => {
           const isToday = sh.days.some(d => formatIsoDate(d) === todayIso);
+          const peopleHtml = [0, 1].map(i => {
+            const name = sh.students[i];
+            if (!name) return "";
+            const st = findStudent(name);
+            const sttText = st ? `#${st.stt}` : "—";
+            const genderCls = isFemale(name) ? "female" : "male";
+            return `
+              <div class="person-row">
+                <span class="stt-tag ${genderCls}">${sttText}</span>
+                <span class="person-name" title="${esc(name)}">${esc(name)}</span>
+                <button type="button" class="remove-btn" title="Xóa & dồn người kế" onclick="removePersonFromShift('${sh.startDate}', ${i})">&times;</button>
+              </div>
+            `;
+          }).join("");
+
           return `
-          <div class="shift${isToday ? " shift-today" : ""}">
-            <div class="flex items-center justify-between gap-2">
-              <span class="shift-day">${sh.label}</span>
-              <span class="flex items-center gap-1.5">
-                ${isToday ? '<span class="today-tag">Hôm nay</span>' : ""}
-                <button type="button" class="lnk" onclick="openEditShiftModal('${sh.startDate}')">Sửa</button>
-              </span>
+            <div class="shift-card ${isToday ? "is-today" : ""}">
+              <div class="shift-top">
+                <div class="shift-meta">
+                  <span class="shift-date-badge">${esc(sh.label)}</span>
+                  ${isToday ? '<span class="today-pill">Hôm nay</span>' : ""}
+                </div>
+                <button type="button" class="edit-link" onclick="openEditShiftModal('${sh.startDate}')">
+                  <svg class="w-3.5 h-3.5"><use href="#i-edit"/></svg>
+                  <span>Sửa</span>
+                </button>
+              </div>
+              ${peopleHtml}
             </div>
-            ${[0, 1].map(i => sh.students[i] ? `
-              <div class="person">
-                <span class="av av${hueOf(sh.students[i])}" aria-hidden="true">${esc(initialOf(sh.students[i]))}</span>
-                <span class="truncate" title="${esc(sh.students[i])}">${esc(sh.students[i])}</span>
-                <button type="button" class="x" title="Xóa & dồn người tiếp theo lên" onclick="removePersonFromShift('${sh.startDate}', ${i})">&times;</button>
-              </div>` : "").join("")}
-          </div>`;
+          `;
         }).join("");
 
         return `
-          <article class="week ${cls}">
-            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
-              <div class="flex items-center gap-3">
-                <h3>Tuần ${formatShortDate(mon)} – ${formatShortDate(fri)}/${fri.getFullYear()}</h3>
-                ${wk.isCurrent ? '<span class="live"><i></i>Đang trực</span>' : ""}
+          <article class="card p-4 sm:p-5 ${pastStyle}">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3.5">
+              <div class="flex items-center gap-2.5 flex-wrap">
+                <h3 class="text-base sm:text-lg font-extrabold" style="color: var(--primary);">
+                  Tuần ${formatShortDate(mon)} – ${formatShortDate(fri)}/${fri.getFullYear()}
+                </h3>
+                ${wk.isCurrent ? '<span class="live-badge"><span class="live-dot"></span>Đang trực</span>' : ""}
               </div>
-              <button class="btn btn-s" onclick="downloadWeekPng('${wk.weekMonday}', ${wk.weekNumber})">Tải hình PNG</button>
+              <button type="button" class="btn btn-sm" onclick="downloadWeekPng('${wk.weekMonday}')">
+                <svg class="w-3.5 h-3.5"><use href="#i-image"/></svg>
+                <span>PNG</span>
+              </button>
             </div>
-            <div class="shifts">${shifts}</div>
-          </article>`;
+            <div class="shift-grid">${shiftsHtml}</div>
+          </article>
+        `;
       }).join("");
-    }
-
-    function updateHs2ModeButtons() {
-      const nextBtn = document.getElementById("hs2ModeNextBtn");
-      const customBtn = document.getElementById("hs2ModeCustomBtn");
-      if (!nextBtn || !customBtn) return;
-      if (hs2SelectionMode === "next") {
-        nextBtn.className = "px-2.5 py-1 bg-blue-600 text-white";
-        customBtn.className = "px-2.5 py-1 bg-white text-slate-700 hover:bg-slate-50";
-      } else {
-        customBtn.className = "px-2.5 py-1 bg-blue-600 text-white";
-        nextBtn.className = "px-2.5 py-1 bg-white text-slate-700 hover:bg-slate-50";
-      }
     }
 
     function setHs2Mode(mode) {
       hs2SelectionMode = mode;
-      updateHs2ModeButtons();
-      if (mode === "next") {
-        onManualStudent1Change();
-      }
+      document.getElementById("hs2ModeNextBtn").className = mode === "next" ? "btn btn-sm btn-primary" : "btn btn-sm";
+      document.getElementById("hs2ModeCustomBtn").className = mode === "custom" ? "btn btn-sm btn-primary" : "btn btn-sm";
+      if (mode === "next") onManualStudent1Change();
     }
 
     function onManualStudent1Change() {
       if (hs2SelectionMode !== "next") return;
-      const s1 = document.getElementById("manualStudent1")?.value || "";
-      const exempt = getExemptNames();
-      const nextStudent = getNextStudentByStt(s1, exempt);
-      const s2Select = document.getElementById("manualStudent2");
-      if (s2Select && nextStudent) {
-        s2Select.value = nextStudent;
-      }
+      const s1 = document.getElementById("manualStudent1").value;
+      const nextSt = getNextStudentByStt(s1, getExemptNames());
+      if (nextSt) document.getElementById("manualStudent2").value = nextSt;
     }
 
     function openEditShiftModal(startDate) {
@@ -1354,37 +1152,103 @@ Bí thư - Gia An`;
       let targetShift = null;
       for (const wk of weeks) {
         for (const sh of wk.shifts) {
-          if (sh.startDate === startDate) {
-            targetShift = sh;
-            break;
-          }
+          if (sh.startDate === startDate) { targetShift = sh; break; }
         }
         if (targetShift) break;
       }
 
       const exempt = getExemptNames();
       editingManualDate = startDate;
-      document.getElementById("manualModalTitle").textContent = "Chỉnh sửa phân công trực";
+      document.getElementById("manualModalTitle").textContent = "Sửa phân công trực";
       document.getElementById("manualDate").value = startDate;
 
-      const s1Val = targetShift?.students?.[0] || STUDENTS[0].name;
-      const chosenS1 = findStudent(s1Val)?.name || STUDENTS[0].name;
-      document.getElementById("manualStudent1").value = chosenS1;
+      const s1 = findStudent(targetShift?.students?.[0])?.name || STUDENTS[0].name;
+      document.getElementById("manualStudent1").value = s1;
 
-      const autoS2 = getNextStudentByStt(chosenS1, exempt);
-      const currentS2 = targetShift?.students?.[1] || "";
-      if (currentS2 && currentS2 !== autoS2) {
+      const autoS2 = getNextStudentByStt(s1, exempt);
+      const curS2 = targetShift?.students?.[1] || "";
+      if (curS2 && curS2 !== autoS2) {
         hs2SelectionMode = "custom";
-        document.getElementById("manualStudent2").value = findStudent(currentS2)?.name || currentS2;
+        document.getElementById("manualStudent2").value = findStudent(curS2)?.name || curS2;
       } else {
         hs2SelectionMode = "next";
-        document.getElementById("manualStudent2").value = autoS2 || currentS2;
+        document.getElementById("manualStudent2").value = autoS2 || curS2;
       }
-      updateHs2ModeButtons();
+      setHs2Mode(hs2SelectionMode);
 
       const hasManual = state.manualInsertions.some(m => m.startDate === startDate);
       document.getElementById("btnDeleteManualDuty").classList.toggle("hidden", !hasManual);
       document.getElementById("manualModal").classList.remove("hidden");
+    }
+
+    function openManualModal() {
+      editingManualDate = "";
+      hs2SelectionMode = "next";
+      document.getElementById("manualModalTitle").textContent = "Phân trực thủ công";
+      document.getElementById("manualDate").value = formatIsoDate(getRealToday());
+      onManualStudent1Change();
+      setHs2Mode("next");
+      document.getElementById("btnDeleteManualDuty").classList.add("hidden");
+      document.getElementById("manualModal").classList.remove("hidden");
+    }
+
+    // Khi phân thủ công vào ngày có người trực -> đẩy người trực cũ sang ca/ngày tiếp theo
+    function submitManualDuty() {
+      const startDate = document.getElementById("manualDate").value;
+      const s1 = document.getElementById("manualStudent1").value;
+      const exempt = getExemptNames();
+      const s2 = hs2SelectionMode === "next"
+        ? getNextStudentByStt(s1, exempt)
+        : document.getElementById("manualStudent2").value;
+      if (!startDate || !s1) return;
+
+      const weeks = buildAllWeeksSchedule();
+      const flat = [];
+      for (const wk of weeks) {
+        for (const sh of wk.shifts) {
+          flat.push({ startDate: sh.startDate, students: [...sh.students] });
+        }
+      }
+
+      const targetIdx = flat.findIndex(sh => sh.startDate === startDate);
+      if (targetIdx !== -1) {
+        const oldPair = flat[targetIdx].students.filter(Boolean);
+        flat[targetIdx].students = [s1, s2].filter(Boolean);
+
+        // Đẩy người trực cũ sang các ca sau
+        if (oldPair.length > 0 && targetIdx + 1 < flat.length) {
+          const tailQueue = [];
+          for (let i = targetIdx + 1; i < flat.length; i++) {
+            tailQueue.push(...flat[i].students.filter(Boolean));
+          }
+          const combined = [...oldPair, ...tailQueue];
+          const lastPerson = combined[combined.length - 1] || s2 || s1;
+          combined.push(...buildSttCycleFrom(lastPerson, exempt, false));
+
+          let cursor = 0;
+          for (let i = targetIdx + 1; i < flat.length; i++) {
+            const pA = combined[cursor++] || "";
+            const pB = combined[cursor++] || "";
+            flat[i].students = [pA, pB].filter(Boolean);
+          }
+        }
+
+        for (let i = targetIdx; i < flat.length; i++) {
+          state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== flat[i].startDate);
+          state.manualInsertions.push({
+            startDate: flat[i].startDate,
+            student1: flat[i].students[0] || "",
+            student2: flat[i].students[1] || ""
+          });
+        }
+      } else {
+        state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== startDate);
+        state.manualInsertions.push({ startDate, student1: s1, student2: s2 });
+      }
+
+      saveState();
+      closeModal("manualModal");
+      renderWeeks();
     }
 
     function removePersonFromShift(startDate, slotIndex) {
@@ -1392,41 +1256,29 @@ Bí thư - Gia An`;
       const weeks = buildAllWeeksSchedule();
       const flatShifts = [];
       for (const wk of weeks) {
-        for (const sh of wk.shifts) {
-          flatShifts.push({
-            startDate: sh.startDate,
-            students: [...sh.students]
-          });
-        }
+        for (const sh of wk.shifts) flatShifts.push({ startDate: sh.startDate, students: [...sh.students] });
       }
 
-      const startShiftIdx = flatShifts.findIndex(s => s.startDate === startDate);
-      if (startShiftIdx === -1) return;
+      const startIdx = flatShifts.findIndex(s => s.startDate === startDate);
+      if (startIdx === -1) return;
 
       const stream = [];
-      for (let idx = startShiftIdx; idx < flatShifts.length; idx++) {
-        const pair = flatShifts[idx].students;
-        for (let k = 0; k < pair.length; k++) {
-          if (idx === startShiftIdx && k === slotIndex) continue;
-          if (pair[k]) stream.push(pair[k]);
+      for (let i = startIdx; i < flatShifts.length; i++) {
+        for (let k = 0; k < flatShifts[i].students.length; k++) {
+          if (i === startIdx && k === slotIndex) continue;
+          if (flatShifts[i].students[k]) stream.push(flatShifts[i].students[k]);
         }
       }
 
-      const lastPerson = stream[stream.length - 1] || flatShifts[startShiftIdx].students[1 - slotIndex] || STUDENTS[0].name;
-      const extraCycle = buildSttCycleFrom(lastPerson, exempt, false);
-      stream.push(...extraCycle);
+      const lastPerson = stream[stream.length - 1] || STUDENTS[0].name;
+      stream.push(...buildSttCycleFrom(lastPerson, exempt, false));
 
       let cursor = 0;
-      for (let idx = startShiftIdx; idx < flatShifts.length; idx++) {
-        const shDate = flatShifts[idx].startDate;
+      for (let i = startIdx; i < flatShifts.length; i++) {
         const p1 = stream[cursor++] || "";
         const p2 = stream[cursor++] || "";
-        state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== shDate);
-        state.manualInsertions.push({
-          startDate: shDate,
-          student1: p1,
-          student2: p2
-        });
+        state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== flatShifts[i].startDate);
+        state.manualInsertions.push({ startDate: flatShifts[i].startDate, student1: p1, student2: p2 });
       }
 
       saveState();
@@ -1434,484 +1286,297 @@ Bí thư - Gia An`;
     }
 
     function deleteManualDuty() {
-      const targetDate = editingManualDate || document.getElementById("manualDate").value;
-      state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== targetDate);
+      const target = editingManualDate || document.getElementById("manualDate").value;
+      state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== target);
       saveState();
       closeModal("manualModal");
       renderWeeks();
     }
 
-    function paintPaper(ctx, w, h) {
-      ctx.fillStyle = "#FBFCFF";
-      ctx.fillRect(0, 0, w, h);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(90,120,210,.16)";
-      for (let y = 31.5; y < h; y += 32) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-      ctx.strokeStyle = "rgba(205,40,54,.55)";
-      [14.5, 18.5].forEach(x => { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); });
-    }
-
-    function downloadWeekPng(weekMonday, weekNumber) {
-      const weeks = buildAllWeeksSchedule();
-      const wk = weeks.find(w => w.weekMonday === weekMonday);
+    function downloadWeekPng(weekMonday) {
+      const wk = buildAllWeeksSchedule().find(w => w.weekMonday === weekMonday);
       if (!wk) return;
-
-      const mondayObj = toDateObj(wk.weekMonday);
-      const fridayObj = new Date(mondayObj);
-      fridayObj.setDate(mondayObj.getDate() + 4);
+      const mon = toDateObj(wk.weekMonday);
+      const fri = new Date(mon);
+      fri.setDate(mon.getDate() + 4);
 
       const width = 760;
-      const rowHeight = 86;
-      const height = 130 + wk.shifts.length * rowHeight;
-
+      const rowH = 76;
+      const height = 120 + wk.shifts.length * rowH;
       const canvas = document.createElement("canvas");
-      const scale = 2;
-      canvas.width = width * scale;
-      canvas.height = height * scale;
+      canvas.width = width * 2;
+      canvas.height = height * 2;
       const ctx = canvas.getContext("2d");
-      ctx.scale(scale, scale);
+      ctx.scale(2, 2);
 
-      paintPaper(ctx, width, height);
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = "#0284c7";
+      ctx.font = "bold 20px 'Be Vietnam Pro', sans-serif";
+      ctx.fillText(`TRỰC NHẬT 12A1 (${formatShortDate(mon)} – ${formatShortDate(fri)}/${fri.getFullYear()})`, 28, 44);
 
-      ctx.fillStyle = "#4A35C8";
-      ctx.font = "bold 22px 'Be Vietnam Pro', sans-serif";
-      ctx.fillText(`LỊCH TRỰC NHẬT 12A1 (${formatShortDate(mondayObj)} – ${formatShortDate(fridayObj)}/${fridayObj.getFullYear()})`, 32, 48);
-
-      ctx.strokeStyle = "#C9C0F5";
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(32, 72);
-      ctx.lineTo(width - 32, 72);
-      ctx.stroke();
-
-      let y = 104;
+      let y = 92;
       for (const sh of wk.shifts) {
-        ctx.fillStyle = "#4A35C8";
-        ctx.font = "bold 16px 'Be Vietnam Pro', sans-serif";
-        ctx.fillText(sh.label, 32, y);
+        ctx.fillStyle = "#0284c7";
+        ctx.font = "bold 15px 'Be Vietnam Pro', sans-serif";
+        ctx.fillText(sh.label, 28, y);
 
-        ctx.fillStyle = "#0f172a";
-        ctx.font = "400 16px 'Be Vietnam Pro', sans-serif";
-        ctx.fillText(sh.students[0] || "", 240, y);
-        if (sh.students[1]) {
-          ctx.fillText(sh.students[1], 240, y + 24);
-        }
+        ctx.fillStyle = "#0f2942";
+        ctx.font = "600 15px 'Be Vietnam Pro', sans-serif";
+        sh.students.forEach((p, idx) => {
+          const st = findStudent(p);
+          const txt = st ? `#${st.stt} ${st.name}` : p;
+          ctx.fillText(txt, 220, y + idx * 22);
+        });
 
-        ctx.strokeStyle = "#f1f5f9";
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#e2e8f0";
         ctx.beginPath();
-        ctx.moveTo(32, y + 42);
-        ctx.lineTo(width - 32, y + 42);
+        ctx.moveTo(28, y + 36);
+        ctx.lineTo(width - 28, y + 36);
         ctx.stroke();
-
-        y += rowHeight;
+        y += rowH;
       }
 
       const link = document.createElement("a");
-      link.download = `Truc_Nhat_12A1_${formatShortDate(mondayObj).replace("/", "-")}.png`;
+      link.download = `Truc_Nhat_12A1_${formatShortDate(mon).replace("/", "-")}.png`;
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
 
-    function getGroupedViolations() {
-      const grouped = [];
-      const groupMap = new Map();
-
-      for (const v of state.violations) {
-        if (isExcusedAbsence(v.type)) continue;
-        if (v.studentName === "Tập thể lớp") continue;
-
-        const st = findStudent(v.studentName);
-        const displayName = st ? st.name : v.studentName;
-        const stt = st ? st.stt : "-";
-        const errName = (v.type || "Vi phạm").trim();
-        const category = resolveViolationCategory(errName);
-        const key = `${displayName}|||${errName}`;
-
-        if (!groupMap.has(key)) {
-          const item = { stt, name: displayName, category, errName, count: 0 };
-          groupMap.set(key, item);
-          grouped.push(item);
-        }
-        groupMap.get(key).count += 1;
-      }
-      return grouped;
-    }
-
+    // Vi phạm & cảnh báo từ 3 lần trở lên trong cùng 1 mục lớn
     function getGroupedViolationsByStudent() {
-      const flat = getGroupedViolations();
       const byStudent = [];
-      const studentMap = new Map();
-
-      for (const item of flat) {
-        if (!studentMap.has(item.name)) {
-          const entry = {
-            stt: item.stt,
-            name: item.name,
-            errors: [],
-            totalCount: 0
-          };
-          studentMap.set(item.name, entry);
-          byStudent.push(entry);
-        }
-        const entry = studentMap.get(item.name);
-        entry.errors.push({ category: item.category, errName: item.errName, count: item.count });
-        entry.totalCount += item.count;
-      }
-      return byStudent;
-    }
-
-    // Cảnh báo khi 1 học sinh có từ 3 lần vi phạm trở lên trong cùng 1 mục lớn (I. Chuyên cần / II. Tác phong / III. Kỷ luật)
-    function getCategoryAlerts() {
-      const byStudentCat = new Map();
+      const sMap = new Map();
 
       for (const v of state.violations) {
         if (isExcusedAbsence(v.type)) continue;
         if (v.studentName === "Tập thể lớp") continue;
 
         const st = findStudent(v.studentName);
-        const displayName = st ? st.name : v.studentName;
+        const name = st ? st.name : v.studentName;
+        const stt = st ? `#${st.stt}` : "—";
         const errName = (v.type || "Vi phạm").trim();
         const category = resolveViolationCategory(errName);
-        const key = `${displayName}|||${category}`;
 
-        if (!byStudentCat.has(key)) {
-          byStudentCat.set(key, { name: displayName, category, total: 0, details: new Map() });
+        if (!sMap.has(name)) {
+          sMap.set(name, { stt, name, errorsMap: new Map(), totalCount: 0 });
+          byStudent.push(sMap.get(name));
         }
-        const entry = byStudentCat.get(key);
-        entry.total += 1;
-        entry.details.set(errName, (entry.details.get(errName) || 0) + 1);
+        const entry = sMap.get(name);
+        entry.totalCount += 1;
+        const eKey = `${category}|||${errName}`;
+        if (!entry.errorsMap.has(eKey)) {
+          entry.errorsMap.set(eKey, { category, errName, count: 0 });
+        }
+        entry.errorsMap.get(eKey).count += 1;
       }
 
-      return Array.from(byStudentCat.values()).filter(item => item.total >= 3);
+      return byStudent.map(s => ({
+        stt: s.stt,
+        name: s.name,
+        totalCount: s.totalCount,
+        errors: Array.from(s.errorsMap.values())
+      }));
     }
 
-    function renderRepeatWarnings() {
-      const warnSection = document.getElementById("repeatWarningSection");
-      const warnList = document.getElementById("repeatWarningList");
-      if (!warnSection || !warnList) return;
-
-      const alerts = getCategoryAlerts();
-      if (alerts.length === 0) {
-        warnSection.classList.add("hidden");
-        warnList.innerHTML = "";
-        return;
+    function getCategoryAlerts() {
+      const map = new Map();
+      for (const v of state.violations) {
+        if (isExcusedAbsence(v.type) || v.studentName === "Tập thể lớp") continue;
+        const st = findStudent(v.studentName);
+        const name = st ? st.name : v.studentName;
+        const errName = (v.type || "Vi phạm").trim();
+        const category = resolveViolationCategory(errName);
+        const key = `${name}|||${category}`;
+        if (!map.has(key)) map.set(key, { name, category, total: 0 });
+        map.get(key).total += 1;
       }
+      return Array.from(map.values()).filter(x => x.total >= 3);
+    }
 
-      warnSection.classList.remove("hidden");
-      warnList.innerHTML = alerts.map(item => {
-        const detailText = Array.from(item.details.entries())
-          .map(([err, cnt]) => `${err}: ${cnt}`)
-          .join(", ");
-        return `
-          <span class="warn-chip" title="${esc(detailText)}">
-            <b>${esc(item.name)}</b> • ${esc(item.category)} (${item.total} lần: ${esc(detailText)})
-          </span>
-        `;
+    function renderTodayDuty() {
+      const el = document.getElementById("todayDuty");
+      if (!el) return;
+      const t = getRealToday(), iso = formatIsoDate(t), dow = t.getDay();
+      const msg = s => { el.innerHTML = `<span class="text-sm muted">${s}</span>`; };
+      const hol = (state.holidays || []).find(h => h.date === iso);
+      if (hol) return msg(`Nghỉ lễ — ${esc(hol.note)}`);
+      if (dow === 0 || dow === 6) return msg("Cuối tuần, không có ca trực.");
+      let found = null;
+      for (const wk of buildAllWeeksSchedule()) for (const sh of wk.shifts) if (sh.days.some(d => formatIsoDate(d) === iso)) found = sh;
+      const names = found ? found.students.filter(Boolean) : [];
+      if (!names.length) return msg("Chưa có ca trực hôm nay.");
+      el.innerHTML = names.map(n => {
+        const st = findStudent(n);
+        return `<span class="duty-chip"><span class="stt-tag ${isFemale(n) ? "female" : "male"}">${st ? "#" + st.stt : "—"}</span>${esc(n)}</span>`;
       }).join("");
     }
 
     function renderViolations() {
-      const keyword = normalizeStr(document.getElementById("violationSearch")?.value || "");
-      const tbody = document.getElementById("violationTableBody");
+      const alerts = getCategoryAlerts();
+      const warnSec = document.getElementById("repeatWarningSection");
+      const warnList = document.getElementById("repeatWarningList");
+      warnSec.classList.toggle("hidden", alerts.length === 0);
+      warnList.innerHTML = alerts.map(a => `
+        <div class="warn-card"><div class="top"><span>${esc(a.name)}</span><span class="pill pill-bad">${a.total} lần</span></div>
+        <div class="cat">${esc(a.category)}</div></div>`).join("");
 
-      renderRepeatWarnings();
+      const all = getGroupedViolationsByStudent();
+      document.getElementById("statViol").textContent = all.reduce((s, x) => s + x.totalCount, 0);
+      document.getElementById("statWarn").textContent = alerts.length;
 
-      const studentsGrouped = getGroupedViolationsByStudent();
+      const kw = norm(document.getElementById("violationSearch")?.value || "");
+      const CATS = ["I. Chuyên cần", "II. Tác phong", "III. Kỷ luật"];
+      const warnedNames = new Set(alerts.map(a => a.name));
+      const rows = all.filter(st => !kw || norm(st.name).includes(kw) || st.errors.some(e => norm(e.errName).includes(kw) || norm(e.category).includes(kw)))
+        .sort((a, b) => (warnedNames.has(b.name) - warnedNames.has(a.name)) || (b.totalCount - a.totalCount));
 
-      const rows = studentsGrouped.filter(student => {
-        if (!keyword) return true;
-        return (
-          normalizeStr(student.name).includes(keyword) ||
-          normalizeStr(`${student.totalCount} lần`).includes(keyword) ||
-          student.errors.some(e =>
-            normalizeStr(e.category).includes(keyword) ||
-            normalizeStr(e.errName).includes(keyword) ||
-            normalizeStr(`${e.count} lần`).includes(keyword)
-          )
-        );
-      });
-
-      if (rows.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="py-10 text-center text-slate-500">${keyword ? "Không tìm thấy kết quả phù hợp." : "Chưa có lỗi nào được ghi. Dán ảnh vi phạm hoặc bấm “+ Thêm lỗi vi phạm” để bắt đầu."}</td></tr>`;
+      const box = document.getElementById("violationTableBody");
+      if (!rows.length) {
+        box.innerHTML = `<div class="card p-10 text-center text-sm muted" style="grid-column:1/-1">${kw ? "Không tìm thấy kết quả phù hợp." : "Chưa có dữ liệu vi phạm."}</div>`;
         return;
       }
 
-      tbody.innerHTML = rows.map(st => {
+      box.innerHTML = rows.map(st => {
         const safeName = st.name.replace(/'/g, "\\'");
-        const errorsHtml = st.errors.map(e => {
+        const warned = warnedNames.has(st.name);
+        const meters = CATS.map(c => {
+          const n = st.errors.filter(e => e.category === c).reduce((s, e) => s + e.count, 0);
+          const cls = n >= 3 ? "r" : n === 2 ? "a" : "";
+          return `<div><div class="meter-top"><span>${c.replace(/^[IV]+\.\s*/, "")}</span><b>${n}/3</b></div><div class="bar"><i class="${cls}" style="width:${Math.min(n, 3) / 3 * 100}%"></i></div></div>`;
+        }).join("");
+        const errs = st.errors.map(e => {
           const safeErr = e.errName.replace(/'/g, "\\'");
           return `
-            <div class="err-item">
-              <div class="flex flex-wrap items-center gap-2 min-w-0">
-                <span class="cat-tag">${esc(e.category)}</span>
-                <span class="text-slate-800 font-medium">${esc(e.errName)}</span>
-                <span class="pill ${e.count >= 3 ? "pill-r" : e.count === 2 ? "pill-a" : "pill-s"}">${e.count} lần</span>
+            <div class="verr">
+              <div class="min-w-0"><span class="tag">${esc(e.category.split(".")[0])}</span><span class="font-medium">${esc(e.errName)}</span> <span class="pill ${e.count >= 3 ? "pill-bad" : e.count === 2 ? "pill-warn" : "pill-ok"}">×${e.count}</span></div>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', -1)" class="mini m" title="Trừ 1 lần">−1</button>
+                <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', 1)" class="mini" title="Cộng 1 lần">+1</button>
               </div>
-              <div class="inline-flex items-center gap-1.5 shrink-0">
-                <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', -1)"
-                  title="Trừ 1 lần lỗi này"
-                  class="cnt cnt-m">
-                  -1
-                </button>
-                <button type="button" onclick="adjustViolationCount('${safeName}', '${safeErr}', 1)"
-                  title="Cộng thêm 1 lần lỗi này"
-                  class="cnt cnt-p">
-                  +1
-                </button>
-              </div>
-            </div>
-          `;
+            </div>`;
         }).join("");
-
         return `
-          <tr class="vrow align-top">
-            <td class="py-3.5 px-4 text-slate-500 font-medium">#${st.stt}</td>
-            <td class="py-3.5 px-4 font-semibold text-slate-900">${esc(st.name)}</td>
-            <td class="py-2 px-4">${errorsHtml}</td>
-            <td class="py-3.5 px-4 text-center">
-              <span class="pill ${st.totalCount >= 3 ? "pill-r" : st.totalCount === 2 ? "pill-a" : "pill-s"}">${st.totalCount} lần</span>
-            </td>
-          </tr>
-        `;
+          <article class="vcard ${warned ? "vcard-warn" : ""}">
+            <div class="vhead">
+              <span class="stt-tag ${isFemale(st.name) ? "female" : "male"}">${esc(st.stt)}</span>
+              <div class="min-w-0 flex-1"><div class="vname">${esc(st.name)}</div><div class="vsub">Tổng ${st.totalCount} lỗi</div></div>
+              ${warned ? '<span class="pill pill-bad">Cảnh báo</span>' : ""}
+            </div>
+            <div class="meters">${meters}</div>
+            <div>${errs}</div>
+          </article>`;
       }).join("");
-    }
-
-    function downloadViolationsPng() {
-      const studentsGrouped = getGroupedViolationsByStudent();
-      const alerts = getCategoryAlerts();
-      const width = 820;
-      const warnLines = alerts.length > 0
-        ? alerts.map(r => `• ${r.name} — ${r.category} (${r.total} lần)`)
-        : [];
-      const warnBoxHeight = warnLines.length > 0 ? 34 + warnLines.length * 20 : 0;
-      const totalBodyHeight = studentsGrouped.length === 0
-        ? 44
-        : studentsGrouped.reduce((sum, st) => sum + Math.max(44, st.errors.length * 28 + 16), 0);
-      const height = 130 + warnBoxHeight + totalBodyHeight;
-
-      const canvas = document.createElement("canvas");
-      const scale = 2;
-      canvas.width = width * scale;
-      canvas.height = height * scale;
-      const ctx = canvas.getContext("2d");
-      ctx.scale(scale, scale);
-
-      paintPaper(ctx, width, height);
-
-      ctx.fillStyle = "#4A35C8";
-      ctx.font = "bold 22px 'Be Vietnam Pro', sans-serif";
-      ctx.fillText("THỐNG KÊ VI PHẠM LỚP 12A1", 32, 46);
-
-      ctx.fillStyle = "#64748b";
-      ctx.font = "500 13px 'Be Vietnam Pro', sans-serif";
-      ctx.fillText(`Cập nhật: ${formatShortDate(getRealToday())}/${getRealToday().getFullYear()}`, 32, 68);
-
-      let y = 96;
-      if (warnLines.length > 0) {
-        ctx.fillStyle = "#fef2f2";
-        ctx.fillRect(32, y - 16, width - 64, warnBoxHeight - 8);
-        ctx.fillStyle = "#b91c1c";
-        ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
-        ctx.fillText("CẢNH BÁO VI PHẠM (TỪ 3 LẦN TRỞ LÊN TRONG CÙNG 1 MỤC):", 44, y + 4);
-        ctx.font = "600 13px 'Be Vietnam Pro', sans-serif";
-        warnLines.forEach((line, idx) => {
-          ctx.fillText(line, 56, y + 24 + idx * 20);
-        });
-        y += warnBoxHeight + 8;
-      }
-
-      ctx.fillStyle = "#0f172a";
-      ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
-      ctx.fillText("STT", 32, y);
-      ctx.fillText("Họ và tên", 95, y);
-      ctx.fillText("Lỗi vi phạm", 335, y);
-      ctx.fillText("Tổng lần", 690, y);
-
-      ctx.strokeStyle = "#cbd5e1";
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(32, y + 10);
-      ctx.lineTo(width - 32, y + 10);
-      ctx.stroke();
-
-      y += 34;
-      if (studentsGrouped.length === 0) {
-        ctx.fillStyle = "#94a3b8";
-        ctx.font = "15px 'Be Vietnam Pro', sans-serif";
-        ctx.fillText("Chưa có dữ liệu vi phạm.", 32, y);
-      } else {
-        for (const st of studentsGrouped) {
-          ctx.fillStyle = "#475569";
-          ctx.font = "500 14px 'Be Vietnam Pro', sans-serif";
-          ctx.fillText(`#${st.stt}`, 32, y);
-
-          ctx.fillStyle = "#0f172a";
-          ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
-          ctx.fillText(st.name, 95, y);
-
-          ctx.fillStyle = "#334155";
-          ctx.font = "400 14px 'Be Vietnam Pro', sans-serif";
-          st.errors.forEach((e, idx) => {
-            ctx.fillText(`• [${e.category}] ${e.errName} (${e.count} lần)`, 335, y + idx * 24);
-          });
-
-          ctx.fillStyle = st.totalCount >= 3 ? "#dc2626" : "#4A35C8";
-          ctx.font = "bold 14px 'Be Vietnam Pro', sans-serif";
-          ctx.fillText(`${st.totalCount} lần`, 690, y);
-
-          const blockHeight = Math.max(44, st.errors.length * 24 + 20);
-          ctx.strokeStyle = "#f1f5f9";
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(32, y + blockHeight - 16);
-          ctx.lineTo(width - 32, y + blockHeight - 16);
-          ctx.stroke();
-
-          y += blockHeight;
-        }
-      }
-
-      const link = document.createElement("a");
-      link.download = `Thong_Ke_Vi_Pham_12A1_${formatShortDate(getRealToday()).replace("/", "-")}.png`;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
     }
 
     function adjustViolationCount(studentName, errName, delta) {
       if (delta > 0) {
-        state.violations.push({
-          id: Date.now() + Math.random(),
-          studentName,
-          date: formatIsoDate(getRealToday()),
-          type: errName
-        });
-      } else if (delta < 0) {
-        let removeIdx = -1;
+        state.violations.push({ id: Date.now() + Math.random(), studentName, date: formatIsoDate(getRealToday()), type: errName });
+      } else {
         for (let i = state.violations.length - 1; i >= 0; i--) {
           const v = state.violations[i];
-          const st = findStudent(v.studentName);
-          const displayName = st ? st.name : v.studentName;
-          const vErr = (v.type || "Vi phạm").trim();
-          if (displayName === studentName && vErr === errName) {
-            removeIdx = i;
+          const n = findStudent(v.studentName)?.name || v.studentName;
+          if (n === studentName && (v.type || "").trim() === errName) {
+            state.violations.splice(i, 1);
             break;
           }
-        }
-        if (removeIdx !== -1) {
-          state.violations.splice(removeIdx, 1);
         }
       }
       saveState();
       renderViolations();
     }
 
-    function addPriorityForDuty(studentName, dateIso) {
-      if (normalizeStr(studentName).includes("tap the")) {
-        const weeks = buildAllWeeksSchedule();
-        let dutyPair = null;
-        for (const wk of weeks) {
-          for (const sh of wk.shifts) {
-            if (sh.days.some(d => formatIsoDate(d) === dateIso)) {
-              dutyPair = sh.students;
-              break;
-            }
-          }
-          if (dutyPair) break;
-        }
-        if (dutyPair) {
-          for (const pName of dutyPair) {
-            if (pName && pName !== "Trực bổ sung") {
-              state.priorityQueue.unshift(pName);
-            }
-          }
-        }
-        return;
-      }
-      const st = findStudent(studentName);
-      state.priorityQueue.unshift(st ? st.name : studentName);
-    }
+    function downloadViolationsPng() {
+      const students = getGroupedViolationsByStudent();
+      const alerts = getCategoryAlerts();
+      const width = 800;
+      const warnH = alerts.length ? 36 + alerts.length * 22 : 0;
+      const bodyH = students.length ? students.reduce((sum, s) => sum + Math.max(44, s.errors.length * 24 + 16), 0) : 44;
+      const height = 110 + warnH + bodyH;
 
-    function addStatsViolationRecord(studentName, dateIso, typeStr) {
-      if (isExcusedAbsence(typeStr)) return;
+      const canvas = document.createElement("canvas");
+      canvas.width = width * 2;
+      canvas.height = height * 2;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(2, 2);
 
-      if (normalizeStr(studentName).includes("tap the")) {
-        state.violations.push({
-          id: Date.now() + Math.random(),
-          studentName: "Tập thể lớp",
-          date: dateIso,
-          type: typeStr || "Xả rác làm mất vệ sinh"
-        });
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = "#0284c7";
+      ctx.font = "bold 20px 'Be Vietnam Pro', sans-serif";
+      ctx.fillText("THỐNG KÊ VI PHẠM 12A1", 28, 42);
 
-        const weeks = buildAllWeeksSchedule();
-        let dutyPair = null;
-        for (const wk of weeks) {
-          for (const sh of wk.shifts) {
-            if (sh.days.some(d => formatIsoDate(d) === dateIso)) {
-              dutyPair = sh.students;
-              break;
-            }
-          }
-          if (dutyPair) break;
-        }
-
-        if (dutyPair) {
-          for (const pName of dutyPair) {
-            if (pName && pName !== "Trực bổ sung") {
-              state.violations.push({
-                id: Date.now() + Math.random(),
-                studentName: pName,
-                date: dateIso,
-                type: typeStr || "Xả rác làm mất vệ sinh"
-              });
-            }
-          }
-        }
-        return;
+      let y = 76;
+      if (alerts.length) {
+        ctx.fillStyle = "#fef2f2";
+        ctx.fillRect(28, y - 16, width - 56, warnH - 8);
+        ctx.fillStyle = "#dc2626";
+        ctx.font = "bold 12px 'Be Vietnam Pro', sans-serif";
+        ctx.fillText("CẢNH BÁO TỪ 3 LẦN CÙNG MỤC LỚN:", 40, y + 2);
+        ctx.font = "600 12px 'Be Vietnam Pro', sans-serif";
+        alerts.forEach((a, idx) => ctx.fillText(`• ${a.name} — ${a.category} (${a.total} lần)`, 48, y + 20 + idx * 20));
+        y += warnH + 8;
       }
 
-      const st = findStudent(studentName);
-      const finalName = st ? st.name : studentName;
-      state.violations.push({
-        id: Date.now() + Math.random(),
-        studentName: finalName,
-        date: dateIso,
-        type: typeStr || "Vi phạm"
-      });
-    }
+      ctx.fillStyle = "#0f2942";
+      ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
+      ctx.fillText("STT", 28, y);
+      ctx.fillText("Họ tên", 85, y);
+      ctx.fillText("Lỗi", 310, y);
+      ctx.fillText("Tổng", 710, y);
+      y += 28;
 
-    function addViolationRecord(studentName, dateIso, typeStr, options = { duty: true, stats: true }) {
-      if (isExcusedAbsence(typeStr)) return;
-      if (options.stats) addStatsViolationRecord(studentName, dateIso, typeStr);
-      if (options.duty) addPriorityForDuty(studentName, dateIso);
+      for (const st of students) {
+        ctx.fillStyle = "#526b82";
+        ctx.font = "600 13px 'Be Vietnam Pro', sans-serif";
+        ctx.fillText(st.stt, 28, y);
+
+        ctx.fillStyle = "#0f2942";
+        ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
+        ctx.fillText(st.name, 85, y);
+
+        ctx.fillStyle = "#334155";
+        ctx.font = "400 13px 'Be Vietnam Pro', sans-serif";
+        st.errors.forEach((e, idx) => ctx.fillText(`• [${e.category}] ${e.errName} (${e.count})`, 310, y + idx * 22));
+
+        ctx.fillStyle = st.totalCount >= 3 ? "#dc2626" : "#0284c7";
+        ctx.font = "bold 13px 'Be Vietnam Pro', sans-serif";
+        ctx.fillText(`${st.totalCount}`, 715, y);
+
+        y += Math.max(40, st.errors.length * 22 + 14);
+      }
+
+      const link = document.createElement("a");
+      link.download = `Vi_Pham_12A1_${formatShortDate(getRealToday()).replace("/", "-")}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
     }
 
     function onSelectViolationCatalog(val) {
-      const customWrap = document.getElementById("violCustomWrap");
-      const typeInput = document.getElementById("violTypeInput");
+      const wrap = document.getElementById("violCustomWrap");
       if (val === "__CUSTOM__") {
-        customWrap?.classList.remove("hidden");
-        if (typeInput) {
-          typeInput.value = "";
-          typeInput.focus();
-        }
+        wrap.classList.remove("hidden");
+        document.getElementById("violTypeInput").focus();
       } else {
-        customWrap?.classList.add("hidden");
-        if (typeInput) typeInput.value = val;
+        wrap.classList.add("hidden");
+        document.getElementById("violTypeInput").value = val;
       }
     }
 
     function submitNewViolation() {
       const target = document.getElementById("violTargetSelect").value;
       const dateVal = document.getElementById("violDateInput").value;
-      const catalogVal = document.getElementById("violCatalogSelect").value;
-      const typeVal = catalogVal === "__CUSTOM__"
-        ? document.getElementById("violTypeInput").value.trim()
-        : catalogVal;
-      const addDuty = Boolean(document.getElementById("violAddDutyCheckbox")?.checked);
+      const catVal = document.getElementById("violCatalogSelect").value;
+      const typeVal = catVal === "__CUSTOM__" ? document.getElementById("violTypeInput").value.trim() : catVal;
+      const addDuty = Boolean(document.getElementById("violAddDutyCheckbox").checked);
       if (!typeVal || isExcusedAbsence(typeVal)) return;
 
-      addViolationRecord(target, dateVal, typeVal, { duty: addDuty, stats: true });
+      const finalName = findStudent(target)?.name || target;
+      state.violations.push({ id: Date.now() + Math.random(), studentName: finalName, date: dateVal, type: typeVal });
+      if (addDuty && finalName !== "Tập thể lớp") {
+        state.priorityQueue.unshift(finalName);
+      }
+
       saveState();
       closeModal("addViolationModal");
       renderAll();
@@ -1920,281 +1585,76 @@ Bí thư - Gia An`;
     function findByDate() {
       const iso = document.getElementById("searchDateInput").value;
       if (!iso) return;
-
       const d = toDateObj(iso);
-      const dow = d.getDay();
       const box = document.getElementById("dateSearchResult");
       const content = document.getElementById("dateSearchContent");
       box.classList.remove("hidden");
 
       const holiday = (state.holidays || []).find(h => h.date === iso);
       if (holiday) {
-        content.innerHTML = `Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> là ngày nghỉ lễ (<b>${esc(holiday.note)}</b>).`;
+        content.innerHTML = `<b>${formatShortDate(d)}/${d.getFullYear()}</b>: Nghỉ lễ — <b>${esc(holiday.note)}</b>`;
+        return;
+      }
+      if (d.getDay() === 0 || d.getDay() === 6) {
+        content.innerHTML = `<b>${formatShortDate(d)}/${d.getFullYear()}</b>: Cuối tuần`;
         return;
       }
 
-      if (dow === 0 || dow === 6) {
-        content.innerHTML = `Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> là cuối tuần (không có ca trực).`;
-        return;
-      }
-
-      const weeks = buildAllWeeksSchedule();
-      let found = null;
-      for (const wk of weeks) {
+      for (const wk of buildAllWeeksSchedule()) {
         for (const sh of wk.shifts) {
           if (sh.days.some(day => formatIsoDate(day) === iso)) {
-            found = sh;
-            break;
+            const list = sh.students.map(n => {
+              const st = findStudent(n);
+              return st ? `#${st.stt} ${st.name}` : n;
+            }).join(" & ");
+            content.innerHTML = `<b>${formatShortDate(d)}/${d.getFullYear()}</b> (${esc(sh.label)}): <b style="color:var(--primary)">${esc(list)}</b>`;
+            return;
           }
         }
-        if (found) break;
       }
-
-      if (!found) {
-        content.innerHTML = `Không tìm thấy ca trực cho ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b>.`;
-        return;
-      }
-
-      const namesText = found.students.filter(Boolean).map(esc).join(" và ");
-      content.innerHTML = `
-        Ngày <b>${formatShortDate(d)}/${d.getFullYear()}</b> (${esc(found.label)}):
-        <span class="font-semibold text-blue-700">${namesText}</span>
-      `;
+      content.innerHTML = `<b>${formatShortDate(d)}/${d.getFullYear()}</b>: Không có ca trực`;
     }
 
-    function submitManualDuty() {
-      const startDate = document.getElementById("manualDate").value;
-      const s1 = document.getElementById("manualStudent1").value;
-      const exempt = getExemptNames();
-      const rawS2 = document.getElementById("manualStudent2").value;
-      const s2 = hs2SelectionMode === "next" ? getNextStudentByStt(s1, exempt) : rawS2;
-      if (!startDate || !s1) return;
+    function openHolidayModal() {
+      document.getElementById("holidayDateInput").value = formatIsoDate(getRealToday());
+      document.getElementById("holidayNoteInput").value = "";
+      renderHolidayList();
+      document.getElementById("holidayModal").classList.remove("hidden");
+    }
 
-      state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== startDate);
-      state.manualInsertions.push({
-        startDate,
-        student1: s1,
-        student2: s2
-      });
-
-      const weeks = buildAllWeeksSchedule();
-      const flatShifts = [];
-      for (const wk of weeks) {
-        for (const sh of wk.shifts) {
-          flatShifts.push(sh.startDate);
-        }
-      }
-      const startIdx = flatShifts.indexOf(startDate);
-      if (startIdx !== -1 && startIdx + 1 < flatShifts.length) {
-        const anchorName = s2 || s1;
-        const nextCycle = buildSttCycleFrom(anchorName, exempt, false);
-        let cursor = 0;
-        for (let idx = startIdx + 1; idx < flatShifts.length; idx++) {
-          const shDate = flatShifts[idx];
-          const p1 = nextCycle[cursor++] || "";
-          const p2 = nextCycle[cursor++] || "";
-          state.manualInsertions = state.manualInsertions.filter(m => m.startDate !== shDate);
-          state.manualInsertions.push({
-            startDate: shDate,
-            student1: p1,
-            student2: p2
-          });
-        }
-      }
-
+    function addHolidayDate() {
+      const dt = document.getElementById("holidayDateInput").value;
+      const note = (document.getElementById("holidayNoteInput").value || "Nghỉ lễ").trim();
+      if (!dt) return;
+      state.holidays = state.holidays.filter(h => h.date !== dt).concat([{ date: dt, note }]);
+      state.holidays.sort((a, b) => a.date.localeCompare(b.date));
       saveState();
-      closeModal("manualModal");
+      renderHolidayList();
       renderWeeks();
     }
 
-    function setScanStatus(msg, isError = false) {
-      const el = document.getElementById("scanStatusText");
-      if (!el) return;
-      el.textContent = msg;
-      el.classList.remove("hidden");
-      el.className = isError
-        ? "text-xs font-medium px-3 py-2 rounded-lg bg-red-50 text-red-700 border border-red-200"
-        : "text-xs font-medium px-3 py-2 rounded-lg bg-blue-50 text-blue-700 border border-blue-200";
-    }
-
-    window.addEventListener("paste", (e) => {
-      const items = e.clipboardData?.items;
-      if (!items) return;
-      for (const item of items) {
-        if (item.type.startsWith("image/")) {
-          const file = item.getAsFile();
-          if (file) {
-            e.preventDefault();
-            openScanModal();
-            readImageFile(file);
-          }
-        }
-      }
-    });
-
-    function handleImageFile(event) {
-      const file = event.target.files?.[0];
-      if (file) readImageFile(file);
-    }
-
-    function readImageFile(file) {
-      currentImageMime = file.type || "image/png";
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const result = String(reader.result || "");
-        const img = document.getElementById("previewImage");
-        img.src = result;
-        img.classList.remove("hidden");
-        currentImageBase64 = result.split(",")[1] || "";
-        await analyzeImage();
-      };
-      reader.readAsDataURL(file);
-    }
-
-    const GEMINI_SCAN_MODELS = [
-      "gemini-3.8-flash",
-      "gemini-3-flash-preview",
-      "gemini-2.5-flash"
-    ];
-
-    async function callGeminiVisionWithFallback(apiKey, prompt, base64Data, mimeType) {
-      let lastErr = "";
-      for (const modelName of GEMINI_SCAN_MODELS) {
-        try {
-          const res = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${encodeURIComponent(apiKey)}`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                contents: [{
-                  parts: [
-                    { text: prompt },
-                    { inline_data: { mime_type: mimeType, data: base64Data } }
-                  ]
-                }]
-              })
-            }
-          );
-          const data = await res.json();
-          if (!res.ok) {
-            lastErr = data.error?.message || `Lỗi ${modelName}`;
-            continue;
-          }
-          const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-          return { text, modelName };
-        } catch (e) {
-          lastErr = e.message || "Lỗi kết nối mạng";
-        }
-      }
-      throw new Error(lastErr || "Không gọi được Gemini API");
-    }
-
-    async function analyzeImage() {
-      saveApiKey();
-      const apiKey = state.geminiApiKey;
-      parsedDraft = [];
-
-      if (apiKey && currentImageBase64) {
-        setScanStatus("Đang nhận diện bảng vi phạm bằng Gemini...");
-        try {
-          const catalogNames = VIOLATION_CATALOG.map(v => v.name).join(" | ");
-          const prompt = `Đọc bảng báo cáo vi phạm học sinh trong ảnh. Trả về đúng JSON array gồm các object: {"student":"tên hoặc Tập thể lớp","date":"YYYY-MM-DD","type":"tên lỗi chuẩn"}. Ưu tiên map "type" khớp danh mục: [${catalogNames}]. TUYỆT ĐỐI BỎ QUA mọi lỗi liên quan đến Vắng có phép / Nghỉ có phép (CP, SP).`;
-          const { text, modelName } = await callGeminiVisionWithFallback(apiKey, prompt, currentImageBase64, currentImageMime);
-          const jsonMatch = text.match(/\[[\s\S]*\]/);
-          if (jsonMatch) {
-            const arr = JSON.parse(jsonMatch[0]);
-            if (Array.isArray(arr)) {
-              parsedDraft = arr
-                .filter(item => item && item.type && !isExcusedAbsence(item.type))
-                .map(item => ({
-                  student: String(item.student || ""),
-                  date: /^\d{4}-\d{2}-\d{2}$/.test(item.date || "") ? item.date : formatIsoDate(getRealToday()),
-                  type: String(item.type)
-                }));
-            }
-          }
-          setScanStatus(`Đã nhận diện ${parsedDraft.length} mục bằng ${modelName} (đã lọc bỏ vắng có phép).`);
-        } catch (err) {
-          setScanStatus(`Không quét tự động được (${err.message}). Bạn có thể bấm "Quét lại ảnh" hoặc nhập/chỉnh tay bên dưới.`, true);
-        }
-      } else {
-        setScanStatus("Đã nhận ảnh. Chưa có Gemini API Key nên bạn có thể điền/thêm dòng nhanh bên dưới.");
-      }
-
-      if (parsedDraft.length === 0) {
-        parsedDraft = [
-          { student: "", date: formatIsoDate(getRealToday()), type: "Trễ" }
-        ];
-      }
-
-      renderParsedPreview();
-    }
-
-    function addParsedRow() {
-      parsedDraft.push({
-        student: "",
-        date: formatIsoDate(getRealToday()),
-        type: "Trễ"
-      });
-      renderParsedPreview();
-    }
-
-    function removeParsedRow(idx) {
-      parsedDraft.splice(idx, 1);
-      renderParsedPreview();
-    }
-
-    function renderParsedPreview() {
-      const box = document.getElementById("parsedPreviewBox");
-      const list = document.getElementById("parsedItemsList");
-      const btn = document.getElementById("btnApplyParsed");
-
-      box.classList.remove("hidden");
-      btn.disabled = parsedDraft.length === 0;
-
-      list.innerHTML = parsedDraft.map((item, idx) => `
-        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-white p-2 rounded-lg border border-slate-200 text-xs items-center">
-          <input type="text" value="${esc(item.student)}" oninput="parsedDraft[${idx}].student = this.value"
-            class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Họ tên / Tập thể lớp" />
-          <input type="date" value="${esc(item.date)}" oninput="parsedDraft[${idx}].date = this.value"
-            class="sm:col-span-3 px-2 py-1 border border-slate-200 rounded" />
-          <input type="text" list="violationCatalogDatalist" value="${esc(item.type)}" oninput="parsedDraft[${idx}].type = this.value"
-            class="sm:col-span-4 px-2 py-1 border border-slate-200 rounded" placeholder="Lỗi vi phạm" />
-          <button type="button" onclick="removeParsedRow(${idx})" class="sm:col-span-1 text-red-600 font-bold text-center hover:underline">
-            &times;
-          </button>
-        </div>
-      `).join("");
-    }
-
-    function applyParsedViolations() {
-      const optDuty = Boolean(document.getElementById("applyOptDuty")?.checked);
-      const optStats = Boolean(document.getElementById("applyOptStats")?.checked);
-
-      if (!optDuty && !optStats) {
-        alert("Hãy chọn ít nhất 1 mục: Phân trực hoặc Thống kê.");
-        return;
-      }
-
-      let appliedCount = 0;
-      for (const item of parsedDraft) {
-        const studentClean = (item.student || "").trim();
-        const typeClean = (item.type || "").trim();
-        if (studentClean && typeClean && !isExcusedAbsence(typeClean)) {
-          addViolationRecord(studentClean, item.date || formatIsoDate(getRealToday()), typeClean, { duty: optDuty, stats: optStats });
-          appliedCount++;
-        }
-      }
-
-      if (appliedCount === 0) {
-        alert("Chưa có dòng hợp lệ (cần điền Họ tên / Tập thể lớp và Lỗi vi phạm).");
-        return;
-      }
-
+    function removeHolidayDate(dt) {
+      state.holidays = state.holidays.filter(h => h.date !== dt);
       saveState();
-      closeModal("scanModal");
-      renderAll();
+      renderHolidayList();
+      renderWeeks();
+    }
+
+    function renderHolidayList() {
+      const box = document.getElementById("holidayListBox");
+      if (!state.holidays.length) {
+        box.innerHTML = `<div class="text-xs" style="color: var(--muted);">Chưa có ngày nghỉ lễ.</div>`;
+        return;
+      }
+      box.innerHTML = state.holidays.map(h => {
+        const d = toDateObj(h.date);
+        return `
+          <div class="card-soft px-3 py-2 flex items-center justify-between text-xs">
+            <span><b>${formatShortDate(d)}/${d.getFullYear()}</b> — ${esc(h.note)}</span>
+            <button type="button" onclick="removeHolidayDate('${h.date}')" class="remove-btn">&times;</button>
+          </div>
+        `;
+      }).join("");
     }
 
     function openBcsModal() {
@@ -2213,14 +1673,14 @@ Bí thư - Gia An`;
         if (txt) {
           state.bcsText = txt;
           state.githubBcsUrl = url;
-          saveState(false);
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
           const ta = document.getElementById("bcsTextarea");
           if (ta) ta.value = txt;
           renderWeeks();
-          if (showAlert) alert("Đã tải BCS.txt mới nhất từ GitHub!");
+          if (showAlert) alert("Đã tải BCS.txt");
         }
       } catch (e) {
-        if (showAlert) alert("Không tải được file BCS.txt từ link này.");
+        if (showAlert) alert("Không tải được BCS.txt");
       }
     }
 
@@ -2231,81 +1691,213 @@ Bí thư - Gia An`;
       renderWeeks();
     }
 
+    function setSyncBadge(text, synced = false) {
+      const el = document.getElementById("syncBadgeText");
+      if (!el) return;
+      el.textContent = text;
+      el.style.color = synced ? "var(--primary)" : "var(--warn)";
+    }
+
+    function saveState(pushCloud = true) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      hasDirtyCloudChanges = true;
+      setSyncBadge("Chưa đẩy lên GitHub", false);
+      if (pushCloud && state.ghToken) {
+        pushCloudData(false);
+      }
+    }
+
+    async function pullCloudData(showNotice = false) {
+      const repo = (state.ghRepo || DEFAULT_GH_REPO).trim();
+      const path = (state.ghDataPath || DEFAULT_GH_DATA_PATH).trim();
+      try {
+        const res = await fetch(`https://raw.githubusercontent.com/${repo}/main/${path}?t=${Date.now()}`);
+        if (!res.ok) throw new Error("Not found");
+        const cloud = await res.json();
+        if (cloud.bcsText) state.bcsText = cloud.bcsText;
+        if (Array.isArray(cloud.holidays)) state.holidays = cloud.holidays;
+        if (Array.isArray(cloud.violations)) state.violations = cloud.violations;
+        if (Array.isArray(cloud.manualInsertions)) state.manualInsertions = cloud.manualInsertions;
+        if (Array.isArray(cloud.priorityQueue)) state.priorityQueue = cloud.priorityQueue;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        hasDirtyCloudChanges = false;
+        renderAll();
+        setSyncBadge("Đã đồng bộ", true);
+        if (showNotice) alert("Đã tải dữ liệu từ GitHub");
+      } catch (e) {
+        if (showNotice) alert("Chưa tải được dữ liệu từ GitHub");
+      }
+    }
+
+    async function pushCloudData(showNotice = false) {
+      const repo = (state.ghRepo || DEFAULT_GH_REPO).trim();
+      const path = (state.ghDataPath || DEFAULT_GH_DATA_PATH).trim();
+      const token = (state.ghToken || "").trim();
+      if (!repo || !path || !token) {
+        if (showNotice) alert("Vui lòng nhập GitHub Token");
+        return;
+      }
+
+      setSyncBadge("Đang đồng bộ...", false);
+      const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
+      const payload = {
+        bcsText: state.bcsText,
+        holidays: state.holidays,
+        violations: state.violations,
+        manualInsertions: state.manualInsertions,
+        priorityQueue: state.priorityQueue
+      };
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+
+      try {
+        let sha = "";
+        const getRes = await fetch(apiUrl, { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" } });
+        if (getRes.ok) sha = (await getRes.json()).sha || "";
+
+        const putRes = await fetch(apiUrl, {
+          method: "PUT",
+          headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json", "Content-Type": "application/json" },
+          body: JSON.stringify({ message: `Sync 12A1 ${new Date().toISOString()}`, content, ...(sha ? { sha } : {}) })
+        });
+        if (!putRes.ok) throw new Error("Lỗi ghi GitHub");
+
+        hasDirtyCloudChanges = false;
+        setSyncBadge(`Đã đồng bộ (${new Date().toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })})`, true);
+        if (showNotice) alert("Đã đồng bộ dữ liệu lên GitHub!");
+      } catch (e) {
+        setSyncBadge("Lỗi đồng bộ", false);
+        if (showNotice) alert("Lỗi đồng bộ lên GitHub");
+      }
+    }
+
+    function openSyncModal() {
+      document.getElementById("ghRepoInput").value = state.ghRepo || DEFAULT_GH_REPO;
+      document.getElementById("ghDataPathInput").value = state.ghDataPath || DEFAULT_GH_DATA_PATH;
+      document.getElementById("ghTokenInput").value = state.ghToken || "";
+      document.getElementById("syncModal").classList.remove("hidden");
+    }
+
+    async function saveSyncConfigAndPush() {
+      state.ghRepo = (document.getElementById("ghRepoInput").value || DEFAULT_GH_REPO).trim();
+      state.ghDataPath = (document.getElementById("ghDataPathInput").value || DEFAULT_GH_DATA_PATH).trim();
+      state.ghToken = (document.getElementById("ghTokenInput").value || "").trim();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      closeModal("syncModal");
+      await pushCloudData(true);
+    }
+
+    // Xác nhận đồng bộ trước khi thoát web nếu còn thay đổi chưa đẩy
+    window.addEventListener("beforeunload", (e) => {
+      if (hasDirtyCloudChanges && state.ghToken) {
+        e.preventDefault();
+        e.returnValue = "Dữ liệu chưa đồng bộ lên GitHub. Hãy đồng bộ trước khi thoát.";
+      }
+    });
+
     function switchTab(tab) {
-      const dutySec = document.getElementById("sectionDuty");
-      const violSec = document.getElementById("sectionViolation");
-      const btnDuty = document.getElementById("tabDuty");
-      const btnViol = document.getElementById("tabViolation");
-
-      if (tab === "duty") {
-        dutySec.classList.remove("hidden");
-        violSec.classList.add("hidden");
-        btnDuty.className = "tab tab-on";
-        btnViol.className = "tab";
-      } else {
-        dutySec.classList.add("hidden");
-        violSec.classList.remove("hidden");
-        btnViol.className = "tab tab-on";
-        btnDuty.className = "tab";
-      }
-    }
-
-    function openScanModal() {
-      document.getElementById("scanModal").classList.remove("hidden");
-    }
-
-    function openManualModal() {
-      editingManualDate = "";
-      hs2SelectionMode = "next";
-      updateHs2ModeButtons();
-      document.getElementById("manualModalTitle").textContent = "Phân trực thủ công";
-      document.getElementById("manualDate").value = formatIsoDate(getRealToday());
-      onManualStudent1Change();
-      document.getElementById("btnDeleteManualDuty").classList.add("hidden");
-      document.getElementById("manualModal").classList.remove("hidden");
-    }
-
-    function openAddViolationModal() {
-      const cb = document.getElementById("violAddDutyCheckbox");
-      if (cb) cb.checked = true;
-      const catSel = document.getElementById("violCatalogSelect");
-      if (catSel) {
-        catSel.value = "Trễ";
-        onSelectViolationCatalog("Trễ");
-      }
-      document.getElementById("addViolationModal").classList.remove("hidden");
+      const isDuty = tab === "duty";
+      document.getElementById("sectionDuty").classList.toggle("hidden", !isDuty);
+      document.getElementById("sectionViolation").classList.toggle("hidden", isDuty);
+      document.getElementById("tabDuty").classList.toggle("active", isDuty);
+      document.getElementById("tabViolation").classList.toggle("active", !isDuty);
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.add("hidden");
     }
 
-    function populateSelects() {
-      const optionsHtml = STUDENTS.map(s => `<option value="${esc(s.name)}">${s.stt}. ${esc(s.name)}</option>`).join("");
-      document.getElementById("manualStudent1").innerHTML = optionsHtml;
-      document.getElementById("manualStudent2").innerHTML = optionsHtml;
-      document.getElementById("violTargetSelect").innerHTML =
-        `<option value="Tập thể lớp">Tập thể lớp</option>` + optionsHtml;
+    function selectLayoutMode(mode) {
+      document.body.classList.toggle("layout-mobile", mode === "mobile");
+      try { localStorage.setItem(LAYOUT_KEY, mode); } catch (e) {}
+    }
 
-      const categories = ["I. Chuyên cần", "II. Tác phong", "III. Kỷ luật"];
-      const groupedOptions = categories.map(cat => {
-        const items = VIOLATION_CATALOG.filter(v => v.category === cat);
-        const opts = items.map(v => `<option value="${esc(v.name)}">${v.stt}. ${esc(v.name)}</option>`).join("");
-        return `<optgroup label="${esc(cat)}">${opts}</optgroup>`;
+    function applyPalette(id) {
+      const p = COLOR_PALETTES.find(x => x.id === id) ? id : "azure-ice";
+      document.body.setAttribute("data-palette", p);
+      try { localStorage.setItem(PALETTE_KEY, p); } catch (e) {}
+      renderPaletteChoices();
+    }
+
+    function renderPaletteChoices() {
+      const cur = document.body.getAttribute("data-palette") || "azure-ice";
+      document.getElementById("paletteList").innerHTML = COLOR_PALETTES.map(p => {
+        const active = p.id === cur;
+        return `
+          <button type="button" onclick="applyPalette('${p.id}')" class="btn w-full justify-between ${active ? "btn-primary" : ""}">
+            <span class="flex items-center gap-2.5">
+              <span class="palette-swatch"><span style="background:${p.c1}"></span><span style="background:${p.c2}"></span></span>
+              <span>${esc(p.label)}</span>
+            </span>
+            <span class="text-xs">${active ? "Đang dùng" : "Chọn"}</span>
+          </button>
+        `;
       }).join("");
+    }
 
-      const catSelect = document.getElementById("violCatalogSelect");
-      if (catSelect) {
-        catSelect.innerHTML = groupedOptions + `<option value="__CUSTOM__">+ Nhập lỗi khác...</option>`;
-      }
+    function openDisplayModal() {
+      renderPaletteChoices();
+      document.getElementById("displayModal").classList.remove("hidden");
+    }
 
-      let dl = document.getElementById("violationCatalogDatalist");
-      if (!dl) {
-        dl = document.createElement("datalist");
-        dl.id = "violationCatalogDatalist";
-        document.body.appendChild(dl);
-      }
-      dl.innerHTML = VIOLATION_CATALOG.map(v => `<option value="${esc(v.name)}">`).join("");
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle("dark");
+      try { localStorage.setItem("theme_12a1", isDark ? "dark" : "light"); } catch (e) {}
+    }
+
+    function resetData() {
+      if (!confirm("Khôi phục mặc định?")) return;
+      const keepToken = state.ghToken;
+      state = {
+        bcsText: DEFAULT_BCS,
+        githubBcsUrl: DEFAULT_GITHUB_BCS_URL,
+        ghRepo: DEFAULT_GH_REPO,
+        ghDataPath: DEFAULT_GH_DATA_PATH,
+        ghToken: keepToken,
+        holidays: [],
+        violations: [],
+        manualInsertions: [],
+        priorityQueue: []
+      };
+      saveState(Boolean(state.ghToken));
+      renderAll();
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem("duty_12a1_v18") || localStorage.getItem("duty_12a1_v17");
+        if (raw) {
+          const p = JSON.parse(raw);
+          state = {
+            bcsText: p.bcsText ?? DEFAULT_BCS,
+            githubBcsUrl: p.githubBcsUrl || DEFAULT_GITHUB_BCS_URL,
+            ghRepo: p.ghRepo || DEFAULT_GH_REPO,
+            ghDataPath: p.ghDataPath || DEFAULT_GH_DATA_PATH,
+            ghToken: p.ghToken || "",
+            holidays: Array.isArray(p.holidays) ? p.holidays : [],
+            violations: Array.isArray(p.violations) ? p.violations : [],
+            manualInsertions: Array.isArray(p.manualInsertions) ? p.manualInsertions : [],
+            priorityQueue: Array.isArray(p.priorityQueue) ? p.priorityQueue : []
+          };
+        }
+        const savedLayout = localStorage.getItem(LAYOUT_KEY);
+        if (savedLayout === "mobile" || savedLayout === "pc") selectLayoutMode(savedLayout);
+        const savedPalette = localStorage.getItem(PALETTE_KEY);
+        if (savedPalette) applyPalette(savedPalette);
+      } catch (e) {}
+    }
+
+    function populateSelects() {
+      const stuOpts = STUDENTS.map(s => `<option value="${esc(s.name)}">#${s.stt} — ${esc(s.name)}</option>`).join("");
+      document.getElementById("manualStudent1").innerHTML = stuOpts;
+      document.getElementById("manualStudent2").innerHTML = stuOpts;
+      document.getElementById("violTargetSelect").innerHTML = `<option value="Tập thể lớp">Tập thể lớp</option>` + stuOpts;
+
+      const cats = ["I. Chuyên cần", "II. Tác phong", "III. Kỷ luật"];
+      document.getElementById("violCatalogSelect").innerHTML = cats.map(cat => {
+        const opts = VIOLATION_CATALOG.filter(v => v.category === cat)
+          .map(v => `<option value="${esc(v.name)}">${v.stt}. ${esc(v.name)}</option>`).join("");
+        return `<optgroup label="${esc(cat)}">${opts}</optgroup>`;
+      }).join("") + `<option value="__CUSTOM__">+ Lỗi khác...</option>`;
 
       const todayIso = formatIsoDate(getRealToday());
       document.getElementById("searchDateInput").value = todayIso;
@@ -2314,96 +1906,24 @@ Bí thư - Gia An`;
     }
 
     function renderAll() {
+      renderTodayDuty();
       renderWeeks();
       renderViolations();
     }
 
-    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-    function toggleTheme() {
-      const dark = document.documentElement.classList.toggle('dark');
-      try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
-      const m = document.querySelector('meta[name="theme-color"]');
-      if (m) m.content = dark ? '#0E101E' : '#F6F8FD';
-    }
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.querySelectorAll('[id$="Modal"]:not(.hidden)').forEach(m => m.classList.add('hidden'));
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") document.querySelectorAll(".modal-backdrop:not(.hidden)").forEach(m => m.classList.add("hidden"));
     });
-    document.addEventListener('mousedown', e => {
-      if (e.target.id && e.target.id.endsWith('Modal')) closeModal(e.target.id);
+    document.addEventListener("mousedown", e => {
+      if (e.target.classList?.contains("modal-backdrop")) e.target.classList.add("hidden");
     });
 
-    initLayoutPicker();
     loadState();
     populateSelects();
     renderAll();
     pullCloudData(false);
     fetchGithubBcs(false);
-  </script>
 
-  <script>
-  (() => {
-    const FEMALE_NAMES = new Set([
-      "Phù Lý Gia An",
-      "Lê Thanh Quế Anh",
-      "Nguyễn Ngọc Trâm Anh",
-      "Trần Ngọc Minh Châu",
-      "Lê Ngân Hạnh",
-      "Phạm Ngọc Hân",
-      "Nguyễn Hồng Mỹ Kim",
-      "Trịnh Thị Ngọc Linh",
-      "Lê Nguyễn Thảo My",
-      "Trương Gia Nghi",
-      "Nguyễn Ngọc Bảo Nhi",
-      "Bùi Lê Như Thảo",
-      "Lưu Bảo Thy",
-      "Lê Thủy Thiên Tú",
-      "Nguyễn Cát Tường",
-      "Lê Ngọc Tường Vy",
-      "Nguyễn Ngọc Hà Vy",
-      "Nguyễn Thị Thảo Yến"
-    ]);
-
-    const norm = (s = "") =>
-      String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, " ").trim();
-
-    const femaleNormSet = new Set([...FEMALE_NAMES].map(norm));
-
-    function styleAvatars() {
-      document.querySelectorAll(".person").forEach((person) => {
-        const av = person.querySelector(".av");
-        if (!av) return;
-
-        const nameEl = person.querySelector("span[title]") || person.querySelectorAll("span")[1];
-        const rawName = (nameEl?.getAttribute("title") || nameEl?.textContent || "").trim();
-        if (!rawName) return;
-
-        av.textContent = "";
-        av.classList.remove("av0", "av1", "av2", "av3", "av4", "av-female", "av-male");
-
-        if (femaleNormSet.has(norm(rawName))) {
-          av.classList.add("av-female");
-        } else {
-          av.classList.add("av-male");
-        }
-      });
-    }
-
-    const origRenderWeeks = window.renderWeeks;
-    if (typeof origRenderWeeks === "function") {
-      window.renderWeeks = function (...args) {
-        const res = origRenderWeeks.apply(this, args);
-        styleAvatars();
-        return res;
-      };
-    }
-
-    const container = document.getElementById("weeksContainer");
-    if (container) {
-      new MutationObserver(styleAvatars).observe(container, { childList: true, subtree: true });
-    }
-
-    styleAvatars();
-  })();
   </script>
 </body>
 </html>
