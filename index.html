@@ -147,6 +147,40 @@
     }
 
 
+    /* Bảng màu phối theo "Bảng phối màu outfit": mỗi cặp chỉ cần --p (màu chính) + --a (màu phối) */
+    body[data-mix] {
+      --bg: color-mix(in srgb, var(--p) 6%, #ffffff);
+      --surface: #ffffff;
+      --surface-2: color-mix(in srgb, var(--p) 3.5%, #ffffff);
+      --text: color-mix(in srgb, var(--p) 22%, #0b1016);
+      --muted: color-mix(in srgb, var(--text) 62%, #ffffff);
+      --border: color-mix(in srgb, var(--p) 16%, color-mix(in srgb, var(--a) 14%, #ffffff));
+      --primary: var(--p);
+      --primary-hover: color-mix(in srgb, var(--p) 85%, #000000);
+      --primary-soft: color-mix(in srgb, var(--p) 12%, #ffffff);
+      --accent: var(--a);
+      --accent-soft: color-mix(in srgb, var(--a) 24%, #ffffff);
+      --today-bg: color-mix(in srgb, var(--a) 18%, #ffffff);
+      --today-border: var(--a);
+    }
+    html.dark body[data-mix] {
+      --bg: color-mix(in srgb, var(--p) 10%, #05080c);
+      --surface: color-mix(in srgb, var(--p) 14%, #0a0e13);
+      --surface-2: color-mix(in srgb, var(--p) 20%, #0a0e13);
+      --text: color-mix(in srgb, var(--p) 8%, #f4f6f8);
+      --muted: color-mix(in srgb, var(--p) 25%, #a3aeb9);
+      --border: color-mix(in srgb, var(--p) 30%, #0e141a);
+      --primary: var(--pd, color-mix(in srgb, var(--p) 55%, #ffffff));
+      --primary-hover: color-mix(in srgb, var(--primary) 85%, #ffffff);
+      --primary-soft: color-mix(in srgb, var(--primary) 18%, transparent);
+      --accent: var(--ad, var(--a));
+      --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
+      --today-bg: color-mix(in srgb, var(--accent) 14%, transparent);
+      --today-border: var(--accent);
+    }
+    body[data-mix] .logo,
+    body[data-mix] .leaf small { background: linear-gradient(135deg, var(--primary), color-mix(in srgb, var(--primary) 60%, var(--accent))); }
+
     * { box-sizing: border-box; }
     html { background: var(--bg); scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     html, body { margin: 0; padding: 0; overflow-x: hidden; }
@@ -237,9 +271,19 @@
     .leaf b { display: block; padding: .55rem .5rem; font-size: 1.1rem; font-weight: 700; letter-spacing: -.02em; }
     .eyebrow { font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin-bottom: .45rem; }
     .duty-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .3rem .85rem .3rem .3rem; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); font-size: .85rem; font-weight: 600; }
-    .base-box { padding: .7rem .9rem; border-radius: 1rem; background: var(--surface-2); border: 1px solid var(--border); font-size: .78rem; max-width: 18rem; }
-    .base-box div + div { margin-top: .35rem; }
-    .base-box span { display: block; font-weight: 600; line-height: 1.35; }
+    .base-box { display: grid; gap: .7rem; padding: .8rem .9rem; border-radius: 1rem; background: var(--surface-2); border: 1px solid var(--border); min-width: 15.5rem; max-width: 20rem; }
+    .base-group .eyebrow { display: flex; align-items: center; gap: .4rem; margin-bottom: .35rem; }
+    .base-group .eyebrow::before { content: ""; width: .5rem; height: .5rem; border-radius: 999px; background: var(--primary); flex-shrink: 0; }
+    .base-group.next .eyebrow::before { background: var(--accent); }
+    .base-line { display: flex; align-items: center; gap: .55rem; padding: .3rem .55rem .3rem .35rem; border-radius: .8rem; background: var(--surface); border: 1px solid var(--border); }
+    .base-line + .base-line { margin-top: .3rem; }
+    .base-group.now .base-line { border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); box-shadow: 0 6px 14px -12px var(--primary); }
+    .base-line .nm { font-size: .86rem; font-weight: 700; line-height: 1.25; min-width: 0; }
+    .stt-tag.lg { min-width: 2.6rem; height: 1.8rem; padding: 0 .5rem; border-radius: .6rem; font-size: .88rem; letter-spacing: -.01em; }
+    .shift-link-note { margin: -.25rem 0 .15rem .2rem; font-size: .7rem; font-weight: 600; color: var(--muted); }
+    .palette-grid { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr)); }
+    .palette-btn { justify-content: flex-start; gap: .55rem; padding: .5rem .65rem; font-size: .78rem; line-height: 1.2; white-space: normal; text-align: left; }
+    .palette-btn .palette-name { flex: 1; min-width: 0; }
     .stats { display: flex; gap: .6rem; }
     .stat { flex: 1; min-width: 6rem; padding: .7rem .9rem; border-radius: 1rem; background: var(--surface-2); border: 1px solid var(--border); }
     .stat b { display: block; font-size: 1.6rem; font-weight: 700; letter-spacing: -.04em; line-height: 1.1; }
@@ -384,8 +428,8 @@
         <div class="leaf"><small id="todayWeekday"></small><b id="todayLabel"></b></div>
         <div><div class="eyebrow">Hôm nay trực</div><div id="todayDuty" class="flex flex-wrap gap-2"></div></div>
         <div class="base-box">
-          <div><div class="eyebrow" style="margin:0">STT chuẩn</div><span id="baseSttNow"></span></div>
-          <div><div class="eyebrow" style="margin:0">STT tiếp theo</div><span id="baseSttNext"></span></div>
+          <div class="base-group now"><div class="eyebrow">STT chuẩn</div><div id="baseSttNow"></div></div>
+          <div class="base-group next"><div class="eyebrow">STT tiếp theo</div><div id="baseSttNext"></div></div>
         </div>
         <div class="stats">
           <div class="stat"><b id="statViol">0</b><span>Lỗi đã ghi</span></div>
@@ -447,7 +491,7 @@
 
   <!-- MODAL ĐỔI LAYOUT & BẢNG MÀU -->
   <div id="displayModal" class="modal-backdrop hidden">
-    <div class="modal-box space-y-4">
+    <div class="modal-box space-y-4" style="max-width: 38rem;">
       <div class="flex items-center justify-between">
         <h3 class="text-base font-extrabold">Layout &amp; Bảng màu</h3>
         <button type="button" onclick="closeModal('displayModal')" class="btn btn-sm">&times;</button>
@@ -463,7 +507,7 @@
 
       <div class="space-y-2">
         <div class="text-xs font-bold uppercase" style="color: var(--muted);">Cặp màu phối</div>
-        <div id="paletteList" class="space-y-2"></div>
+        <div id="paletteList" class="palette-grid"></div>
       </div>
     </div>
   </div>
@@ -695,8 +739,42 @@
       { id: "pine-carolina", label: "Xanh Rừng + Carolina", c1: "#14532d", c2: "#7dd3fc" },
       { id: "slate-mint", label: "Đá Xám + Bạc Hà", c1: "#475569", c2: "#86efac" },
       { id: "wisteria-apricot", label: "Oải Hương + Mơ Chín", c1: "#6d597a", c2: "#fdba74" },
-      { id: "cream-cloud", label: "Xanh Lam + Mây", c1: "#2563eb", c2: "#cbd5e1" }
+      { id: "cream-cloud", label: "Xanh Lam + Mây", c1: "#2563eb", c2: "#cbd5e1" },
+
+      // Các cặp lấy từ "Bảng phối màu outfit" (c1/c2 = màu mẫu hiển thị, p/a = màu dùng cho web)
+      { id: "yellow-black", label: "Vàng + Đen", c1: "#f6e24b", c2: "#1a1a1a", mix: true, p: "#1f2937", a: "#facc15", pd: "#facc15", ad: "#fde68a" },
+      { id: "yellow-sky", label: "Vàng + Xanh nhạt", c1: "#f6e24b", c2: "#bfe0f7", mix: true, p: "#2b7fb8", a: "#f5c518" },
+      { id: "yellow-lilac", label: "Vàng + Tím", c1: "#f6e24b", c2: "#b79be3", mix: true, p: "#7b5cc0", a: "#f2d33a" },
+      { id: "yellow-brown", label: "Vàng + Nâu", c1: "#f6e24b", c2: "#70420f", mix: true, p: "#6b4423", a: "#f2d33a" },
+      { id: "pink-forest", label: "Hồng + Xanh rêu", c1: "#f4b0c0", c2: "#2f5d3a", mix: true, p: "#25613f", a: "#f4a6b8" },
+      { id: "pink-navy", label: "Hồng + Xanh navy", c1: "#f4b0c0", c2: "#1b4f7a", mix: true, p: "#1e5a8a", a: "#f4a6b8" },
+      { id: "crimson-black", label: "Đỏ đô + Đen", c1: "#a50f2a", c2: "#1a1a1a", mix: true, p: "#9b1127", a: "#3f3f46", ad: "#a1a1aa" },
+      { id: "crimson-cream", label: "Đỏ đô + Kem", c1: "#a50f2a", c2: "#f6efdc", mix: true, p: "#9b1127", a: "#e7d3a8" },
+      { id: "orange-navy", label: "Cam + Xanh navy", c1: "#ee8a3a", c2: "#1b4f7a", mix: true, p: "#1d4f7a", a: "#f08a3c" },
+      { id: "orange-forest", label: "Cam + Xanh rêu", c1: "#ee8a3a", c2: "#2f5d3a", mix: true, p: "#2f5d3a", a: "#f08a3c" },
+      { id: "orange-black", label: "Cam + Đen", c1: "#ee8a3a", c2: "#1a1a1a", mix: true, p: "#27272a", a: "#f08a3c", pd: "#fb923c", ad: "#e4e4e7" },
+      { id: "sky-pink", label: "Xanh nhạt + Hồng", c1: "#bfe0f7", c2: "#f4b0c0", mix: true, p: "#2f7fbf", a: "#f4a6b8" },
+      { id: "navy-lime", label: "Xanh navy + Xanh lá", c1: "#1b4f7a", c2: "#9bd36a", mix: true, p: "#1e4d75", a: "#8fd36a" },
+      { id: "forest-lilac", label: "Xanh sẫm + Tím nhạt", c1: "#2f5d3a", c2: "#c4b0f0", mix: true, p: "#2e5a40", a: "#b9a2ec" },
+      { id: "forest-gold", label: "Xanh sẫm + Vàng", c1: "#2f5d3a", c2: "#f6c445", mix: true, p: "#2e5a40", a: "#f2bf3a" },
+      { id: "lilac-pink", label: "Tím + Hồng nhạt", c1: "#b79be3", c2: "#f9d2dd", mix: true, p: "#7e62c4", a: "#f4b6c8" },
+      { id: "lilac-black", label: "Tím + Đen", c1: "#b79be3", c2: "#1a1a1a", mix: true, p: "#6f56b8", a: "#3f3f46", ad: "#a1a1aa" },
+      { id: "brown-red", label: "Nâu + Đỏ", c1: "#70420f", c2: "#b0151f", mix: true, p: "#7a4a1d", a: "#b4202a", ad: "#f87171" },
+      { id: "plum-pink", label: "Đỏ tía + Hồng", c1: "#7a2748", c2: "#f6b8c6", mix: true, p: "#7a2748", a: "#f2a9bd" },
+      { id: "plum-sky", label: "Đỏ tía + Xanh nhạt", c1: "#7a2748", c2: "#bfe0f7", mix: true, p: "#7a2748", a: "#8cc4ec" },
+      { id: "lime-plum", label: "Xanh lá + Tím", c1: "#9bd36a", c2: "#8b4a8f", mix: true, p: "#4d8a2e", a: "#9a5aa0", ad: "#c58bcb" }
     ];
+
+    // Sinh CSS biến màu cho các cặp màu phối
+    (function injectPaletteVars() {
+      const css = COLOR_PALETTES.filter(x => x.mix).map(x =>
+        `body[data-palette="${x.id}"]{--p:${x.p};--a:${x.a};${x.pd ? `--pd:${x.pd};` : ""}${x.ad ? `--ad:${x.ad};` : ""}}`
+      ).join("\n");
+      const st = document.createElement("style");
+      st.id = "paletteVars";
+      st.textContent = css;
+      document.head.appendChild(st);
+    })();
 
     const VIOLATION_CATALOG = [
       { stt: 1, category: "I. Chuyên cần", name: "Phép đặc biệt" },
@@ -923,6 +1001,15 @@ Bí thư - Gia An`;
       return result;
     }
 
+    // Chia ca: gom liên tục từng 2 ngày học (không reset theo tuần).
+    // Nhờ vậy T6 ghép với T2 tuần sau (cùng 1 cặp trực): tuần này T2T3|T4T5|T6, tuần sau T2|T3T4|T5T6...
+    // Có ngày nghỉ lễ thì ngày đó bị bỏ qua và các ca tự dồn lên.
+    function chunkSchoolDays(days) {
+      const out = [];
+      for (let i = 0; i < days.length; i += 2) out.push(days.slice(i, i + 2));
+      return out;
+    }
+
     // Lịch chuẩn không xét vi phạm & không xét phân thủ công
     function buildBaseScheduleOnly() {
       const exempt = getExemptNames();
@@ -934,32 +1021,22 @@ Bí thư - Gia An`;
         .map(s => s.name)
         .filter(n => !exempt.has(n) && !firstPair.includes(n));
 
-      const byWeek = new Map();
-      for (const d of schoolDays) {
-        const wk = getWeekMonday(d);
-        if (!byWeek.has(wk)) byWeek.set(wk, []);
-        byWeek.get(wk).push(d);
-      }
-
       let qIdx = 0;
       let isFirst = true;
       const shifts = [];
-      for (const [, daysInWeek] of byWeek.entries()) {
-        for (let i = 0; i < daysInWeek.length; i += 2) {
-          const grp = daysInWeek.slice(i, i + 2);
-          const startIso = formatIsoDate(grp[0]);
-          if (startIso === "2026-12-04") {
-            shifts.push({ startDate: startIso, days: grp, students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"] });
-            continue;
-          }
-          if (isFirst) {
-            shifts.push({ startDate: startIso, days: grp, students: firstPair });
-            isFirst = false;
-          } else {
-            const p1 = baseOrder[qIdx++ % baseOrder.length] || "";
-            const p2 = baseOrder[qIdx++ % baseOrder.length] || "";
-            shifts.push({ startDate: startIso, days: grp, students: [p1, p2] });
-          }
+      for (const grp of chunkSchoolDays(schoolDays)) {
+        const startIso = formatIsoDate(grp[0]);
+        if (startIso === "2026-12-04") {
+          shifts.push({ startDate: startIso, days: grp, students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"] });
+          continue;
+        }
+        if (isFirst) {
+          shifts.push({ startDate: startIso, days: grp, students: firstPair });
+          isFirst = false;
+        } else {
+          const p1 = baseOrder[qIdx++ % baseOrder.length] || "";
+          const p2 = baseOrder[qIdx++ % baseOrder.length] || "";
+          shifts.push({ startDate: startIso, days: grp, students: [p1, p2] });
         }
       }
       return shifts;
@@ -976,16 +1053,21 @@ Bí thư - Gia An`;
       const curPair = baseShifts[idx]?.students || [];
       const nextPair = baseShifts[idx + 1]?.students || [];
 
-      const fmtPair = arr => arr.filter(Boolean).map(name => {
-        const st = findStudent(name);
-        return st ? `#${st.stt} ${st.name}` : name;
-      }).join(" & ") || "—";
+      const fmtPair = arr => {
+        const list = arr.filter(Boolean);
+        if (!list.length) return `<div class="base-line"><span class="nm muted">—</span></div>`;
+        return list.map(name => {
+          const st = findStudent(name);
+          return `<div class="base-line"><span class="stt-tag lg ${isFemale(name) ? "female" : "male"}">${st ? "#" + st.stt : "—"}</span><span class="nm">${esc(st ? st.name : name)}</span></div>`;
+        }).join("");
+      };
 
-      document.getElementById("baseSttNow").textContent = fmtPair(curPair);
-      document.getElementById("baseSttNext").textContent = fmtPair(nextPair);
+      document.getElementById("baseSttNow").innerHTML = fmtPair(curPair);
+      document.getElementById("baseSttNext").innerHTML = fmtPair(nextPair);
     }
 
-    function buildAllWeeksSchedule() {
+    // Danh sách ca trực phẳng (mỗi ca = 1 cặp học sinh, có thể kéo dài qua 2 tuần: T6 + T2)
+    function buildShiftList() {
       const exempt = getExemptNames();
       const holidays = new Set((state.holidays || []).map(h => h.date));
       const schoolDays = getSchoolDays("2026-11-23", "2027-05-31", holidays);
@@ -1016,35 +1098,47 @@ Bí thư - Gia An`;
         manualMap.set(m.startDate, [s1, s2]);
       }
 
-      const byWeek = new Map();
-      for (const d of schoolDays) {
-        const wk = getWeekMonday(d);
-        if (!byWeek.has(wk)) byWeek.set(wk, []);
-        byWeek.get(wk).push(d);
-      }
-
-      const weeksResult = [];
+      const shifts = [];
       let isFirstShift = true;
-      let wNum = 1;
-
-      for (const [wkKey, daysInWeek] of byWeek.entries()) {
-        const shifts = [];
-        for (let i = 0; i < daysInWeek.length; i += 2) {
-          const grp = daysInWeek.slice(i, i + 2);
-          const startIso = formatIsoDate(grp[0]);
-          if (manualMap.has(startIso)) {
-            shifts.push({ startDate: startIso, days: grp, label: formatShiftLabel(grp), students: manualMap.get(startIso) });
-          } else if (startIso === "2026-12-04") {
-            shifts.push({ startDate: startIso, days: grp, label: formatShiftLabel(grp), students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"] });
-          } else {
-            const pair = isFirstShift ? firstPair : takePair();
-            isFirstShift = false;
-            shifts.push({ startDate: startIso, days: grp, label: formatShiftLabel(grp), students: pair });
-          }
+      for (const grp of chunkSchoolDays(schoolDays)) {
+        const startIso = formatIsoDate(grp[0]);
+        if (manualMap.has(startIso)) {
+          shifts.push({ startDate: startIso, days: grp, students: manualMap.get(startIso) });
+        } else if (startIso === "2026-12-04") {
+          shifts.push({ startDate: startIso, days: grp, students: ["Lê Ngân Hạnh", "Lê Nguyễn Thảo My"] });
+        } else {
+          const pair = isFirstShift ? firstPair : takePair();
+          isFirstShift = false;
+          shifts.push({ startDate: startIso, days: grp, students: pair });
         }
-        weeksResult.push({ weekNumber: wNum++, weekMonday: wkKey, shifts });
       }
-      return weeksResult;
+      return shifts;
+    }
+
+    // Gom ca theo tuần để hiển thị. Ca bắc cầu T6 -> T2 xuất hiện ở cả 2 tuần (cùng 1 cặp trực).
+    function buildAllWeeksSchedule() {
+      const weekMap = new Map();
+      for (const sh of buildShiftList()) {
+        const parts = new Map();
+        for (const d of sh.days) {
+          const wk = getWeekMonday(d);
+          if (!parts.has(wk)) parts.set(wk, []);
+          parts.get(wk).push(d);
+        }
+        for (const [wk, ds] of parts.entries()) {
+          if (!weekMap.has(wk)) weekMap.set(wk, []);
+          const others = sh.days.filter(d => !ds.includes(d));
+          const link = others.length ? `${getDayLabel(others[0].getDay())} ${formatShortDate(others[0])}` : "";
+          weekMap.get(wk).push({
+            startDate: sh.startDate,
+            days: ds,
+            label: formatShiftLabel(ds),
+            students: sh.students,
+            link
+          });
+        }
+      }
+      return Array.from(weekMap.entries()).map(([weekMonday, shifts], i) => ({ weekNumber: i + 1, weekMonday, shifts }));
     }
 
     function getVisibleWeeks() {
@@ -1108,6 +1202,7 @@ Bí thư - Gia An`;
                   <span>Sửa</span>
                 </button>
               </div>
+              ${sh.link ? `<div class="shift-link-note">↔ Cùng ca với ${esc(sh.link)}</div>` : ""}
               ${peopleHtml}
             </div>
           `;
@@ -1148,14 +1243,7 @@ Bí thư - Gia An`;
     }
 
     function openEditShiftModal(startDate) {
-      const weeks = buildAllWeeksSchedule();
-      let targetShift = null;
-      for (const wk of weeks) {
-        for (const sh of wk.shifts) {
-          if (sh.startDate === startDate) { targetShift = sh; break; }
-        }
-        if (targetShift) break;
-      }
+      const targetShift = buildShiftList().find(sh => sh.startDate === startDate) || null;
 
       const exempt = getExemptNames();
       editingManualDate = startDate;
@@ -1202,15 +1290,10 @@ Bí thư - Gia An`;
         : document.getElementById("manualStudent2").value;
       if (!startDate || !s1) return;
 
-      const weeks = buildAllWeeksSchedule();
-      const flat = [];
-      for (const wk of weeks) {
-        for (const sh of wk.shifts) {
-          flat.push({ startDate: sh.startDate, students: [...sh.students] });
-        }
-      }
+      const flat = buildShiftList().map(sh => ({ startDate: sh.startDate, days: sh.days, students: [...sh.students] }));
 
-      const targetIdx = flat.findIndex(sh => sh.startDate === startDate);
+      // Chọn ngày nào trong ca cũng được (vd T2 của ca T6+T2)
+      const targetIdx = flat.findIndex(sh => sh.startDate === startDate || sh.days.some(d => formatIsoDate(d) === startDate));
       if (targetIdx !== -1) {
         const oldPair = flat[targetIdx].students.filter(Boolean);
         flat[targetIdx].students = [s1, s2].filter(Boolean);
@@ -1253,11 +1336,7 @@ Bí thư - Gia An`;
 
     function removePersonFromShift(startDate, slotIndex) {
       const exempt = getExemptNames();
-      const weeks = buildAllWeeksSchedule();
-      const flatShifts = [];
-      for (const wk of weeks) {
-        for (const sh of wk.shifts) flatShifts.push({ startDate: sh.startDate, students: [...sh.students] });
-      }
+      const flatShifts = buildShiftList().map(sh => ({ startDate: sh.startDate, students: [...sh.students] }));
 
       const startIdx = flatShifts.findIndex(s => s.startDate === startDate);
       if (startIdx === -1) return;
@@ -1812,8 +1891,11 @@ Bí thư - Gia An`;
     }
 
     function applyPalette(id) {
-      const p = COLOR_PALETTES.find(x => x.id === id) ? id : "azure-ice";
+      const found = COLOR_PALETTES.find(x => x.id === id);
+      const p = found ? id : "azure-ice";
       document.body.setAttribute("data-palette", p);
+      if (found && found.mix) document.body.setAttribute("data-mix", "1");
+      else document.body.removeAttribute("data-mix");
       try { localStorage.setItem(PALETTE_KEY, p); } catch (e) {}
       renderPaletteChoices();
     }
@@ -1823,12 +1905,10 @@ Bí thư - Gia An`;
       document.getElementById("paletteList").innerHTML = COLOR_PALETTES.map(p => {
         const active = p.id === cur;
         return `
-          <button type="button" onclick="applyPalette('${p.id}')" class="btn w-full justify-between ${active ? "btn-primary" : ""}">
-            <span class="flex items-center gap-2.5">
-              <span class="palette-swatch"><span style="background:${p.c1}"></span><span style="background:${p.c2}"></span></span>
-              <span>${esc(p.label)}</span>
-            </span>
-            <span class="text-xs">${active ? "Đang dùng" : "Chọn"}</span>
+          <button type="button" onclick="applyPalette('${p.id}')" class="btn palette-btn ${active ? "btn-primary" : ""}">
+            <span class="palette-swatch"><span style="background:${p.c1}"></span><span style="background:${p.c2}"></span></span>
+            <span class="palette-name">${esc(p.label)}</span>
+            ${active ? '<span class="text-xs">✓</span>' : ""}
           </button>
         `;
       }).join("");
